@@ -1,0 +1,220 @@
+{
+  "main": {
+    "id": "bd596735796c3585",
+    "type": "split",
+    "children": [
+      {
+        "id": "7be6dc6a5f38ae03",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "636cc3e36ac725bf",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Математика/Дискретная математика/Множество.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Множество"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "4dd2682b704a1315",
+    "type": "split",
+    "children": [
+      {
+        "id": "c43f59f2aa5e08b7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1f81cf9c78e3b816",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "d6a2de388c9d06de",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "Словар",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "d4dc12ff03d08966",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "aff33f0237e10495",
+    "type": "split",
+    "children": [
+      {
+        "id": "9b7052d9eecece5f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8797bca638e2f183",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Clippings/Торвальдс, Линус — Википедия.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Торвальдс, Линус — Википедия"
+            }
+          },
+          {
+            "id": "f53923f224741fa5",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Clippings/Торвальдс, Линус — Википедия.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Торвальдс, Линус — Википедия"
+            }
+          },
+          {
+            "id": "fca1edab2c75550c",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "fa98a28b2a39353d",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Clippings/Торвальдс, Линус — Википедия.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Торвальдс, Линус — Википедия"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "bases:Create new base": false,
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "636cc3e36ac725bf",
+  "lastOpenFiles": [
+    "Информатика/Алгоритмы и структуры данных/Алгоритмы/Сортировка подсчетом.md",
+    "Математика/Дискретная математика/Множество.md",
+    "Математика/Дискретная математика/number_sets.png",
+    "Pas.md",
+    "Информатика/Алгоритмы и структуры данных/Алгоритмы/Сортировка вставками.md",
+    "Математика/Дискретная математика/Кортеж.md",
+    "Математика/Дискретная математика/Пара.md",
+    "Математика/Дискретная математика/Типы бинарных отношений.md",
+    "Математика/Дискретная математика/Универсум.md",
+    "Математика/Кванторы.md",
+    "Untitled 2.base",
+    "Untitled.base",
+    "Untitled 1.base",
+    "Untitled 3.base",
+    "Математика/Дискретная математика/Бинарные отношения.md",
+    "Математика/Дискретная математика/Операции над бинарными отношениями.md",
+    "Математика/Линейная алгебра/Полугруппа.md",
+    "Математика/Линейная алгебра/Поле.md",
+    "Математика/Линейная алгебра/Моноид.md",
+    "Математика/Линейная алгебра/Магма.md",
+    "Математика/Линейная алгебра/Группа.md",
+    "Математика/Линейная алгебра/Кольцо.md",
+    "Математика/Линейная алгебра/Комплексное число.md",
+    "Pasted image 20250916100803.png",
+    "Pasted image 20250908132403.png",
+    "Математика/Дискретная математика/Законы над операциями множеств.md",
+    "Математика/Дискретная математика/Аксиомы множеств.md",
+    "Математика/Дискретная математика/Операции множеств.md",
+    "Математика/Математический анализ/Абсолютная величина.md",
+    "Информатика/Алгоритмы и структуры данных/Структуры данных/Структура данных.md",
+    "Информатика/Алгоритмы и структуры данных/Алгоритмы/Сортировка.md",
+    "Информатика/Алгоритмы и структуры данных/Алгоритмы/Бинарный поиск.md",
+    "Информатика/Алгоритмы и структуры данных/Алгоритмы/media/bubble_sort.gif",
+    "Информатика/Алгоритмы и структуры данных/Алгоритмы/media/bubble_sort.mov",
+    "Информатика/Алгоритмы и структуры данных/Алгоритмы/media/select_sort.gif",
+    "Информатика/Алгоритмы и структуры данных/Алгоритмы/media/radix_sort.gif",
+    "Информатика/Алгоритмы и структуры данных/Алгоритмы/media/quick_sort_lamuto.gif",
+    "Информатика/Алгоритмы и структуры данных/Алгоритмы/media/merge_sort.gif",
+    "Информатика/Алгоритмы и структуры данных/Алгоритмы/media/insertion_sort.gif",
+    "Информатика/Алгоритмы и структуры данных/Алгоритмы/media/count_sort.gif",
+    "Информатика/Алгоритмы и структуры данных/Алгоритмы/media/bsearch.mov",
+    "Информатика/Алгоритмы и структуры данных/Алгоритмы/media/merge_sort.mov",
+    "Информатика/Алгоритмы и структуры данных/Алгоритмы/media/radix_sort.mov",
+    "Информатика/Алгоритмы и структуры данных/Алгоритмы/media/quick_sort_lamuto.mov",
+    "Информатика/Алгоритмы и структуры данных/Алгоритмы/media/count_sort.mov"
+  ]
+}
