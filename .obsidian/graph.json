@@ -1,6 +1,6 @@
 {
   "collapse-filter": false,
-  "search": "path:Математика  ",
+  "search": "path:Информатика  ",
   "showTags": false,
   "showAttachments": false,
   "hideUnresolved": false,
@@ -17,6 +17,6 @@
   "repelStrength": 10,
   "linkStrength": 1,
   "linkDistance": 250,
-  "scale": 2.0632605995588333,
+  "scale": 2.0357672449677304,
   "close": true
 }
