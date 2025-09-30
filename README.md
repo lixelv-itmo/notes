@@ -9,6 +9,11 @@ git clone https://github.com/lixelv-itmo/notes.git
 
 Также для корректной работы необходимо скачать это расширение (ссылка). Включите его в списке расширений от сообщества и это все, что нужно для корректного использования.
 
+## Демонстрация
+![](media/merge_sort.gif)
+![](media/bsearch.gif)
+![](media/exp_function.gif)
+
 ## Автор
 
 [lixelv](https://github.com/lixelv) | Ефременко Симеон
