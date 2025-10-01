@@ -1,11 +1,11 @@
 {
-  "collapse-filter": true,
-  "search": "path:Информатика  ",
+  "collapse-filter": false,
+  "search": "",
   "showTags": false,
   "showAttachments": false,
   "hideUnresolved": false,
-  "showOrphans": true,
-  "collapse-color-groups": false,
+  "showOrphans": false,
+  "collapse-color-groups": true,
   "colorGroups": [
     {
       "query": "path:\"Математика/Дискретная математика\"  ",
@@ -25,7 +25,21 @@
       "query": "path:\"Математика/Математический анализ\" path:\"Математика/Математический анализ\"  ",
       "color": {
         "a": 1,
-        "rgb": 11657298
+        "rgb": 5431378
+      }
+    },
+    {
+      "query": "path:\"Информатика/Алгоритмы и структуры данных/Алгоритмы\"  ",
+      "color": {
+        "a": 1,
+        "rgb": 5431473
+      }
+    },
+    {
+      "query": "path:\"Информатика/Алгоритмы и структуры данных/Структуры данных\"  ",
+      "color": {
+        "a": 1,
+        "rgb": 5419488
       }
     }
   ],
@@ -39,6 +53,6 @@
   "repelStrength": 10,
   "linkStrength": 1,
   "linkDistance": 250,
-  "scale": 1.723898434385987,
-  "close": false
+  "scale": 1.1291288623172444,
+  "close": true
 }
