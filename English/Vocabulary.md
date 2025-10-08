@@ -1,9 +1,19 @@
 
-| Word          | Meaning                         |
-| ------------- | ------------------------------- |
-| chinwag       | болтать, говорить без остановки |
-| wagtail       | птица, такой тип птиц           |
-| flabbergasted | amazed                          |
-| eavesdropping | подслушивание                   |
-| brunch        | (breakfast + lunch)             |
-| smog          | (smoke + fog), type of weather  |
+| Word                    | Meaning                         |
+| ----------------------- | ------------------------------- |
+| chinwag                 | болтать, говорить без остановки |
+| wagtail                 | птица, такой тип птиц           |
+| flabbergasted           | amazed                          |
+| eavesdropping           | подслушивание                   |
+| brunch                  | (breakfast + lunch)             |
+| smog                    | (smoke + fog), type of weather  |
+| put your skills to test | Проверить знания на практике    |
+| trait                   | особенность, свойство           |
+| perseverance            | настойчивость                   |
+| persistence             | настойчивость                   |
+| insistence              | настойчивость                   |
+| laid-back               | Chill guy                       |
+| tight-fisted            | скупой                          |
+| well-balanced           | многосторонне развитый          |
+| tend to                 | меня тянет к                    |
+|                         |                                 |
