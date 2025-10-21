@@ -16,4 +16,18 @@
 | tight-fisted            | скупой                          |
 | well-balanced           | многосторонне развитый          |
 | tend to                 | меня тянет к                    |
-|                         |                                 |
+| apsonminded             | Витающая в облаках              |
+| bigheaded               | Душнила, зануда                 |
+| tightfisted             | Скупой                          |
+| clogs up                | Забивается                      |
+| end up                  | В конце концов                  |
+| if anything             | Если что мы и должны делать     |
+| sprained                | Растяжение                      |
+| brandy                  | Коньяк                          |
+| choke on                | Подавиться                      |
+| rush                    | Сыпь                            |
+| ichy                    | Чешется                         |
+| sick tired              |                                 |
+| fracture                | Перелом                         |
+| hiking                  | Пеший поход                     |
+| soft palate             | Неба (Неб)                      |
