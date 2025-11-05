@@ -25,9 +25,20 @@
 | sprained                | Растяжение                      |
 | brandy                  | Коньяк                          |
 | choke on                | Подавиться                      |
-| rush                    | Сыпь                            |
-| ichy                    | Чешется                         |
+| rash                    | Сыпь                            |
+| itchy                   | Чешется                         |
 | sick tired              |                                 |
 | fracture                | Перелом                         |
 | hiking                  | Пеший поход                     |
 | soft palate             | Неба (Неб)                      |
+| parade                  | Выставлять на показ             |
+| inclined                |                                 |
+| dispose                 | Распоряжение                    |
+| Now, then               | Так, вот                        |
+| Alternate               | Иногда                          |
+| I take it               | Я так понимаю                   |
+| panto                   |                                 |
+| crumble                 |                                 |
+| tidy                    |                                 |
+| goody two shoes         | Паинька                         |
+| firewell                |                                 |

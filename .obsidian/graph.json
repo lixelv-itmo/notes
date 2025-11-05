@@ -5,7 +5,7 @@
   "showAttachments": false,
   "hideUnresolved": false,
   "showOrphans": false,
-  "collapse-color-groups": true,
+  "collapse-color-groups": false,
   "colorGroups": [
     {
       "query": "path:\"Математика/Дискретная математика\"  ",
@@ -41,6 +41,13 @@
         "a": 1,
         "rgb": 5419488
       }
+    },
+    {
+      "query": "path:\"Информатика/Основы программирования\"  ",
+      "color": {
+        "a": 1,
+        "rgb": 2707614
+      }
     }
   ],
   "collapse-display": true,
@@ -48,11 +55,11 @@
   "textFadeMultiplier": 0,
   "nodeSizeMultiplier": 1,
   "lineSizeMultiplier": 1,
-  "collapse-forces": true,
-  "centerStrength": 0.518713248970312,
-  "repelStrength": 10,
-  "linkStrength": 1,
-  "linkDistance": 250,
-  "scale": 2.6303066254975844,
+  "collapse-forces": false,
+  "centerStrength": 0.625895182291667,
+  "repelStrength": 9.98697916666667,
+  "linkStrength": 0.826985677083333,
+  "linkDistance": 123,
+  "scale": 1.7569807421516972,
   "close": true
 }
