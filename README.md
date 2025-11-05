@@ -7,7 +7,7 @@
 git clone https://github.com/lixelv-itmo/notes.git
 ```
 
-Также для корректной работы необходимо скачать расширение Multi-Column Markdown ([ссылка](obsidian://show-plugin?id=multi-column-markdown)). Скачайте его и включите его в списке расширений от сообщества и это все, что нужно для корректного использования.
+Также для корректной работы необходимо скачать расширение Multi-Column Markdown ([ссылка](https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/Plugins/multi-column-markdown)). Скачайте его и включите его в списке расширений от сообщества и это все, что нужно для корректного использования.
 
 ## Демонстрация
 ![](media/merge_sort.gif)

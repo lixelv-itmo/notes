@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "a92d814cc43a19ea",
+        "id": "85e039695f53b3ff",
         "type": "tabs",
         "children": [
           {
-            "id": "4d4206635c1f7b5a",
+            "id": "11205f6a59fae000",
             "type": "leaf",
             "state": {
-              "type": "split-diff-view",
+              "type": "markdown",
               "state": {
-                "aFile": ".obsidian/graph.json",
-                "bFile": ".obsidian/graph.json",
-                "aRef": ""
+                "file": "README.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "diff",
-              "title": "Diff: graph.json"
+              "icon": "lucide-file",
+              "title": "README"
             }
           }
         ]
@@ -179,8 +179,9 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "4d4206635c1f7b5a",
+  "active": "11205f6a59fae000",
   "lastOpenFiles": [
+    "Untitled.base",
     "media/trigh.png",
     "Информатика/Основы программирования/C++.md",
     "Информатика/Основы программирования/Функция.md",
@@ -217,7 +218,6 @@
     "media/array.png",
     "media/matrix_transformations.gif",
     "media/backpack.png",
-    "Untitled.base",
     "Информатика/Основы программирования",
     "media/select_sort.mov",
     "media/radix_sort.mov",
