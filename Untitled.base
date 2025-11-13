@@ -1,0 +1,3425 @@
+```
+Binary Relations
+Discrete Math, Fall 2025
+Konstantin Chukharev
+Set
+Theory
+• Operations & laws
+• Power sets
+• Russell’s paradox
+• ZFC axioms
+• Cartesian products
+• Cardinality
+Binary
+Relations
+• Relation properties
+• Equivalence relations
+• Functions
+• Partial orders
+• Lattices
+• Well-orders
+Boolean
+Algebra
+• Truth tables & laws
+• Logic circuits
+• Normal forms
+• Karnaugh maps
+• Binary Decision
+Diagrams (BDDs)
+Formal
+Logic
+• Syntax & semantics
+• Natural deduction
+• Soundness &
+completeness
+• Categorical logic
+• First-order logic
+Relations
+“In mathematics you don’t understand things. You just get used to them.”
+— John von Neumann
+René Descartes Évariste Galois Ernst Schröder Michael Rabin Herbert Wilf
+What is a Relation?
+Relations capture connections between elements of sets.
+Example (Everyday examples):
+• “is less than” relates numbers: 3 is related to 5 because 3 < 5
+• “is a parent of” relates people: Alice is related to Bob if Alice is Bob’s parent
+• “divides” relates integers: 2 is related to 6 because 2 | 6
+Intuition: A relation tells us which pairs of elements are connected.
+Definition 1: A binary relation 𝑅 from set 𝐴 to set 𝐵 is a subset of the Cartesian product:
+𝑅 ⊆ 𝐴 × 𝐵
+Each ordered pair ⟨𝑎, 𝑏⟩ ∈ 𝑅 means “𝑎 is related to 𝑏.”
+4 / 246
+Notation for Relations
+Notation: If 𝑅 ⊆ 𝐴 × 𝐵, we write:
+• 𝑎 𝑅 𝑏 to mean ⟨𝑎, 𝑏⟩ ∈ 𝑅 (element 𝑎 is related to element 𝑏)
+• 𝑎 𝑅 𝑏 to mean ⟨𝑎, 𝑏⟩ ∉ 𝑅 (element 𝑎 is not related to element 𝑏)
+Example: Let 𝑅 = {⟨1, 2⟩, ⟨2, 3⟩, ⟨1, 3⟩} be a relation on naturals.
+• We can write 1 𝑅 2 instead of ⟨1, 2⟩ ∈ 𝑅
+• We can write 2 𝑅 1 instead of ⟨2, 1⟩ ∉ 𝑅
+Key insight: Order matters! 𝑎 𝑅 𝑏 and 𝑏 𝑅 𝑎 are different statements.
+5 / 246
+Types of Relations
+Definition 2: A binary relation 𝑅 ⊆ 𝐴 × 𝐵 is:
+• Heterogeneous if 𝐴 and 𝐵 are different sets
+• Homogeneous if 𝐴 = 𝐵 (we write 𝑅 ⊆ 𝑀2)
+Example (Heterogeneous relation): Let Students = {Alice, Bob} and Subjects = {Math, Algorithms}.
+The relation “likes” (between students and subjects) might be:
+𝑅 = {⟨Alice, Math⟩, ⟨Alice, Algorithms⟩, ⟨Bob, Algorithms⟩}
+We write “Alice 𝑅 Math” to denote that “Alice likes Math”.
+Example (Homogeneous relation): The “less than” relation on ℕ:
+𝑅 = {⟨𝑛, 𝑘⟩ | 𝑛, 𝑘 ∈ ℕ and 𝑛 < 𝑘} ⊆ ℕ2
+For instance: 2 𝑅 3 (since 2 < 3) and 3 𝑅 2 (since not 3 < 2).
+6 / 246
+Visualizing Relations: Directed Graphs
+Relations can be visualized as graphs, making their structure easier to understand.
+Definition 3: A homogeneous relation 𝑅 ⊆ 𝑀2 is represented as a directed graph:
+• Each element of 𝑀 becomes a vertex
+• Draw edge 𝑥 → 𝑦 whenever 𝑥 𝑅 𝑦 (i.e., ⟨𝑥, 𝑦⟩ ∈ 𝑅)
+Example: Relation 𝑅 = {⟨1, 2⟩, ⟨2, 3⟩, ⟨1, 3⟩} on 𝑀 = {1, 2, 3}:
+3
+1 𝑅 3
+2 𝑅 3
+1 2
+1 𝑅 2
+7 / 246
+Visualizing Relations: Bipartite Graphs
+Heterogeneous relations connect elements from two different sets.
+Definition 4: A heterogeneous relation 𝑅 ⊆ 𝐴 × 𝐵 can be represented as a bipartite graph:
+• Left partition: vertices for elements of 𝐴
+• Right partition: vertices for elements of 𝐵
+• Draw edge 𝑎 → 𝑏 whenever 𝑎 𝑅 𝑏 (i.e., ⟨𝑎, 𝑏⟩ ∈ 𝑅)
+Example: Animals 𝐴 = {🐇,🐈️,🐕️} and food 𝐵 = {🥕, 🐟️}. Relation 𝑅: “likes to eat”.
+🐇
+🥕
+🐈️
+🐟️
+𝑅 ⊆ 𝐴 × 𝐵
+Animals (𝐴) Food (𝐵)
+🐕️
+8 / 246
+Matrix Representation
+Definition 5: A relation 𝑅 ⊆ 𝐴 × 𝐵 with 𝐴 = {𝑎1, …, 𝑎𝑚} and 𝐵 = {𝑏1, …, 𝑏𝑛} is represented by an
+𝑚 × 𝑛 boolean matrix ⟦𝑅⟧:
+⟦𝑅⟧[𝑖, 𝑗] = {1 if 𝑎𝑖 𝑅 𝑏𝑗
+0 if 𝑎𝑖 𝑅 𝑏𝑗
+Example: Let 𝐴 = {𝑎, 𝑏, 𝑐}, 𝐵 = {𝑥, 𝑦}, and 𝑅 = {⟨𝑎, 𝑥⟩, ⟨𝑏, 𝑥⟩, ⟨𝑐, 𝑦⟩}.
+Matrix representation with rows = 𝐴 and columns = 𝐵:
+⟦𝑅⟧ =
+[
+1
+1
+0
+0
+0
+1]
+⟺
+{
+𝑎 𝑅 𝑥, 𝑎 𝑅 𝑦
+𝑏 𝑅 𝑥, 𝑏 𝑅 𝑦
+𝑐 𝑅 𝑥, 𝑐 𝑅 𝑦
+Why matrices? Matrix operations (multiply, transpose) match relation operations (compose, inverse).
+9 / 246
+Special Relations
+Definition 6: For any set 𝑀, we have:
+• Empty relation: ∅ ⊆ 𝑀2 — No pairs at all; nothing is related to anything.
+• Identity relation: 𝐼𝑀 = {⟨𝑥, 𝑥⟩ | 𝑥 ∈ 𝑀} — Each element is related only to itself.
+• Universal relation: 𝑈𝑀 = 𝑀2 — All possible pairs; everything is related to everything.
+Example: For 𝑀 = {𝑎, 𝑏, 𝑐}:
+• Empty: ∅ (no relations)
+• Identity: 𝐼𝑀 = {⟨𝑎, 𝑎⟩, ⟨𝑏, 𝑏⟩, ⟨𝑐, 𝑐⟩} (3 pairs on diagonal)
+• Universal: 𝑈𝑀 = {⟨𝑎, 𝑎⟩, ⟨𝑎, 𝑏⟩, ⟨𝑎, 𝑐⟩, ⟨𝑏, 𝑎⟩, ⟨𝑏, 𝑏⟩, ⟨𝑏, 𝑐⟩, ⟨𝑐, 𝑎⟩, ⟨𝑐, 𝑏⟩, ⟨𝑐, 𝑐⟩} (all 32 = 9 pairs)
+Matrix representations:
+⟦∅⟧ =
+[
+0
+0
+0
+0
+0
+0
+0
+0
+0] ⟦𝐼𝑀⟧ =
+[
+1
+0
+0
+0
+1
+0
+0
+0
+1] ⟦𝑈𝑀⟧ =
+[
+1
+1
+1
+1
+1
+1
+1
+1
+1]
+10 / 246
+Set Operations on Relations
+Since relations are sets of pairs, we can apply standard set operations.
+Definition 7: For relations 𝑅, 𝑆 ⊆ 𝐴 × 𝐵:
+• Union: 𝑅 ∪ 𝑆 = {⟨𝑎, 𝑏⟩ | ⟨𝑎, 𝑏⟩ ∈ 𝑅 ∨ ⟨𝑎, 𝑏⟩ ∈ 𝑆}
+• Intersection: 𝑅 ∩ 𝑆 = {⟨𝑎, 𝑏⟩ | ⟨𝑎, 𝑏⟩ ∈ 𝑅 ∧ ⟨𝑎, 𝑏⟩ ∈ 𝑆}
+• Complement: 𝑅 = (𝐴 × 𝐵) ∖ 𝑅 = {⟨𝑎, 𝑏⟩ | ⟨𝑎, 𝑏⟩ ∉ 𝑅}
+Example: Let 𝑅 = {⟨1, 2⟩, ⟨2, 3⟩} and 𝑆 = {⟨1, 2⟩, ⟨3, 4⟩} on ℕ.
+• 𝑅 ∪ 𝑆 = {⟨1, 2⟩, ⟨2, 3⟩, ⟨3, 4⟩} (all pairs from either relation)
+• 𝑅 ∩ 𝑆 = {⟨1, 2⟩} (only common pairs)
+• If we restrict to 𝑀 = {1, 2, 3}, then 𝑅 = {⟨1, 1⟩, ⟨1, 3⟩, ⟨2, 1⟩, ⟨2, 2⟩, ⟨3, 1⟩, ⟨3, 2⟩, ⟨3, 3⟩}
+Matrix view: Union = OR, Intersection = AND, Complement = NOT (element-wise on matrices).
+11 / 246
+Inverse Relation
+Definition 8: For 𝑅 ⊆ 𝐴 × 𝐵, the inverse (or converse, or dual) relation is:
+𝑅−1 = {⟨𝑏, 𝑎⟩ | ⟨𝑎, 𝑏⟩ ∈ 𝑅} ⊆ 𝐵 × 𝐴
+Note: 𝑅−1 reverses all connections. If 𝑎 𝑅 𝑏, then 𝑏 𝑅−1 𝑎.
+Note: Other notations: 𝑅𝑇 (transpose), 𝑅∁ (converse), 𝑅⚬ (reciprocal).
+Example:
+• If 𝑅 = {⟨1, 𝑥⟩, ⟨2, 𝑦⟩, ⟨2, 𝑧⟩}, then 𝑅−1 = {⟨𝑥, 1⟩, ⟨𝑦, 2⟩, ⟨𝑧, 2⟩}.
+• For order relations:
+‣ (<)−1 = (>) (inverse of “less than” is “greater than”)
+‣ (≤)−1 = (≥) (inverse of “less or equal” is “greater or equal”)
+• For the “parent of” relation: (parent of)−1 = “child of”
+Matrix view: ⟦𝑅−1⟧ is the transpose of ⟦𝑅⟧.
+12 / 246
+Properties of Relations
+Reflexivity
+A relation is reflexive if every element is related to itself.
+Definition 9: 𝑅 ⊆ 𝑀2 is reflexive if:
+∀𝑥 ∈ 𝑀. 𝑥 𝑅 𝑥
+Examples:
+• Reflexive: ≤,
+=, “is the same age as”
+• Not reflexive: <, ≠, “is parent of”
+Graph view: Every vertex has a self-loop.
+Matrix view: All diagonal entries are 1.
+14 / 246
+Symmetry
+A relation is symmetric if the relation goes both ways.
+Definition 10: 𝑅 ⊆ 𝑀2 is symmetric if:
+∀𝑥, 𝑦 ∈ 𝑀. (𝑥 𝑅 𝑦) → (𝑦 𝑅 𝑥)
+Example:
+• Symmetric: =, “is sibling of”, “is married to”
+• Not symmetric: ≤, “is parent of”, “likes”
+Graph view: If there’s an edge 𝑥 → 𝑦, there’s also 𝑦 → 𝑥.
+Matrix view: Matrix equals its transpose.
+15 / 246
+Transitivity
+A relation is transitive if connections chain together.
+Definition 11: 𝑅 ⊆ 𝑀2 is transitive if:
+∀𝑥, 𝑦, 𝑧 ∈ 𝑀. (𝑥 𝑅 𝑦 ∧ 𝑦 𝑅 𝑧) → (𝑥 𝑅 𝑧)
+Example:
+• Transitive: ≤,
+=, “is ancestor of”
+• Not transitive: “is parent of” (parent of parent is grandparent, not parent)
+Intuition: If you can reach 𝑧 from 𝑥 through 𝑦, you can reach 𝑧 directly from 𝑥.
+16 / 246
+Irreflexivity
+A relation is irreflexive if no element is related to itself.
+Definition 12: 𝑅 ⊆ 𝑀2 is irreflexive if:
+∀𝑥 ∈ 𝑀. 𝑥 𝑅 𝑥
+Example:
+• Irreflexive: <, ≠, “is parent of”
+• Not irreflexive: ≤,
+=
+Note: Irreflexive is not the same as “not reflexive”! A relation can be neither reflexive nor irreflexive.
+17 / 246
+Antisymmetry
+A relation is antisymmetric if different elements can’t be mutually related.
+Definition 13: 𝑅 ⊆ 𝑀2 is antisymmetric if:
+∀𝑥, 𝑦 ∈ 𝑀. (𝑥 𝑅 𝑦 ∧ 𝑦 𝑅 𝑥) → (𝑥 = 𝑦)
+Note: Alternative definition:
+∀𝑥, 𝑦 ∈ 𝑀. (𝑥 ≠ 𝑦) → (𝑥 𝑅 𝑦 → 𝑦 𝑅 𝑥)
+Example:
+• Antisymmetric: ≤, ⊆, “divides” (on positive integers)
+• Not antisymmetric: “is sibling of”, “is friend of”
+Intuition: At most one direction exists between distinct elements.
+18 / 246
+Asymmetry
+A relation is asymmetric if it never goes both ways.
+Definition 14: 𝑅 ⊆ 𝑀2 is asymmetric if:
+∀𝑥, 𝑦 ∈ 𝑀. (𝑥 𝑅 𝑦) → (𝑦 𝑅 𝑥)
+Example:
+• Asymmetric: <, “is parent of”
+• Not asymmetric: ≤,
+=
+Note: Asymmetric = irreflexive + antisymmetric. Asymmetry is the strongest directional property.
+19 / 246
+Properties: Important Notes
+Note: Properties are not always opposites:
+• Reflexive vs irreflexive: A relation can be neither (e.g., 𝑅 = {⟨1, 1⟩, ⟨1, 2⟩} on 𝑀 = {1, 2})
+• Symmetric vs antisymmetric: A relation can be both (e.g., identity 𝐼𝑀)
+Note: Empty set edge case: On 𝑀 = ∅, the empty relation is vacuously1 reflexive, irreflexive, symmetric,
+antisymmetric, asymmetric, and transitive!
+Example (Combining properties): Common combinations:
+• Equivalence relation: reflexive + symmetric + transitive (e.g.,
+• Partial order: reflexive + antisymmetric + transitive (e.g., ≤)
+• Strict order: irreflexive + antisymmetric + transitive (e.g., <)
+=)
+1A universal statement “∀𝑥 ∈ ∅. 𝑃(𝑥)” is true because there are no counterexamples.
+20 / 246
+Additional Properties
+Definition 15: A relation 𝑅 ⊆ 𝑀2 is:
+• Coreflexive: If 𝑅 ⊆ 𝐼𝑀 (only self-loops are allowed).
+∀𝑥, 𝑦 ∈ 𝑀. (𝑥 𝑅 𝑦) → (𝑥 = 𝑦)
+• Right Euclidean: If 𝑥 relates to both 𝑦 and 𝑧, then 𝑦 and 𝑧 are related.
+∀𝑥, 𝑦, 𝑧 ∈ 𝑀. (𝑥 𝑅 𝑦 ∧ 𝑥 𝑅 𝑧) → (𝑦 𝑅 𝑧)
+• Left Euclidean: If both 𝑦 and 𝑧 relate to 𝑥, then they relate to each other.
+∀𝑥, 𝑦, 𝑧 ∈ 𝑀. (𝑦 𝑅 𝑥 ∧ 𝑧 𝑅 𝑥) → (𝑦 𝑅 𝑧)
+Example:
+• Identity relation 𝐼𝑀 is coreflexive (and any subset of 𝐼𝑀)
+• Equality “=” is both left and right Euclidean
+• Equivalence relations are Euclidean in both directions
+21 / 246
+Equivalence Relations
+Equivalence Relations
+Definition 16: A relation 𝑅 ⊆ 𝑀2 is an equivalence relation if it is reflexive, symmetric and transitive.
+Example (Equality): The identity relation 𝐼𝑀 = {⟨𝑥, 𝑥⟩ | 𝑥 ∈ 𝑀} is an equivalence relation on any set 𝑀.
+Note: The identity relation is just the common equality relation “=”.
+Verification:
+• Reflexive: 𝑥 𝐼𝑀 𝑥 for all 𝑥 ∈ 𝑀 (by definition of 𝐼𝑀) ✓
+• Symmetric: If 𝑥 𝐼𝑀 𝑦, then 𝑥 = 𝑦, thus 𝑦 = 𝑥, so 𝑦 𝐼𝑀 𝑥 ✓
+• Transitive: If 𝑥 𝐼𝑀 𝑦 and 𝑦 𝐼𝑀 𝑧, then 𝑥 = 𝑦 = 𝑧, so 𝑥 𝐼𝑀 𝑧 ✓
+This is the “finest” possible equivalence relation — it distinguishes every element.
+23 / 246
+Equivalence Classes
+Definition 17: Let 𝑅 ⊆ 𝑀2 be an equivalence relation on a set 𝑀. The equivalence class of an
+element 𝑥 ∈ 𝑀 under 𝑅 is the set of all elements related to 𝑥:
+[𝑥]𝑅 = {𝑦 ∈ 𝑀 | 𝑥 𝑅 𝑦}
+Example (Equality): For the identity relation 𝐼𝑀 on set 𝑀 = {𝑎, 𝑏, 𝑐}:
+• [𝑎]𝐼𝑀
+• [𝑏]𝐼𝑀
+• [𝑐]𝐼𝑀
+= {𝑎} (only 𝑎 is equal to 𝑎)
+= {𝑏} (only 𝑏 is equal to 𝑏)
+= {𝑐} (only 𝑐 is equal to 𝑐)
+Each element forms its own equivalence class under equality.
+24 / 246
+Examples of Equivalence Relations
+Example (Modular arithmetic): For any positive integer 𝑛, congruence modulo 𝑛 on ℤ is defined by:
+𝑎 ≡ 𝑏 (mod 𝑛) iff 𝑛 | (𝑏 − 𝑎)
+Verification:
+• Reflexive: 𝑎 ≡ 𝑎 (mod 𝑛) since 𝑛 | (𝑎 − 𝑎) ⟺ 𝑛 | 0 ✓
+• Symmetric: If 𝑎 ≡ 𝑏 (mod 𝑛), then 𝑛 | (𝑏 − 𝑎) ⟺ 𝑛 | (𝑎 − 𝑏), thus 𝑏 ≡ 𝑎 (mod 𝑛) ✓
+• Transitive: If 𝑎 ≡ 𝑏 (mod 𝑛) and 𝑏 ≡ 𝑐 (mod 𝑛), then 𝑛 | (𝑏 − 𝑎) and 𝑛 | (𝑐 − 𝑏), so
+𝑛 | ((𝑐 − 𝑏) + (𝑏 − 𝑎)) ⟺ 𝑛 | (𝑐 − 𝑎), thus 𝑎 ≡ 𝑐 (mod 𝑛) ✓
+Equivalence classes (remainders): Let 𝑛 = 5 and 𝑀 = {0, 1, …, 9}.
+• [0]≡
+= {0, 5} = {𝑥 ∈ 𝑀 | 𝑥 ≡ 0 (mod 5)}
+• [1]≡
+= {1, 6} = {𝑥 ∈ 𝑀 | 𝑥 ≡ 1 (mod 5)}
+• [2]≡
+= {2, 7} = {𝑥 ∈ 𝑀 | 𝑥 ≡ 2 (mod 5)}
+• [3]≡
+= {3, 8} = {𝑥 ∈ 𝑀 | 𝑥 ≡ 3 (mod 5)}
+• [4]≡
+= {4, 9} = {𝑥 ∈ 𝑀 | 𝑥 ≡ 4 (mod 5)}
+25 / 246
+Examples of Equivalence Relations [2]
+Example (Same absolute value): On 𝑀 = {−3,
+−2,
+𝑥 𝑅 𝑦 iff |𝑥| = |𝑦|
+−1, 0, 1, 2, 3}, define relation 𝑅 by:
+Verification:
+• Reflexive: |𝑥| = |𝑥| for all 𝑥 ✓
+• Symmetric: If |𝑥| = |𝑦|, then |𝑦| = |𝑥| ✓
+• Transitive: If |𝑥| = |𝑦| and |𝑦| = |𝑧|, then |𝑥| = |𝑧| ✓
+Equivalence classes:
+• [0]𝑅 = {0}
+• [1]𝑅 = [−1]𝑅 = {−1, 1}
+• [2]𝑅 = [−2]𝑅 = {−2, 2}
+• [3]𝑅 = [−3]𝑅 = {−3, 3}
+Each positive number is equivalent to its negative counterpart.
+26 / 246
+Examples of Equivalence Relations [3]
+Example (Same string length): On the set of all finite strings Σ∗ over alphabet Σ, define:
+𝑠1 𝑅 𝑠2 iff |𝑠1| = |𝑠2|
+where |𝑠| denotes the length of string 𝑠.
+Verification:
+• Reflexive: Every string has the same length as itself ✓
+• Symmetric: If two strings have the same length, the relation is symmetric ✓
+• Transitive: If |𝑠1| = |𝑠2| and |𝑠2| = |𝑠3|, then |𝑠1| = |𝑠3| ✓
+Equivalence classes: [𝑠]𝑅 = {𝑡 ∈ Σ∗ | |𝑡| = |𝑠|}
+For example, over Σ = {𝑎, 𝑏}:
+• [𝜀]𝑅 = {𝜀} (empty string)
+• [a]𝑅 = {a, b} (all strings of length 1)
+• [ab]𝑅 = {aa, ab, ba, bb} (all strings of length 2)
+27 / 246
+Examples of Equivalence Relations [4]
+Example (Living in the same city): Let 𝑃 be the set of people, and define relation 𝑅 by:
+𝑝1 𝑅 𝑝2 iff 𝑝1 and 𝑝2 live in the same city
+Verification:
+• Reflexive: Every person lives in the same city as themselves ✓
+• Symmetric: If person A and B live in the same city, then B and A live in the same city ✓
+• Transitive: If A and B live in the same city, and B and C do so, then A and C live in the same city ✓
+Equivalence classes: Each equivalence class consists of all people living in the same city.
+• [Alice]𝑅 = all people living in Alice’s city
+• This naturally partitions the population by cities
+Application: This relation captures a common social grouping based on location.
+28 / 246
+Examples of Equivalence Relations [5]
+Example (Similarity of triangles): Let 𝑇 be the set of all triangles in the plane. Define relation ∼ by:
+△1 ∼ △2 iff △1 and △2 are similar2
+Verification:
+• Reflexive: Every triangle is similar to itself ✓
+• Symmetric: If triangle 𝐴 is similar to triangle 𝐵, then triangle 𝐵 is similar to triangle 𝐴 ✓
+• Transitive: If 𝐴 ∼ 𝐵 and 𝐵 ∼ 𝐶, then 𝐴 ∼ 𝐶 (similarity is transitive) ✓
+Equivalence classes: Each class consists of all triangles with the same shape (but possibly different sizes).
+• All equilateral triangles form one equivalence class
+• All right triangles with legs in ratio 3:4:5 form another equivalence class
+Geometric significance: This relation captures the concept of “same shape, different size.”
+2Two triangles are similar if their corresponding angles are equal.
+29 / 246
+Examples of Equivalence Relations [6]
+Example (Rational numbers): On the set of ordered pairs ℤ × (ℤ ∖ {0}), define:
+⟨𝑎, 𝑏⟩ ∼ ⟨𝑐, 𝑑⟩ iff 𝑎 ⋅ 𝑑 = 𝑏 ⋅ 𝑐
+This relation is used to construct rational numbers ℚ from integer pairs.
+Verification:
+• Reflexive: ⟨𝑎, 𝑏⟩ ∼ ⟨𝑎, 𝑏⟩ since 𝑎 ⋅ 𝑏 = 𝑏 ⋅ 𝑎 ✓
+• Symmetric: If 𝑎 ⋅ 𝑑 = 𝑏 ⋅ 𝑐, then 𝑐 ⋅ 𝑏 = 𝑑 ⋅ 𝑎 ✓
+• Transitive: If 𝑎 ⋅ 𝑑 = 𝑏 ⋅ 𝑐 and 𝑐 ⋅ 𝑓 = 𝑑 ⋅ 𝑒, then 𝑎 ⋅ 𝑓 = 𝑏 ⋅ 𝑒 ✓
+Equivalence classes: Each equivalence class represents a rational number.
+• [⟨1, 2⟩]∼
+= {⟨1, 2⟩, ⟨2, 4⟩, ⟨3, 6⟩, ⟨−1,
+−2⟩, …} represents 1
+2
+• [⟨3, 4⟩]∼
+= {⟨3, 4⟩, ⟨6, 8⟩, ⟨−3,
+−4⟩, …} represents 3
+4
+Mathematical significance: This construction shows how equivalence relations create new mathematical
+objects (rationals) from simpler ones (integers).
+30 / 246
+Quotient Sets
+Definition 18: The quotient set of 𝑀 by the equivalence relation 𝑅 is the set of all equivalence classes:
+𝑀/𝑅 = {[𝑥]𝑅 | 𝑥 ∈ 𝑀}
+Example: Consider 𝑀 = {0, 1, 2, 3, 4, 5} with the equivalence relation “congruent modulo 3”:
+𝑥 ≡ 𝑦 (mod 3) iff 3 | (𝑥 − 𝑦)
+Equivalence classes:
+• [0]≡
+= {0, 3} = {𝑥 ∈ 𝑀 | 𝑥 ≡ 0 (mod 3)}
+• [1]≡
+= {1, 4} = {𝑥 ∈ 𝑀 | 𝑥 ≡ 1 (mod 3)}
+• [2]≡
+= {2, 5} = {𝑥 ∈ 𝑀 | 𝑥 ≡ 2 (mod 3)}
+Quotient set:
+Note that [3]≡
+= [0]≡
+𝑀/≡
+= {{0, 3}, {1, 4}, {2, 5}}
+= {0, 3}, so we don’t get a new equivalence class, since 𝑀/𝑅 is a set.
+31 / 246
+Quotient Sets [2]
+Example: Let 𝑀 = {a, ab, abc, x, xy, z} with equivalence relation 𝑅 defined by:
+𝑠1 𝑅 𝑠2 iff |𝑠1| = |𝑠2|
+where |𝑠| denotes the length of string 𝑠.
+Equivalence classes by length:
+• [a]𝑅 = {a, x, z} (strings of length 1)
+• [ab]𝑅 = {ab, xy} (strings of length 2)
+• [abc]𝑅 = {abc} (strings of length 3)
+Quotient set:
+𝑀/𝑅 = {{a, x, z}, {ab, xy}, {abc}}
+This partitions strings by their length, creating 3 equivalence classes.
+32 / 246
+Quotient Sets [3]
+Example (Construction of rational numbers): Consider the set of ordered pairs 𝑀 = ℤ × (ℤ ∖ {0}).
+Define the equivalence relation ∼ by:
+⟨𝑎, 𝑏⟩ ∼ ⟨𝑐, 𝑑⟩ iff 𝑎 ⋅ 𝑑 = 𝑏 ⋅ 𝑐
+Equivalence classes: Each represents a rational number in its “reduced form”.
+Representative Equivalence Class Rational Number
+⟨1, 2⟩ ⟨0, 1⟩ ⟨3, 4⟩ {⟨1, 2⟩, ⟨2, 4⟩, ⟨3, 6⟩, ⟨−1,
+−2⟩, ⟨−2,
+−4⟩, …} 1/2
+{⟨0, 1⟩, ⟨0, 2⟩, ⟨0,
+−3⟩, ⟨0, 7⟩, …} 0
+{⟨3, 4⟩, ⟨6, 8⟩, ⟨−3,
+−4⟩, ⟨9, 12⟩, …} 3/4
+⟨−5, 3⟩ {⟨−5, 3⟩, ⟨5,
+−3⟩, ⟨−10, 6⟩, ⟨10,
+−6⟩, …} −5/3
+Quotient set: All equivalence classes together form the set of rational numbers:
+ℚ ≔ (ℤ × (ℤ ∖ {0}))/∼
+= {[⟨𝑎, 𝑏⟩]∼ | ⟨𝑎, 𝑏⟩ ∈ ℤ × (ℤ ∖ {0})}
+33 / 246
+Quotient Sets [4]
+Interpretation: Each equivalence class [⟨𝑎, 𝑏⟩]∼ corresponds exactly to the rational number 𝑎
+𝑏.
+• Different representations ⟨𝑎, 𝑏⟩ and ⟨𝑐, 𝑑⟩ belong to the same equivalence class iff they represent the
+same fraction: 𝑎
+𝑏 =
+𝑐
+𝑑
+• The condition 𝑎 ⋅ 𝑑 = 𝑏 ⋅ 𝑐 is the cross-multiplication test for fraction equality
+Operations on the quotient set: We can define arithmetic operations on ℚ by:
+[⟨𝑎, 𝑏⟩]∼ + [⟨𝑐, 𝑑⟩]∼
+[⟨𝑎, 𝑏⟩]∼
+⋅ [⟨𝑐, 𝑑⟩]∼
+≔ [⟨𝑎𝑑 + 𝑏𝑐, 𝑏𝑑⟩]∼
+≔ [⟨𝑎𝑐, 𝑏𝑑⟩]∼
+These operations are well-defined because the result doesn’t depend on the choice of representatives.
+Mathematical significance:
+• This construction shows that ℚ is literally the quotient set ℤ × (ℤ ∖ {0})/∼
+• It demonstrates how equivalence relations and quotient sets create new mathematical structures
+• This is the rigorous foundation for rational number arithmetic taught in elementary school
+34 / 246
+Quotient Sets [5]
+Example: Consider the set of all points in the plane 𝑀 = ℝ2 with the equivalence relation:
+⟨𝑥1, 𝑦1⟩ ∼ ⟨𝑥2, 𝑦2⟩ iff 𝑥1 + 𝑦1 = 𝑥2 + 𝑦2
+This relation groups points that lie on the same line of the form 𝑥 + 𝑦 = 𝑐 for some constant 𝑐.
+Equivalence classes:
+• [⟨0, 0⟩]∼
+= {⟨𝑥, 𝑦⟩ | 𝑥 + 𝑦 = 0} (the line 𝑥 + 𝑦 = 0)
+• [⟨1, 0⟩]∼
+= {⟨𝑥, 𝑦⟩ | 𝑥 + 𝑦 = 1} (the line 𝑥 + 𝑦 = 1)
+• [⟨0, 2⟩]∼
+= {⟨𝑥, 𝑦⟩ | 𝑥 + 𝑦 = 2} (the line 𝑥 + 𝑦 = 2)
+Quotient set:
+ℝ2/∼
+= {𝐿𝑐 | 𝑐 ∈ ℝ}
+where 𝐿𝑐
+= {⟨𝑥, 𝑦⟩ | 𝑥 + 𝑦 = 𝑐} is the line with equation 𝑥 + 𝑦 = 𝑐.
+Each equivalence class is an entire line, and the quotient set consists of all such parallel lines.
+35 / 246
+Quotient Sets [6]
+Example: Let 𝑀 = {apple, ant, banana, bee, cherry, cat} with equivalence relation:
+𝑤1 𝑅 𝑤2 iff first letter of 𝑤1 = first letter of 𝑤2
+Equivalence classes:
+• [apple]𝑅 = {apple, ant} (words starting with ‘a’)
+• [banana]𝑅 = {banana, bee} (words starting with ‘b’)
+• [cherry]𝑅 = {cherry, cat} (words starting with ‘c’)
+Quotient set:
+𝑀/𝑅 = {{apple, ant}, {banana, bee}, {cherry, cat}}
+This creates a dictionary-like grouping by first letter.
+36 / 246
+Quotient Sets [7]
+Example (Trivial quotient sets):
+Identity relation: If 𝑅 = 𝐼𝑀 (identity relation), then each element forms its own equivalence class:
+𝑀/𝐼𝑀
+= {{𝑥} | 𝑥 ∈ 𝑀}
+The quotient set has the same cardinality as the original set.
+Universal relation: If 𝑅 = 𝑀 × 𝑀 (universal relation), then all elements are equivalent:
+𝑀/𝑀×𝑀 = {𝑀}
+The quotient set contains exactly one equivalence class — the entire set 𝑀.
+37 / 246
+Set Partitions
+Definition 19: A partition 𝒫︀ of a set 𝑀 is a family of non-empty, pairwise-disjoint subsets whose
+union is 𝑀:
+• (Non-empty) ∀𝐵 ∈ 𝒫︀. (𝐵 ≠ ∅)
+• (Disjoint) ∀𝐵1, 𝐵2 ∈ 𝒫︀. (𝐵1 ≠ 𝐵2) → (𝐵1 ∩ 𝐵2 = ∅)
+• (Cover) ⋃
+𝐵 = 𝑀
+𝐵∈𝒫︀
+Elements of 𝒫︀ are blocks (or cells).
+Example: For 𝑀 = {0, 1, 2, 3, 4, 5}: {{0, 2, 4}, {1, 3, 5}} and {{0, 5}, {1, 2, 3}, {4}} are partitions.
+0
+2
+4
+0
+5
+4
+1
+3
+5
+1
+2
+3
+38 / 246
+Partitions and Equivalence Relations
+Theorem 1 (Equivalences ⇔ Partitions): Each equivalence relation 𝑅 on 𝑀 yields the partition
+𝒫︀ 𝑅 = {[𝑥]𝑅 | 𝑥 ∈ 𝑀}. Each partition 𝒫︀ yields an equivalence 𝑅𝒫︀ given by ⟨𝑥, 𝑦⟩ ∈ 𝑅𝒫︀ iff 𝑥 and 𝑦 lie
+in the same block. These constructions invert one another.
+Proof (Sketch): Classes of an equivalence are non-empty, disjoint, and cover 𝑀. Conversely, “same block”
+relation is reflexive, symmetric, transitive. Composing the two constructions returns exactly the starting
+equivalence relation or partition (they are mutually inverse up to equality of sets of ordered pairs). □
+39 / 246
+Composition of Relations
+Composition of Relations
+Definition 20: The composition of two relations 𝑅 ⊆ 𝐴 × 𝐵 and 𝑆 ⊆ 𝐵 × 𝐶 is defined as:
+𝑅 ; 𝑆 = 𝑆 ∘ 𝑅 = {⟨𝑎, 𝑐⟩ | ∃𝑏 ∈ 𝐵. (𝑎 𝑅 𝑏) ∧ (𝑏 𝑆 𝑐)}
+Example: Let 𝐴 = {1, 2, 3}, 𝐵 = {𝑎, 𝑏, 𝑐, 𝑑}, 𝐶 = {𝑥, 𝑦} with relations:
+• 𝑅 = {⟨1, 𝑎⟩, ⟨1, 𝑏⟩, ⟨2, 𝑐⟩, ⟨3, 𝑑⟩} ⊆ 𝐴 × 𝐵
+• 𝑆 = {⟨𝑎, 𝑥⟩, ⟨𝑏, 𝑦⟩, ⟨𝑐, 𝑥⟩} ⊆ 𝐵 × 𝐶
+To find 𝑅 ; 𝑆, we look for pairs ⟨𝑖, 𝑧⟩ where there exists 𝑤 such that ⟨𝑖, 𝑤⟩ ∈ 𝑅 and ⟨𝑤, 𝑧⟩ ∈ 𝑆:
+From 1: can reach 𝑎 and 𝑏 via 𝑅
+• 𝑎 connects to 𝑥 via 𝑆 ⇒ ⟨1, 𝑥⟩ is in the composition
+• 𝑏 connects to 𝑦 via 𝑆 ⇒ ⟨1, 𝑦⟩ is in the composition
+From 2: can reach 𝑐 via 𝑅
+• 𝑐 connects to 𝑥 via 𝑆 ⇒ ⟨2, 𝑥⟩ is in the composition
+From 3: can reach 𝑑 via 𝑅
+41 / 246
+Composition of Relations [2]
+• 𝑑 has no outgoing connections in 𝑆 ⇒ no pairs from 3 in the composition
+Therefore: 𝑅 ; 𝑆 = {⟨1, 𝑥⟩, ⟨1, 𝑦⟩, ⟨2, 𝑥⟩}
+𝑎
+1
+𝑏
+𝑥
+2
+𝑐
+𝑦
+3
+𝑑
+Edges legend:
+• Solid: Relations 𝑅 and 𝑆
+• Dashed: Composition 𝑅 ; 𝑆
+• Red: Dead end (no outgoing path)
+42 / 246
+Examples of Composition
+Example (Composition in a social network): Consider three sets:
+• People = {Alice, Bob, Carol}
+• Skills = {Python, Design, Management}
+• Projects = {WebApp, Mobile, Analytics}
+Define relations:
+• HasSkill = {⟨Alice, Python⟩, ⟨Alice, Design⟩, ⟨Bob, Python⟩, ⟨Carol, Management⟩}
+• RequiresSkill = {⟨Python, WebApp⟩, ⟨Python, Analytics⟩, ⟨Design, WebApp⟩, ⟨Management, Mobile⟩}
+The composition HasSkill ; RequiresSkill gives us CanWorkOn:
+• Alice can work on WebApp (via Python AND Design)
+• Alice can work on Analytics (via Python)
+• Bob can work on WebApp (via Python)
+• Bob can work on Analytics (via Python)
+• Carol can work on Mobile (via Management)
+So: CanWorkOn =
+{⟨Alice, WebApp⟩, ⟨Alice, Analytics⟩, ⟨Bob, WebApp⟩, ⟨Bob, Analytics⟩, ⟨Carol, Mobile⟩}
+43 / 246
+Examples of Composition [2]
+Example (Matrix composition): Relations can be composed using Boolean matrix multiplication.
+Given 𝑅 ⊆ {1, 2} × {𝑎, 𝑏} and 𝑆 ⊆ {𝑎, 𝑏} × {𝑥, 𝑦}:
+⟦𝑅⟧ = [1
+1
+0
+1] ⟦𝑆⟧ = [1
+0
+1
+1]
+The composition ⟦𝑅 ; 𝑆⟧ = ⟦𝑅⟧ ⊙ ⟦𝑆⟧ using Boolean matrix multiplication:
+⟦𝑅 ; 𝑆⟧ = [(1 ∧ 1) ∨ (0 ∧ 0)
+(1 ∧ 1) ∨ (1 ∧ 0)
+(1 ∧ 1) ∨ (0 ∧ 1)
+(1 ∧ 1) ∨ (1 ∧ 1)] = [1
+1
+This means 𝑅 ; 𝑆 = {⟨1, 𝑥⟩, ⟨1, 𝑦⟩, ⟨2, 𝑥⟩, ⟨2, 𝑦⟩} (the universal relation).
+1
+1]
+44 / 246
+Powers of Relations
+Definition 21: For a homogeneous relation 𝑅 ⊆ 𝑀2, we define powers of 𝑅:
+• 𝑅0 = 𝐼𝑀 (identity relation)
+• 𝑅1 = 𝑅
+• 𝑅𝑛+1 = 𝑅𝑛 ∘ 𝑅 for 𝑛 ≥ 1
+Example: Let 𝑀 = {1, 2, 3, 4} and 𝑅 = {⟨1, 2⟩, ⟨2, 3⟩, ⟨3, 4⟩} (successor relation).
+• 𝑅1 = {⟨1, 2⟩, ⟨2, 3⟩, ⟨3, 4⟩}
+• 𝑅2 = {⟨1, 3⟩, ⟨2, 4⟩} (two steps)
+• 𝑅3 = {⟨1, 4⟩} (three steps)
+• 𝑅4 = ∅ (no four-step paths) 𝑅2 𝑅2
+1 2 3 4
+𝑅3
+45 / 246
+Paths in Graphs
+Example (Path composition in a graph): Consider a directed graph with vertices {𝐴, 𝐵, 𝐶, 𝐷} and
+relation 𝑅 representing direct edges: 𝑅 = {⟨𝐴, 𝐵⟩, ⟨𝐵, 𝐶⟩, ⟨𝐵, 𝐷⟩, ⟨𝐶, 𝐷⟩}
+Powers of 𝑅 represent paths of different lengths:
+• 𝑅1 = 𝑅 (direct connections)
+• 𝑅2 = 𝑅 ∘ 𝑅 (2-step paths):
+‣ ⟨𝐴, 𝐶⟩: path 𝐴 → 𝐵 → 𝐶
+‣ ⟨𝐴, 𝐷⟩: path 𝐴 → 𝐵 → 𝐷
+‣ ⟨𝐵, 𝐷⟩: path 𝐵 → 𝐶 → 𝐷
+‣ So 𝑅2 = {⟨𝐴, 𝐶⟩, ⟨𝐴, 𝐷⟩, ⟨𝐵, 𝐷⟩}.
+• 𝑅3 = 𝑅2 ∘ 𝑅 (3-step paths):
+‣ ⟨𝐴, 𝐷⟩: path 𝐴 → 𝐵 → 𝐶 → 𝐷
+‣ No more 3-step paths!
+‣ So 𝑅3 = {⟨𝐴, 𝐷⟩}.
+• 𝑅4 = ∅ (no 4-step paths)
+𝐴 𝐵
+𝐷
+𝐶
+46 / 246
+Associativity of Composition
+Theorem 2: Composition of relations is associative: (𝑅 ; 𝑆) ; 𝑇 = 𝑅 ; (𝑆 ; 𝑇).
+Proof: Let 𝑅 ⊆ 𝐴 × 𝐵, 𝑆 ⊆ 𝐵 × 𝐶, and 𝑇 ⊆ 𝐶 × 𝐷 be three relations.
+(⊆): Let ⟨𝑎, 𝑑⟩ ∈ (𝑅 ; 𝑆) ; 𝑇.
+• By definition of composition: ∃𝑐 ∈ 𝐶. (⟨𝑎, 𝑐⟩ ∈ 𝑅 ; 𝑆) ∧ (⟨𝑐, 𝑑⟩ ∈ 𝑇).
+• Since ⟨𝑎, 𝑐⟩ ∈ 𝑅 ; 𝑆, we have: ∃𝑏 ∈ 𝐵. (⟨𝑎, 𝑏⟩ ∈ 𝑅) ∧ (⟨𝑏, 𝑐⟩ ∈ 𝑆).
+• From ⟨𝑏, 𝑐⟩ ∈ 𝑆 and ⟨𝑐, 𝑑⟩ ∈ 𝑇, we have: ⟨𝑏, 𝑑⟩ ∈ 𝑆 ; 𝑇.
+• From ⟨𝑎, 𝑏⟩ ∈ 𝑅 and ⟨𝑏, 𝑑⟩ ∈ 𝑆 ; 𝑇, we have: ⟨𝑎, 𝑑⟩ ∈ 𝑅 ; (𝑆 ; 𝑇).
+(⊇): Let ⟨𝑎, 𝑑⟩ ∈ 𝑅 ; (𝑆 ; 𝑇).
+• By definition of composition: ∃𝑏 ∈ 𝐵. (⟨𝑎, 𝑏⟩ ∈ 𝑅) ∧ (⟨𝑏, 𝑑⟩ ∈ 𝑆 ; 𝑇).
+• Since ⟨𝑏, 𝑑⟩ ∈ 𝑆 ; 𝑇, we have: ∃𝑐 ∈ 𝐶. (⟨𝑏, 𝑐⟩ ∈ 𝑆) ∧ (⟨𝑐, 𝑑⟩ ∈ 𝑇).
+• From ⟨𝑎, 𝑏⟩ ∈ 𝑅 and ⟨𝑏, 𝑐⟩ ∈ 𝑆, we have: ⟨𝑎, 𝑐⟩ ∈ 𝑅 ; 𝑆.
+• From ⟨𝑎, 𝑐⟩ ∈ 𝑅 ; 𝑆 and ⟨𝑐, 𝑑⟩ ∈ 𝑇, we have: ⟨𝑎, 𝑑⟩ ∈ (𝑅 ; 𝑆) ; 𝑇.
+Therefore, (𝑅 ; 𝑆) ; 𝑇 = 𝑅 ; (𝑆 ; 𝑇). □
+47 / 246
+Closures of Relations
+What is a Closure?
+Sometimes we have a relation that almost has a property we want, but not quite.
+Example (Motivation):
+• You have relation 𝑅 = {⟨1, 2⟩, ⟨2, 3⟩} on {1, 2, 3}
+• It’s not reflexive (missing self-loops)
+• It’s not symmetric (arrows only go one way)
+• It’s not transitive (missing ⟨1, 3⟩)
+How do we “fix” 𝑅 to get these properties?
+Definition 22: The closure of relation 𝑅 with respect to property 𝑃 is the smallest relation containing
+𝑅 that has property 𝑃.
+Think of it as: “minimally extend 𝑅 to satisfy 𝑃”.
+Key insight: Closures add the minimum pairs needed — no more, no less.
+49 / 246
+Reflexive Closure
+Definition 23: The reflexive closure of 𝑅 ⊆ 𝑀2 is:
+𝑟(𝑅) = 𝑅 ∪ 𝐼𝑀 = 𝑅 ∪ {⟨𝑥, 𝑥⟩ | 𝑥 ∈ 𝑀}
+Add all missing self-loops: ⟨𝑥, 𝑥⟩ for every 𝑥 ∈ 𝑀 that doesn’t already relate to itself.
+Example: Let 𝑀 = {1, 2, 3} and 𝑅 = {⟨1, 2⟩, ⟨2, 2⟩, ⟨2, 3⟩}.
+• Element 2 already has ⟨2, 2⟩
+• Elements 1 and 3 are missing self-loops
+• Add: ⟨1, 1⟩ and ⟨3, 3⟩
+Result: 𝑟(𝑅) = {⟨1, 1⟩, ⟨1, 2⟩, ⟨2, 2⟩, ⟨2, 3⟩, ⟨3, 3⟩}
+Graph view: Add self-loop to every vertex.
+Matrix view: Set all diagonal entries to 1.
+50 / 246
+Symmetric Closure
+Definition 24: The symmetric closure of 𝑅 ⊆ 𝑀2 is:
+𝑠(𝑅) = 𝑅 ∪ 𝑅−1 = 𝑅 ∪ {⟨𝑏, 𝑎⟩ | ⟨𝑎, 𝑏⟩ ∈ 𝑅}
+For every pair in 𝑅, add its reverse (if not already present).
+Example: Let 𝑀 = {1, 2, 3} and 𝑅 = {⟨1, 2⟩, ⟨2, 3⟩, ⟨1, 3⟩}.
+For each pair, add the reverse:
+• ⟨1, 2⟩ ∈ 𝑅 ⇒ add ⟨2, 1⟩
+• ⟨2, 3⟩ ∈ 𝑅 ⇒ add ⟨3, 2⟩
+• ⟨1, 3⟩ ∈ 𝑅 ⇒ add ⟨3, 1⟩
+Result: 𝑠(𝑅) = {⟨1, 2⟩, ⟨2, 1⟩, ⟨1, 3⟩, ⟨3, 1⟩, ⟨2, 3⟩, ⟨3, 2⟩}
+Graph view: Every directed edge becomes bidirectional.
+Matrix view: Make matrix symmetric.
+51 / 246
+Transitive Closure
+Definition 25: The transitive closure 𝑡(𝑅) of 𝑅 ⊆ 𝑀2 is the smallest transitive relation containing 𝑅.
+Theorem 3: The transitive closure can be computed as:
+𝑡(𝑅) = ⋃∞
+𝑛=1
+𝑅𝑛 = 𝑅 ∪ 𝑅2 ∪ 𝑅3 ∪ …
+where 𝑅𝑛 represents all 𝑛-step paths (relation composition power: 𝑅𝑛+1 = 𝑅𝑛 ∘ 𝑅).
+For finite 𝑀 with |𝑀| = 𝑘, we have: 𝑡(𝑅) = 𝑅 ∪ 𝑅2 ∪ … ∪ 𝑅𝑘
+.
+Proof: Any path longer than |𝑀| must repeat vertices, so paths up to length |𝑀| suffice. □
+Intuition: Add shortcuts for all multi-step paths. If you can reach 𝑐 from 𝑎 through intermediate steps
+(𝑎 → 𝑏 → 𝑐), make 𝑎 directly relate to 𝑐: add 𝑎 → 𝑐.
+52 / 246
+Computing Transitive Closure: Example
+Example: Let 𝑀 = {1, 2, 3} and 𝑅 = {⟨1, 2⟩, ⟨2, 3⟩} (a chain: 1 → 2 → 3).
+Step Description New pairs added Result
+Step 1: Direct connections
+(𝑅1 = 𝑅)
+Step 2: Two-step paths
+(𝑅2 = 𝑅 ∘ 𝑅)
+Step 3: Three-step paths
+(𝑅3 = 𝑅2 ∘ 𝑅)
+Final Result: Transitive closure ⟨1, 2⟩, ⟨2, 3⟩ ⟨1, 3⟩ from path 1 → 2 → 3 None (no three-step paths) ⟨1, 2⟩, ⟨2, 3⟩, ⟨1, 3⟩ 𝑅1 = {⟨1, 2⟩, ⟨2, 3⟩}
+𝑅2 = {⟨1, 3⟩}
+𝑅3 = ∅
+𝑡(𝑅) = {⟨1, 2⟩, ⟨2, 3⟩, ⟨1, 3⟩}
+Result: The “shortcut” ⟨1, 3⟩ was added to connect the chain endpoints.
+53 / 246
+Combining Closures
+Closures can be combined to achieve multiple properties at once.
+Definition 26: Common combinations:
+• Reflexive-symmetric: 𝑠𝑟(𝑅) = 𝑠(𝑟(𝑅)) — add self-loops and reverse arrows
+• Reflexive-transitive: 𝑡𝑟(𝑅) = 𝑡(𝑟(𝑅)) — add self-loops and shortcuts
+• Equivalence closure: 𝑡𝑠𝑟(𝑅) = 𝑡(𝑠(𝑟(𝑅))) — make reflexive, symmetric, and transitive
+Theorem 4 (Commutativity):
+• Reflexive and symmetric closures commute: 𝑠𝑟(𝑅) = 𝑟𝑠(𝑅)
+• Reflexive and transitive closures commute: 𝑡𝑟(𝑅) = 𝑟𝑡(𝑅)
+• Equivalence (reflexive-symmetric-transitive) closure is independent of the order of 𝑟 and 𝑠, if 𝑡 is
+applied last: 𝑡𝑠𝑟(𝑅) = 𝑡𝑟𝑠(𝑅), which is equavalent to 𝑡(𝑟𝑠(𝑅)) = 𝑡(𝑠𝑟(𝑅)).
+Note: Order matters for some combinations! Generally safe: reflexive and symmetric commute with most
+operations, but transitive closure should be computed last when combining all three.
+54 / 246
+Example: Reflexive-Symmetric Closure
+Example: Let 𝑀 = {1, 2, 3} and 𝑅 = {⟨1, 2⟩, ⟨2, 3⟩}.
+We want both reflexivity and symmetry. Order doesn’t matter!
+Method 1: Reflexive first, then symmetric
+𝑟(𝑅) = {⟨1, 1⟩, ⟨1, 2⟩, ⟨2, 2⟩, ⟨2, 3⟩, ⟨3, 3⟩}
+𝑠𝑟(𝑅) = {⟨1, 1⟩, ⟨1, 2⟩, ⟨2, 1⟩, ⟨2, 2⟩, ⟨2, 3⟩, ⟨3, 2⟩, ⟨3, 3⟩}
+Method 2: Symmetric first, then reflexive
+𝑠(𝑅) = {⟨1, 2⟩, ⟨2, 1⟩, ⟨2, 3⟩, ⟨3, 2⟩}
+𝑟𝑠(𝑅) = {⟨1, 1⟩, ⟨1, 2⟩, ⟨2, 1⟩, ⟨2, 2⟩, ⟨2, 3⟩, ⟨3, 2⟩, ⟨3, 3⟩}
+Both methods give the same result: 𝑟𝑠(𝑅) = 𝑠𝑟(𝑅) ✓
+55 / 246
+Example: Reflexive-Transitive Closure
+The reflexive-transitive closure is particularly important and has a special notation.
+Example: Let 𝑀 = {𝑎, 𝑏, 𝑐} and 𝑅 = {⟨𝑎, 𝑏⟩, ⟨𝑏, 𝑐⟩} (a chain).
+Step 1: Compute transitive closure
+𝑡(𝑅) = 𝑅 ∪ 𝑅2 = {⟨𝑎, 𝑏⟩, ⟨𝑏, 𝑐⟩, ⟨𝑎, 𝑐⟩}
+Step 2: Add reflexivity
+𝑟𝑡(𝑅) = 𝑡(𝑅) ∪ 𝐼𝑀 = {⟨𝑎, 𝑎⟩, ⟨𝑎, 𝑏⟩, ⟨𝑎, 𝑐⟩, ⟨𝑏, 𝑏⟩, ⟨𝑏, 𝑐⟩, ⟨𝑐, 𝑐⟩}
+Note: The reflexive-transitive closure is often denoted 𝑅∗ (Kleene star).
+It represents: “reachable in zero or more steps” — fundamental in automata theory and formal languages.
+56 / 246
+Example: Equivalence Closure
+The equivalence closure makes a relation reflexive, symmetric, and transitive.
+Example: Let 𝑀 = {1, 2, 3, 4} and 𝑅 = {⟨1, 2⟩, ⟨3, 4⟩} (two separate connections).
+Step Description New pairs Result
+Step 1: Step 2: Reflexive closure Symmetric closure ⟨1, 1⟩, ⟨2, 2⟩, ⟨3, 3⟩, ⟨4, 4⟩ ⟨2, 1⟩, ⟨4, 3⟩ 𝑟(𝑅) = {⟨1, 1⟩, ⟨1, 2⟩, ⟨2, 2⟩,
+⟨3, 3⟩, ⟨3, 4⟩, ⟨4, 4⟩}
+𝑠𝑟(𝑅) = {⟨1, 1⟩, ⟨1, 2⟩, ⟨2, 1⟩, ⟨2, 2⟩,
+⟨3, 3⟩, ⟨3, 4⟩, ⟨4, 3⟩, ⟨4, 4⟩}
+Step 3: Transitive closure None (no new pairs needed) 𝑡𝑠𝑟(𝑅) = 𝑠𝑟(𝑅)
+Result: The equivalence closure creates two equivalence classes: {1, 2} and {3, 4}.
+57 / 246
+Another Example: Equivalence Closure
+Example: Let 𝑀 = {𝑎, 𝑏, 𝑐, 𝑑, 𝑒} and 𝑅 = {⟨𝑎, 𝑏⟩, ⟨𝑏, 𝑐⟩, ⟨𝑑, 𝑒⟩} (chain 𝑎 → 𝑏 → 𝑐 and pair 𝑑 → 𝑒).
+Step 1: Add reflexivity — all self-loops
+𝑟(𝑅) = 𝑅 ∪ {⟨𝑎, 𝑎⟩, ⟨𝑏, 𝑏⟩, ⟨𝑐, 𝑐⟩, ⟨𝑑, 𝑑⟩, ⟨𝑒, 𝑒⟩}
+Step 2: Add symmetry — reverse all arrows
+𝑠𝑟(𝑅) = 𝑟(𝑅) ∪ {⟨𝑏, 𝑎⟩, ⟨𝑐, 𝑏⟩, ⟨𝑒, 𝑑⟩}
+Step 3: Add transitivity — connect all chains
+• Chain 𝑎 ↔ 𝑏 ↔ 𝑐 needs shortcuts: ⟨𝑎, 𝑐⟩ and ⟨𝑐, 𝑎⟩
+• Pair 𝑑 ↔ 𝑒 is already bi-connected
+𝑡𝑠𝑟(𝑅) = 𝑠𝑟(𝑅) ∪ {⟨𝑎, 𝑐⟩, ⟨𝑐, 𝑎⟩}
+Result: Two equivalence classes emerge: {𝑎, 𝑏, 𝑐} (connected chain) and {𝑑, 𝑒} (connected pair).
+58 / 246
+Warshall’s Algorithm
+An efficient algorithm to compute transitive closure using dynamic programming.
+Definition 27: Warshall’s algorithm computes 𝑡(𝑅) in 𝑂(𝑛3) time.
+Idea: Systematically check if paths exist through each vertex as an intermediate.
+M = relmat(R) # Start with relation matrix
+for k = 1 to n: # Try each vertex k as intermediate
+for i = 1 to n:
+for j = 1 to n:
+# If path i→k and k→j exist, add i→j
+M[i,j] = M[i,j] OR (M[i,k] AND M[k,j])
+Key insight: Consider each vertex in turn as a “stepping stone” to create shortcuts.
+59 / 246
+Warshall’s Algorithm: Step-by-Step Example
+Example: Graph: 1 → 2 → 3 → 4 → 1 (a cycle)
+Initial matrix:
+𝑀(0) =
+[
+0
+0
+0
+1
+1
+0
+0
+0
+0
+1
+0
+0
+0
+0
+0]
+1
+𝑘 = 1: Paths through vertex 1 as intermediate
+𝑀(1) =
+[
+0
+0
+0
+1
+1
+0
+0
+1
+0
+1
+0
+0
+0
+0
+0]
+1
+New: 4 → 1 → 2, so add ⟨4, 2⟩
+60 / 246
+Warshall’s Algorithm: Step-by-Step Example [2]
+𝑘 = 2: Paths through vertex 2
+𝑀(2) =
+[
+0
+0
+0
+1
+1
+0
+0
+1
+1
+1
+0
+1
+0
+0
+0]
+1
+New: 1 → 2 → 3 and 4 → 2 → 3
+𝑘 = 3: Paths through vertex 3
+𝑀(3) =
+[
+0
+0
+0
+1
+1
+0
+0
+1
+1
+1
+0
+1
+1
+1
+1]
+1
+New: paths to 4 via 3
+61 / 246
+Warshall’s Algorithm: Step-by-Step Example [3]
+𝑘 = 4: Paths through vertex 4 (closes cycle!)
+𝑀(4) =
+[
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1]
+1
+Cycle means everything becomes reachable!
+62 / 246
+Applications of Transitive Closure
+Example (Social network influence): In a “follows” network: 𝑅 = {⟨𝐴, 𝐵⟩, ⟨𝐵, 𝐶⟩, ⟨𝐶, 𝐷⟩, ⟨𝐴, 𝐸⟩}
+Transitive closure 𝑡(𝑅) reveals indirect influence:
+• 𝐴 can be influenced by 𝐶 (through 𝐵)
+• 𝐴 can be influenced by 𝐷 (through 𝐵, then 𝐶)
+Applications:
+• Information propagation analysis
+• Recommendation systems
+• Influence maximization
+Example (Software dependencies): Module 𝐴 depends on 𝐵 if it imports/uses 𝐵.
+Transitive closure reveals:
+• All transitive dependencies (what 𝐴 ultimately needs)
+• Build order (via topological sort)
+• Circular dependencies (cycles in closure)
+63 / 246
+Mathematical Properties of Closures
+Closures satisfy important mathematical properties.
+Theorem 5: For any relation 𝑅 ⊆ 𝑀2:
+1. Idempotency: Closure of closure = closure
+𝑟(𝑟(𝑅)) = 𝑟(𝑅), 𝑠(𝑠(𝑅)) = 𝑠(𝑅), 𝑡(𝑡(𝑅)) = 𝑡(𝑅)
+2. Monotonicity: Larger relation ⇒ larger closure
+𝑅1 ⊆ 𝑅2 → 𝑟(𝑅1) ⊆ 𝑟(𝑅2)
+3. Extensivity: Closure contains original
+𝑅 ⊆ 𝑟(𝑅), 𝑅 ⊆ 𝑠(𝑅), 𝑅 ⊆ 𝑡(𝑅)
+4. Distributivity: Closure of union = union of closures (for 𝑟 and 𝑠)
+𝑟(𝑅1 ∪ 𝑅2) = 𝑟(𝑅1) ∪ 𝑟(𝑅2)
+64 / 246
+Special Cases of Closures
+Example (Empty relation): Let 𝑀 = {𝑎, 𝑏, 𝑐} and 𝑅 = ∅ (no pairs at all).
+• 𝑟(∅) = 𝐼𝑀 = {⟨𝑎, 𝑎⟩, ⟨𝑏, 𝑏⟩, ⟨𝑐, 𝑐⟩} (add all self-loops)
+• 𝑠(∅) = ∅ (no pairs to reverse)
+• 𝑡(∅) = ∅ (no paths to connect)
+Note: Reflexive closure adds structure, but symmetric/transitive closures have no pairs to work with.
+Example (Universal relation): Let 𝑀 = {1, 2} and 𝑅 = 𝑀 × 𝑀 (all 4 pairs).
+• 𝑟(𝑅) = 𝑅 (already has all self-loops)
+• 𝑠(𝑅) = 𝑅 (already symmetric)
+• 𝑡(𝑅) = 𝑅 (already transitive)
+Note: Universal relation already has all properties — closures don’t add anything!
+65 / 246
+Non-Distributivity of Transitive Closure
+Example: Let 𝑅1 = {⟨1, 2⟩} and 𝑅2 = {⟨2, 3⟩} on 𝑀 = {1, 2, 3}.
+Computing 𝑡(𝑅) separately:
+Computing 𝑡(𝑅) on union:
+• 𝑡(𝑅1) = {⟨1, 2⟩} (no paths to close)
+• 𝑅1 ∪ 𝑅2 = {⟨1, 2⟩, ⟨2, 3⟩} (a chain!)
+• 𝑡(𝑅2) = {⟨2, 3⟩} (no paths to close)
+• 𝑡(𝑅1 ∪ 𝑅2) = {⟨1, 2⟩, ⟨2, 3⟩, ⟨1, 3⟩} (adds shortcut ⟨1, 3⟩)
+• 𝑡(𝑅1) ∪ 𝑡(𝑅2) = {⟨1, 2⟩, ⟨2, 3⟩}
+Result: 𝑡(𝑅1 ∪ 𝑅2) ⊃ 𝑡(𝑅1) ∪ 𝑡(𝑅2)
+Key insight: Transitive closure does not distribute over union!
+𝑡(𝑅1 ∪ 𝑅2) ≠ 𝑡(𝑅1) ∪ 𝑡(𝑅2)
+Note: Reflexive and symmetric closures do distribute over union:
+𝑟(𝑅1 ∪ 𝑅2) = 𝑟(𝑅1) ∪ 𝑟(𝑅2) 𝑠(𝑅1 ∪ 𝑅2) = 𝑠(𝑅1) ∪ 𝑠(𝑅2)
+66 / 246
+Transitive Closure in Dependency Analysis
+Example: Consider a directed acyclic graph (DAG) where 𝑅 represents “depends on” relationships:
+𝑅 = {⟨𝐴, 𝐵⟩, ⟨𝐵, 𝐶⟩, ⟨𝐴, 𝐷⟩, ⟨𝐷, 𝐶⟩}
+C
+Component 𝐴 depends on 𝐵 and 𝐷, which both depend on 𝐶.
+B D
+The transitive closure reveals all indirect dependencies:
+𝑡(𝑅) = 𝑅 ∪ {⟨𝐴, 𝐶⟩}
+A
+Component 𝐴 transitively depends on 𝐶 through two paths: 𝐴 → 𝐵 → 𝐶 and 𝐴 → 𝐷 → 𝐶.
+Application: Build systems use transitive closure to determine the complete dependency tree and
+optimal compilation order (possibly parallel).
+67 / 246
+Applications of Relation Closures
+Example (Graph Reachability): In directed graphs, transitive closure determines reachability:
+• Social networks: Finding mutual connections and influence propagation
+• Transportation: Computing all possible routes between cities
+• Citation networks: Tracking intellectual dependencies in research
+• Web crawling: Discovering linked pages and site connectivity
+Example (Program Analysis): Closure operations enable sophisticated program optimization:
+• Data flow analysis: Transitive closure computes variable dependencies
+• Call graph construction: Finding all possible function invocations
+• Alias analysis: Determining which pointers may reference the same memory
+• Taint analysis: Tracking information flow and potential vulnerabilities
+Example (Database Systems): Relational databases extensively use closure computations:
+• Recursive queries: Computing organizational hierarchies and bill-of-materials
+• Join optimization: Finding efficient query execution plans
+• Integrity constraints: Ensuring referential consistency across tables
+• Data lineage: Tracking data provenance and transformation chains
+68 / 246
+Complexity of Closure Computations
+Theorem 6: For a relation 𝑅 on a set with 𝑛 elements:
+• Reflexive closure: 𝑂(𝑛) — simply add 𝑛 self-loops
+• Symmetric closure: 𝑂(|𝑅|) — reverse each of the |𝑅| pairs
+• Transitive closure: 𝑂(𝑛3) — Warshall’s algorithm
+Warning: The 𝑂(𝑛3) transitive closure bottleneck drives many algorithmic design decisions in
+databases, compilers, and network analysis.
+Note: Faster algorithms exist for specific graph types (e.g., 𝑂(𝑛 + 𝑚) for DAGs using topological sort).
+69 / 246
+Functions
+“A function is a machine which converts a certain class of inputs
+into a certain class of outputs.”
+— Norbert Wiener
+Leonhard Euler Augustin-Louis
+Cauchy
+Karl
+Weierstrass
+Joseph-Louis
+Lagrange
+George Pólya Norbert
+Wiener
+Definition of a Function
+Definition 28: A function 𝑓 from a set 𝐴 to a set 𝐵, denoted 𝑓 : 𝐴 → 𝐵, is a special kind of relation
+𝑓 ⊆ 𝐴 × 𝐵 where every element of 𝐴 is paired with exactly one element of 𝐵.
+This “exactly one” requirement breaks down into two conditions:
+1. Functional property (right-unique or well-defined): Each input has at most one output. No input can
+map to multiple different outputs.
+∀𝑎 ∈ 𝐴. ∀𝑏1, 𝑏2 ∈ 𝐵. (𝑓(𝑎) = 𝑏1) ∧ (𝑓(𝑎) = 𝑏2) → (𝑏1 = 𝑏2)
+2. Total property (left-total or defined everywhere): Each input has at least one output. Every element in
+the domain must map to something.
+∀𝑎 ∈ 𝐴. ∃𝑏 ∈ 𝐵. 𝑓(𝑎) = 𝑏
+71 / 246
+Definition of a Function [2]
+Definition 29: A relation that satisfies only the functional property (but not necessarily total) is called
+a partial function, denoted 𝑓 : 𝐴 ↪︎ 𝐵. It may be undefined for some inputs.
+Definition 30: A relation that satisfies both properties is called a total function, denoted 𝑓 : 𝐴 → 𝐵.
+It is defined for every input in its domain.
+Note: In most contexts, when we say “function” we mean total function. Partial functions are explicitly
+noted when needed, especially in computability theory and programming language semantics.
+72 / 246
+Examples of Functions
+Example (Partial functions):
+• Division: 𝑓 : ℝ × ℝ ↪︎ ℝ defined by 𝑓(𝑥, 𝑦) =
+𝑥
+𝑦 is partial because 𝑓(𝑥, 0) is undefined.
+• Square root on integers: 𝑔 : ℤ ↪︎ ℝ defined by 𝑔(𝑛) = √𝑛 is partial because negative integers have no
+real square root.
+• Array access: arr : ℕ ↪︎ 𝑇 where arr(𝑖) returns the element at index 𝑖, but is undefined for out-of-
+bounds indices.
+• Head of list: head : List[𝑇] ↪︎ 𝑇 returns the first element, but is undefined for empty lists.
+Example (Total functions):
+• Absolute value: | ⋅ | : ℝ → ℝ is total — defined for all real numbers.
+• Successor: 𝑆 : ℕ → ℕ defined by 𝑆(𝑛) = 𝑛 + 1 is total — defined for all natural numbers.
+• Constant function: 𝑓 : 𝐴 → 𝐵 defined by 𝑓(𝑥) = 𝑏0 for some fixed 𝑏0 ∈ 𝐵 is always total.
+73 / 246
+Domain, Codomain, Range
+Definition 31: For a function 𝑓 : 𝐴 → 𝐵:
+• The set 𝐴 is called the domain of 𝑓, denoted Dom(𝑓).
+• The set 𝐵 is called the codomain of 𝑓, denoted Cod(𝑓).
+• The range (or image) of 𝑓 is the set of all values that 𝑓 actually takes:
+Range(𝑓) = {𝑏 ∈ 𝐵 | ∃𝑎 ∈ 𝐴. 𝑓(𝑎) = 𝑏} = {𝑓(𝑎) | 𝑎 ∈ 𝐴}
+Note: Range(𝑓) ⊆ Cod(𝑓)
+Example: Let 𝐴 = {1, 2, 3} and 𝐵 = {𝑥, 𝑦, 𝑧}, and define 𝑓 = {⟨1, 𝑥⟩, ⟨2, 𝑦⟩, ⟨3, 𝑥⟩}.
+• 𝑓 : 𝐴 → 𝐵 is a function from 𝐴 to 𝐵
+• Dom(𝑓) = 𝐴 = {1, 2, 3} (“from”)
+• Cod(𝑓) = 𝐵 = {𝑥, 𝑦, 𝑧} (“to”)
+• Range(𝑓) = {𝑥, 𝑦} ⊂ 𝐵 (note that 𝑧 is not in the range)
+• We have 𝑓(1) = 𝑥, 𝑓(2) = 𝑦, 𝑓(3) = 𝑥
+1
+2
+3
+𝑥
+𝑦
+𝑧
+74 / 246
+Examples of Domain, Codomain, Range
+Example: Consider the squaring function 𝑔 : ℤ → ℤ defined by 𝑔(𝑛) = 𝑛2
+.
+• Dom(𝑔) = Cod(𝑔) = ℤ (all integers)
+• Range(𝑔) = {0, 1, 4, 9, 16, …} = {𝑛2 | 𝑛 ∈ ℕ} (non-negative perfect squares)
+Note that the range of 𝑔 is a proper subset of the codomain: Range(𝑔) ⊂ Cod(𝑔), since −1 ∉ Range(𝑔).
+Example: The absolute value function 𝑓 : ℝ → ℝ defined by 𝑓(𝑥) = |𝑥|:
+• Dom(𝑓) = Cod(𝑓) = ℝ (all real numbers)
+• Range(𝑓) = [0, ∞) = {𝑦 ∈ ℝ | 𝑦 ≥ 0} (non-negative reals)
+Example: The exponential function exp : ℝ → (0, ∞) defined by exp(𝑥) = 𝑒𝑥:
+• Dom(exp) = ℝ (all real numbers)
+• Cod(exp) = (0, ∞) (positive real numbers)
+• Range(exp) = (0, ∞) (same as codomain — this function is surjective!)
+Note the careful choice of codomain: if we used exp : ℝ → ℝ, the range would still be (0, ∞), making it
+not surjective.
+75 / 246
+Image and Preimage of Sets
+Definition 32: Let 𝑓 : 𝐴 → 𝐵 be a function and let 𝑆 ⊆ 𝐴. The image of 𝑆 under 𝑓 is the set:
+𝑓(𝑆) = {𝑓(𝑠) | 𝑠 ∈ 𝑆}
+Note that 𝑓(𝑆) ⊆ 𝐵. The range of 𝑓 is 𝑓(𝐴).
+Definition 33: Let 𝑓 : 𝐴 → 𝐵 be a function and let 𝑇 ⊆ 𝐵. The preimage of 𝑇 under 𝑓 (or inverse
+image of 𝑇) is the set of all elements in the domain that map into 𝑇:
+𝑓−1(𝑇) = {𝑎 ∈ 𝐴 | 𝑓(𝑎) ∈ 𝑇}
+Note: The notation 𝑓−1(𝑆) is used even if the inverse function 𝑓−1 does not exist (i.e., if 𝑓 is not bijective).
+It always refers to the set of domain elements that map into 𝑆.
+76 / 246
+Examples of Image and Preimage
+Example: Let 𝑓 : ℤ → ℤ be 𝑓(𝑥) = 𝑥2
+.
+• Let 𝑆 = {−2,
+−1, 0, 1, 2}.
+‣ Then 𝑓(𝑆) = {𝑓(−2), 𝑓(−1), 𝑓(0), 𝑓(1), 𝑓(2)} = {4, 1, 0, 1, 4} = {0, 1, 4}.
+• Let 𝑇1 = {1, 9}.
+‣ The preimage is 𝑓−1(𝑇1) = {𝑥 ∈ ℤ | 𝑥2 ∈ {1, 9}} = {−3,
+−1, 1, 3}.
+• Let 𝑇2 = {2, 3}.
+‣ The preimage is 𝑓−1(𝑇2) = {𝑥 ∈ ℤ | 𝑥2 ∈ {2, 3}} = ∅.
+77 / 246
+Injective Functions
+Definition 34: A function 𝑓 : 𝐴 → 𝐵 is injective (left-unique or one-to-one3) if distinct elements in the
+domain map to distinct elements in the codomain. Formally:
+∀𝑎1, 𝑎2 ∈ 𝐴. (𝑓(𝑎1) = 𝑓(𝑎2)) → (𝑎1 = 𝑎2)
+Equivalent formulation:
+∀𝑎1, 𝑎2 ∈ 𝐴. (𝑎1 ≠ 𝑎2) → (𝑓(𝑎1) ≠ 𝑓(𝑎2))
+1
+𝑓
+𝑓
+𝑥
+2
+𝑦
+3Do not confuse “one-to-one” with “one-to-one correspondence”, which refers to a bijection — another concept!
+78 / 246
+Examples of Injective Functions
+Key insight: An injective function never “collapses” different inputs to the same output.
+Each output has at most one pre-image.
+Example: 𝑓 : ℕ → ℕ defined by 𝑓(𝑛) = 2𝑛 is injective.
+• If 𝑓(𝑛1) = 𝑓(𝑛2), then 2𝑛1 = 2𝑛2, so 𝑛1 = 𝑛2.
+✓
+Example: 𝑔 : ℝ → ℝ defined by 𝑔(𝑥) = 𝑥3 is injective.
+• The cube function is strictly increasing, so distinct inputs give distinct outputs. ✓
+Example (Computer science applications):
+• Student ID assignment: Each student gets a unique ID number.
+• Hash functions (perfect): Different data should hash to different values (to avoid collisions).
+• Primary keys in databases: Each record must have a unique identifier.
+• Memory addresses: Each memory location has a unique address.
+79 / 246
+Examples of Non-Injective Functions
+Example (Counter-examples (not injective functions)):
+• 𝑔 : ℤ → ℤ defined by 𝑔(𝑛) = 𝑛2 is not injective.
+‣ 𝑔(−1) = 1 and 𝑔(1) = 1, but −1 ≠ 1. ✗
+• ℎ : ℝ → ℝ defined by ℎ(𝑥) = sin(𝑥) is not injective.
+‣ ℎ(0) = ℎ(𝜋) = 0, but 0 ≠ 𝜋. ✗
+• 𝑓 : ℤ → ℤ5 defined by 𝑓(𝑥) = 𝑥 mod 5 is not injective.
+‣ 𝑓(2) = 𝑓(7) = 2, but 2 ≠ 7. ✗
+80 / 246
+Surjective Functions
+Definition 35: A function 𝑓 : 𝐴 → 𝐵 is surjective (right-total or onto) if every element in the
+codomain is the image of at least one element in the domain. Formally:
+∀𝑏 ∈ 𝐵. ∃𝑎 ∈ 𝐴. 𝑓(𝑎) = 𝑏
+For surjective functions, Range(𝑓) = Cod(𝑓), i.e., there are no “uncovered” elements in the right side.
+1
+𝑓
+𝑓
+𝑥
+2
+𝑦
+81 / 246
+Examples of Surjective Functions
+Key insight: A surjective function “covers” the entire codomain.
+Every possible output is actually achieved by some input.
+Example: 𝑓 : ℝ → ℝ defined by 𝑓(𝑥) = 𝑥3 is surjective.
+• For any 𝑦 ∈ ℝ, let 𝑥 = 3 √𝑦. Then 𝑓(𝑥) = (3 √𝑦)3
+= 𝑦.
+✓
+Example: 𝑔 : ℝ → [0, ∞) defined by 𝑔(𝑥) = 𝑥2 is surjective.
+• For any 𝑦 ≥ 0, let 𝑥 = √𝑦. Then 𝑔(𝑥) = (√𝑦)2
+= 𝑦.
+✓
+Example: 𝑓 : ℤ → ℤ5 defined by 𝑓(𝑥) = 𝑥 mod 5 is surjective.
+• Every element {0, 1, 2, 3, 4} is achieved: 𝑓(0) = 0, 𝑓(1) = 1, 𝑓(2) = 2, 𝑓(3) = 3, 𝑓(4) = 4.
+Example (Computer science applications):
+• Color quantization: Map 24-bit colors to 8-bit palette (should cover all palette colors).
+• Load balancing: Distribute requests across servers (all servers should be used).
+• Hash table design: Hash function should potentially reach every bucket.
+✓
+82 / 246
+Examples of Non-Surjective Functions
+Example (Counter-examples (not surjective)):
+• 𝑔 : ℕ → ℕ defined by 𝑔(𝑛) = 2𝑛 is not surjective.
+‣ Odd numbers like 3, 5, 7, … are never achieved since 2𝑛 is always even. ✗
+• ℎ : ℝ → ℝ defined by ℎ(𝑥) = 𝑥2 is not surjective.
+‣ Negative numbers like −1,
+−2,
+−3, … are never achieved since 𝑥2 ≥ 0. ✗
+• 𝑓 : ℝ → ℝ defined by 𝑓(𝑥) = 𝑒𝑥 is not surjective.
+‣ Negative numbers and zero are never achieved since 𝑒𝑥 > 0 for all 𝑥. ✗
+83 / 246
+Bijective Functions
+Definition 36: A function 𝑓 : 𝐴 → 𝐵 is bijective if it is both injective and surjective. A bijective
+function establishes a one-to-one correspondence between the elements of 𝐴 and 𝐵.
+Equivelently, 𝑓 is bijective iff it has an inverse function 𝑓−1 : 𝐵 → 𝐴.
+Example: 𝑓 : ℝ → ℝ defined by 𝑓(𝑥) = 2𝑥 + 1 is bijective.
+• Injective: If 2𝑥1 + 1 = 2𝑥2 + 1, then 𝑥1 = 𝑥2.
+✓
+• Surjective: For any 𝑦 ∈ ℝ, let 𝑥 = 𝑦−1
+2 . Then 𝑓(𝑥) = 𝑦.
+✓
+• Inverse: 𝑓−1(𝑦) = 𝑦−1
+2.
+Example: 𝑔 : [0, ∞) → [0, ∞) defined by 𝑔(𝑥) = 𝑥2 is bijective.
+• Injective: If 𝑥2
+1 = 𝑥2
+2 and 𝑥1, 𝑥2 ≥ 0, then 𝑥1 = 𝑥2.
+✓
+• Surjective: For any 𝑦 ≥ 0, let 𝑥 = √𝑦. Then 𝑔(𝑥) = 𝑦.
+✓
+• Inverse: 𝑔−1(𝑦) = √𝑦.
+84 / 246
+Examples of Bijective Functions
+Key insight: Bijective functions are “perfect matchings” between sets. Every element in 𝐴 pairs with
+exactly one element in 𝐵, and vice versa.
+Example (Computer science applications):
+• Encryption algorithms: Must be bijective to ensure decryption is possible.
+• Base conversion: Bijection between decimal and binary representations.
+• Perfect hash functions: Bijective mapping from keys to table positions.
+• Coordinate transformations: Reversible mappings between coordinate systems.
+85 / 246
+Function Composition
+Definition 37: Let 𝑓 : 𝐴 → 𝐵 and 𝑔 : 𝐵 → 𝐶 be two functions. The composition of 𝑔 and 𝑓, denoted
+𝑔 ∘ 𝑓 (read as “𝑔 composed with 𝑓” or “𝑔 after 𝑓”), is a function from 𝐴 to 𝐶 defined by:
+(𝑔 ∘ 𝑓)(𝑎) = 𝑔(𝑓(𝑎))
+Example: Let 𝑓 : ℝ → ℝ be 𝑓(𝑥) = 𝑥2 and 𝑔 : ℝ → ℝ be 𝑔(𝑥) = 𝑥 + 1.
+• (𝑔 ∘ 𝑓)(𝑥) = 𝑔(𝑓(𝑥)) = 𝑔(𝑥2) = 𝑥2 + 1
+• (𝑓 ∘ 𝑔)(𝑥) = 𝑓(𝑔(𝑥)) = 𝑓(𝑥 + 1) = (𝑥 + 1)2 = 𝑥2 + 2𝑥 + 1
+Note: 𝑔 ∘ 𝑓 ≠ 𝑓 ∘ 𝑔 (composition is not commutative!) 𝑎1
+𝑏1
+𝑐1
+𝑎2
+𝑏2
+𝑐2
+𝑎3
+𝑏3
+86 / 246
+Examples of Function Composition
+Key insight: Function composition is like a “pipeline” — the output of 𝑓 becomes the input to 𝑔.
+Read right-to-left: 𝑔 ∘ 𝑓 means “first apply 𝑓, then apply 𝑔”, or rather, “do 𝑔 after 𝑓”.
+Example (Computer science applications):
+• Function pipelines: data |> filter |> map |> reduce
+• Compiler design: lexer → parser → optimizer → code generator
+• Data processing: clean → transform → aggregate → visualize
+87 / 246
+Properties of Function Composition
+• Associativity: If 𝑓 : 𝐴 → 𝐵, 𝑔 : 𝐵 → 𝐶, and ℎ : 𝐶 → 𝐷, then (ℎ ∘ 𝑔) ∘ 𝑓 = ℎ ∘ (𝑔 ∘ 𝑓).
+• The identity function acts as a neutral element for composition:
+‣ id𝐵 ∘ 𝑓 = 𝑓 for any function 𝑓 : 𝐴 → 𝐵.
+‣ 𝑓 ∘ id𝐴 = 𝑓 for any function 𝑓 : 𝐴 → 𝐵.
+• Composition preserves the properties of functions:
+‣ If 𝑓 and 𝑔 are injective, so is 𝑔 ∘ 𝑓.
+‣ If 𝑓 and 𝑔 are surjective, so is 𝑔 ∘ 𝑓.
+‣ If 𝑓 and 𝑔 are bijective, so is 𝑔 ∘ 𝑓.
+• Note that in general, 𝑔 ∘ 𝑓 ≠ 𝑓 ∘ 𝑔, i.e., function composition is not commutative.
+88 / 246
+Functional Powers
+Definition 38: The functional power of 𝑓 : 𝐴 → 𝐴 can defined inductively:
+𝑓0 = id𝐴
+𝑓𝑛+1 = 𝑓 ∘ 𝑓𝑛 = 𝑓𝑛 ∘ 𝑓
+Note: This definition also works for functions 𝑓 : 𝑋 → 𝑌 with 𝑌 ⊆ 𝑋.
+Note: To avoid the confusion with exponential powers (e.g., 𝑓𝑛(𝑥) could be interpreted as (𝑓(𝑥))𝑛),
+we can use the notation 𝑓⚬𝑛 to denote the 𝑛-th functional power.
+Example: Let 𝑓 : ℝ → ℝ be 𝑓(𝑥) = 2𝑥.
+• 𝑓0(𝑥) = 𝑥 (identity)
+• 𝑓1(𝑥) = 2𝑥
+• 𝑓2(𝑥) = 𝑓(𝑓(𝑥)) = 𝑓(2𝑥) = 2(2𝑥) = 4𝑥
+• 𝑓3(𝑥) = 𝑓(𝑓2(𝑥)) = 𝑓(4𝑥) = 2(4𝑥) = 8𝑥
+• In general: 𝑓𝑛(𝑥) = 2𝑛𝑥
+89 / 246
+Examples of Functional Powers
+Example: Let 𝑔 : ℤ → ℤ be 𝑔(𝑥) = 𝑥 + 1 (successor function).
+• 𝑔⚬0(𝑥) = 𝑥
+• 𝑔⚬1(𝑥) = 𝑥 + 1
+• 𝑔⚬2(𝑥) = 𝑔(𝑔(𝑥)) = 𝑔(𝑥 + 1) = (𝑥 + 1) + 1 = 𝑥 + 2
+• 𝑔⚬3(𝑥) = 𝑔(𝑔⚬2(𝑥)) = 𝑔(𝑥 + 2) = (𝑥 + 2) + 1 = 𝑥 + 3
+• In general: 𝑔⚬𝑛(𝑥) = 𝑥 + 𝑛
+90 / 246
+Inverse Functions
+Definition 39: If 𝑓 : 𝐴 → 𝐵 is a bijective function, then its inverse function, denoted 𝑓−1 : 𝐵 → 𝐴, is:
+𝑓−1(𝑏) = 𝑎 iff 𝑓(𝑎) = 𝑏
+Note: A function has an inverse if and only if it is bijective.
+Example: Let 𝑓 : ℝ → ℝ be 𝑓(𝑥) = 2𝑥 + 1. We found it’s bijective. To find 𝑓−1(𝑦), let 𝑦 = 2𝑥 + 1. Solving
+for 𝑥, we get 𝑥 = 𝑦−1
+2 . So, 𝑓−1(𝑦) = 𝑦−1
+2.
+Example: The exponential function exp : ℝ → (0, ∞) defined by exp(𝑥) = 𝑒𝑥 is bijective.
+• Its inverse is the natural logarithm: ln : (0, ∞) → ℝ.
+• We have: ln(𝑒𝑥) = 𝑥 for all 𝑥 ∈ ℝ and 𝑒ln 𝑦 = 𝑦 for all 𝑦 > 0.
+Note: If we tried exp : ℝ → ℝ, it wouldn’t be surjective (negative numbers never achieved), hence no
+inverse! The codomain restriction is essential.
+91 / 246
+Examples of Inverse Functions
+Example (Polynomial with domain restriction): Consider 𝑓 : ℝ → ℝ defined by 𝑓(𝑥) = 𝑥2
+.
+• This is not injective: 𝑓(−2) = 𝑓(2) = 4, so no inverse exists.
+However, if we restrict the domain to 𝑓 : [0, ∞) → [0, ∞), then:
+• 𝑓 becomes bijective (both injective and surjective on non-negative reals).
+• The inverse is 𝑓−1(𝑦) = √𝑦 for 𝑦 ≥ 0.
+Key insight: Many functions need domain/codomain restrictions to become invertible. This is crucial
+in calculus when finding inverse functions!
+𝜋
+2 ,
+Example: The sine function sin : ℝ → ℝ is not injective (it’s periodic), so it has no inverse.
+However, with domain restriction, sin : [−
+𝜋
+2 ] → [−1, 1] is bijective, with inverse arcsin : [−1, 1] →
+[−
+𝜋
+𝜋
+2 ].
+Similarly: cos : [0, 𝜋] → [−1, 1] has inverse arccos, and tan : (−
+𝜋
+𝜋
+2 ) → ℝ has inverse arctan.
+2 ,
+2 ,
+92 / 246
+Characterization of Invertible Functions
+Theorem 7: A function 𝑓 : 𝐴 → 𝐵 has an inverse function 𝑓−1 : 𝐵 → 𝐴 if and only if 𝑓 is bijective.
+Proof: We prove both directions.
+(⇒): If 𝑓 has an inverse, then 𝑓 is bijective.
+Assume 𝑓−1 : 𝐵 → 𝐴 is an inverse of 𝑓 : 𝐴 → 𝐵 with the following properties:
+• 𝑓−1(𝑓(𝑥)) = 𝑥 for all 𝑥 ∈ 𝐴
+• 𝑓(𝑓−1(𝑦)) = 𝑦 for all 𝑦 ∈ 𝐵
+We are going to show that 𝑓 is both injective and surjective.
+1. 𝑓 is injective: Let 𝑥1, 𝑥2 ∈ 𝐴 such that 𝑓(𝑥1) = 𝑓(𝑥2). Applying 𝑓−1 to both sides, we get:
+𝑓−1(𝑓(𝑥1)) = 𝑓−1(𝑓(𝑥2))
+By the property of the inverse, this simplifies to:
+𝑥1 = 𝑥2
+93 / 246
+Characterization of Invertible Functions [2]
+Thus, 𝑓 is injective.
+2. 𝑓 is surjective: Let 𝑦 ∈ 𝐵. We need to find an 𝑥 ∈ 𝐴 such that 𝑓(𝑥) = 𝑦. Take 𝑥 = 𝑓−1(𝑦). Then by
+the property of the inverse, we have:
+𝑓(𝑥) = 𝑓(𝑓−1(𝑦)) = 𝑦
+Hence, 𝑓 is surjective.
+Therefore, 𝑓 is bijective. ∎
+(⇐): If 𝑓 is bijective, then 𝑓 has an inverse 𝑓−1
+.
+Assume 𝑓 : 𝐴 → 𝐵 is bijective. This means:
+• 𝑓 is injective: (𝑓(𝑥1) = 𝑓(𝑥2)) → (𝑥1 = 𝑥2)
+• 𝑓 is surjective: for every 𝑦 ∈ 𝐵, there exists 𝑥 ∈ 𝐴 such that 𝑓(𝑥) = 𝑦
+We need to construct an inverse function 𝑓−1 : 𝐵 → 𝐴, satisfying:
+𝑓−1(𝑓(𝑥)) = 𝑥 and 𝑓(𝑓−1(𝑦)) = 𝑦
+94 / 246
+Characterization of Invertible Functions [3]
+Construction of 𝑓−1: For each 𝑦 ∈ 𝐵:
+• Since 𝑓 is surjective, there exists at least one 𝑥 ∈ 𝐴 such that 𝑓(𝑥) = 𝑦.
+• Since 𝑓 is injective, this 𝑥 is unique.
+We define a function 𝑓−1 : 𝐵 → 𝐴 by:
+𝑓−1(𝑦) = the unique 𝑥 ∈ 𝐴 such that 𝑓(𝑥) = 𝑦
+Verification:
+1. For all 𝑥 ∈ 𝐴, by definition of 𝑓−1:
+𝑓−1(𝑓(𝑥)) = 𝑥
+2. For all 𝑦 ∈ 𝐵, since 𝑓−1(𝑦) is defined as the unique 𝑥 with 𝑓(𝑥) = 𝑦, we have:
+𝑓(𝑓−1(𝑦)) = 𝑦
+Therefore, 𝑓−1 is indeed the inverse of 𝑓. ∎
+Thus, a function has an inverse if and only if it is bijective. □
+95 / 246
+Some Properties of Inverse Functions
+Theorem 8: If 𝑓 : 𝐴 → 𝐵 is a bijective function with inverse 𝑓−1 : 𝐵 → 𝐴:
+• 𝑓−1 is also bijective.
+• (𝑓−1 ∘ 𝑓)(𝑎) = 𝑎 for all 𝑎 ∈ 𝐴 (i.e., 𝑓−1 ∘ 𝑓 = id𝐴).
+• (𝑓 ∘ 𝑓−1)(𝑏) = 𝑏 for all 𝑏 ∈ 𝐵 (i.e., 𝑓 ∘ 𝑓−1 = id𝐵).
+• If 𝑓 : 𝐴 → 𝐵 and 𝑔 : 𝐵 → 𝐶 are both bijective, then (𝑔 ∘ 𝑓)−1 = 𝑓−1 ∘ 𝑔−1
+.
+96 / 246
+Monotonic Functions
+Definition 40: A function 𝑓 : 𝐴 → 𝐵 is called monotonic if it preserves order relationships.
+For real-valued functions 𝑓 : ℝ → ℝ:
+• Monotonic increasing (or isotone) if 𝑥 ≤ 𝑦 → 𝑓(𝑥) ≤ 𝑓(𝑦)
+• Strictly increasing if 𝑥 < 𝑦 → 𝑓(𝑥) < 𝑓(𝑦)
+• Monotonic decreasing (or antitone) if 𝑥 ≤ 𝑦 → 𝑓(𝑥) ≥ 𝑓(𝑦)
+• Strictly decreasing if 𝑥 < 𝑦 → 𝑓(𝑥) > 𝑓(𝑦)
+Note: More generally, for any posets ⟨𝐴, ≤𝐴⟩ and ⟨𝐵, ≤𝐵⟩:
+• 𝑓 is order-preserving (monotone) if 𝑥 ≤𝐴 𝑦 → 𝑓(𝑥) ≤𝐵 𝑓(𝑦)
+• 𝑓 is order-reversing (antitone) if 𝑥 ≤𝐴 𝑦 → 𝑓(𝑥) ≥𝐵 𝑓(𝑦)
+97 / 246
+Monotonicity implies Injectivity
+Theorem 9: If 𝑓 : ℝ → ℝ is strictly increasing or strictly decreasing, then 𝑓 is injective.
+Proof: Suppose 𝑓 is strictly increasing. Let 𝑥1, 𝑥2 ∈ ℝ with 𝑥1 ≠ 𝑥2. Then either 𝑥1 < 𝑥2 or 𝑥2 < 𝑥1.
+• If 𝑥1 < 𝑥2, then 𝑓(𝑥1) < 𝑓(𝑥2) by strict monotonicity, so 𝑓(𝑥1) ≠ 𝑓(𝑥2).
+• If 𝑥2 < 𝑥1, then 𝑓(𝑥2) < 𝑓(𝑥1) by strict monotonicity, so 𝑓(𝑥1) ≠ 𝑓(𝑥2).
+In both cases, 𝑓(𝑥1) ≠ 𝑓(𝑥2), proving injectivity. The proof for strictly decreasing is analogous. □
+Key insights:
+• Monotonic functions have predictable behavior: they never “change direction”
+• Strictly monotonic functions are always injective (one-to-one)
+• Non-strict monotonic functions may have “flat” regions (also known as “plateaus”) where different
+inputs map to the same output
+• Fun fact: monotonic functions are order-homomorphisms between posets!
+98 / 246
+Examples of Monotonic Functions
+Examples: Strictly monotonic functions (which are always injective):
+• 𝑓(𝑥) = 2𝑥 + 1 is strictly increasing on ℝ, hence injective. ✓
+• 𝑔(𝑥) = −𝑥 is strictly decreasing on ℝ, hence injective. ✓
+• ℎ(𝑥) = 𝑥3 is strictly increasing on ℝ, hence injective. ✓
+• 𝑘(𝑥) = 𝑒𝑥 is strictly increasing on ℝ, hence injective. ✓
+Examples: Monotonic but NOT strictly monotonic functions (not necessarily injective):
+• 𝑓(𝑥) = ⌊𝑥⌋ is monotonic increasing but NOT strictly increasing.
+‣ For 𝑥 ∈ [2, 3), we have 𝑓(𝑥) = 2 (constant on intervals).
+‣ This is NOT injective: 𝑓(2.1) = 𝑓(2.9) = 2 but 2.1 ≠ 2.9. ✗
+•
+𝑔(𝑥) = {𝑥 if 𝑥≤0
+0 if 0<𝑥<1
+is monotonic but not injective.
+𝑥−1 if 𝑥≥1
+Example: 𝑓 : (ℝ ∖ {0}) → ℝ defined by 𝑓(𝑥) =
+1
+𝑥
+is injective but not monotonic.
+• If 𝑓(𝑥1) = 𝑓(𝑥2), then 1
+1
+=
+𝑥1
+𝑥2 implies 𝑥1 = 𝑥2.
+✓
+• However, 𝑓 is not monotonic since it decreases on (−∞, 0) and (0, ∞), but 𝑓(−1) < 𝑓(1). ✗
+99 / 246
+Function Properties Overview
+Functions can be characterized by several key properties that determine their mathematical behavior.
+Property Definition
+Functional (Right-unique) Total (Left-total) Partial Injective (Left-unique) Surjective (Right-total) Bijective Monotonic Continuous Each input maps to at most one output
+Each input maps to at least one output (defined everywhere)
+Functional but not total (may be undefined for some inputs)
+Different inputs ⟹ different outputs
+Every codomain element is covered
+Both injective and surjective (one-to-one correspondence)
+Preserves or reverses order relationships
+Small input changes ⟹ small output changes
+100 / 246
+Characteristic Functions
+Definition 41: For any set 𝑆 ⊆ 𝐴, the characteristic function (or indicator function) 𝜒𝑆 : 𝐴 → {0, 1} is:
+𝜒𝑆(𝑥) = {1 if 𝑥 ∈ 𝑆
+0 if 𝑥 ∉ 𝑆
+This function “indicates” membership in set 𝑆.
+Example: Let 𝐴 = {1, 2, 3, 4, 5} and 𝑆 = {2, 4}. Then 𝜒𝑆 maps:
+• 𝜒𝑆(1) = 0 (since 1 ∉ 𝑆)
+• 𝜒𝑆(2) = 1 (since 2 ∈ 𝑆)
+• 𝜒𝑆(3) = 0 (since 3 ∉ 𝑆)
+𝜒𝑆(𝑥)
+• 𝜒𝑆(4) = 1 (since 4 ∈ 𝑆)
+1
+• 𝜒𝑆(5) = 0 (since 5 ∉ 𝑆)
+So 𝜒𝑆 = {(1, 0), (2, 1), (3, 0), (4, 1), (5, 0)}. Elements in 𝑆 = {2, 4} map to 1
+0
+1 2 3 4 5 𝑥
+Elements not in 𝑆 map to 0
+101 / 246
+Properties of Characteristic Functions
+Definition 42: For sets 𝐴, 𝐵 ⊆ 𝑈:
+• 𝜒𝐴∩𝐵 = 𝜒𝐴⋅ 𝜒𝐵 (pointwise multiplication)
+• 𝜒𝐴∪𝐵 = 𝜒𝐴 + 𝜒𝐵− 𝜒𝐴⋅ 𝜒𝐵
+• 𝜒𝐴 = 1 − 𝜒𝐴 (complement)
+• 𝜒𝐴△𝐵 = 𝜒𝐴 + 𝜒𝐵− 2𝜒𝐴⋅ 𝜒𝐵 (symmetric difference)
+• 𝜒∅ = 0 and 𝜒𝑈 = 1 (constant functions)
+Example (Applications):
+• Probability theory: Indicator random variables
+• Database queries: Boolean conditions in WHERE clauses
+• Set operations: Converting logical operations to arithmetic
+• Machine learning: Feature encoding (one-hot encoding)
+• Computer graphics: Masking and selection operations
+• Digital signal processing: Window functions and filters
+102 / 246
+Floor and Ceiling Functions
+Definition 43:
+• Floor function ⌊: ℝ → ℤ maps 𝑥 to the largest integer ≤ 𝑥: ⌊𝑥⌋ = max{𝑛 ∈ ℤ | 𝑛 ≤ 𝑥}
+• Ceiling function ⌈: ℝ → ℤ maps 𝑥 to the smallest integer ≥ 𝑥: ⌈𝑥⌉ = min{𝑛 ∈ ℤ | 𝑛 ≥ 𝑥}
+Example:
+𝑦
+𝑥 ⌊𝑥⌋ ⌈𝑥⌉ Note
+3.7 3 4 Positive non-integer
+−2.3 −3 −2 Negative non-integer
+5 5 5 Integer (floor = ceiling)
+0 0 0 Zero
+−1 −1 −1 Negative integer
+⌈𝑥⌉
+⌊𝑥⌋
+𝑥
+103 / 246
+Summary: Functions
+Functions establish relationships between sets where every input has exactly one output:
+• Injective: Different inputs → Different outputs (one-to-one)
+• Surjective: Every output is achieved (onto)
+• Bijective: Both injective and surjective (perfect correspondence)
+Key applications in computer science:
+• Database design: Functions model relationships
+• Algorithm analysis: Function properties affect complexity
+• Cryptography: Bijective functions enable encryption/decryption
+• Type systems: Function signatures and type hierarchies
+• Data structures: Mappings, hashing, and uniqueness constraints
+104 / 246
+Order Theory
+“Order is heaven’s first law.”
+— Alexander Pope
+Helmut Hasse Felix Hausdorff Henri Poincaré Robert Floyd Stephen
+Warshall
+Stephen Kleene
+Orders
+Definition 44: A relation 𝑅 ⊆ 𝑀2 is called a preorder if it is reflexive and transitive.
+Definition 45: A partial order is a relation 𝑅 ⊆ 𝑀2 that is reflexive, antisymmetric, and transitive.
+Definition 46: A linear order is a partial order 𝑅 ⊆ 𝑀2 where every pair of elements is comparable:
+∀𝑥, 𝑦 ∈ 𝑀. (𝑥 𝑅 𝑦 ∨ 𝑦 𝑅 𝑥)
+Note: The above condition is called strong connectivity. The similar property with the 𝑥 ≠ 𝑦 condition is
+called semi-connectivity. The corresponding relations are called connex and semi-connex.
+Note: Hereinafter, we mainly study the “non-strict” orders (e.g., ≤, ⊆), which require the reflexivity.
+The “strict” orders (e.g., <, ⊂) require irreflexivity instead, and are defined similarly.
+Note: Strict linear orders require semi-connectivity instead, since connectivity alone implies reflexivity!
+106 / 246
+Examples of Orders
+Example: The relation ≤ on real numbers ℝ is a total order:
+• Reflexive: 𝑥 ≤ 𝑥 for all 𝑥 ∈ ℝ ✓
+• Antisymmetric: If 𝑥 ≤ 𝑦 and 𝑦 ≤ 𝑥, then 𝑥 = 𝑦 ✓
+• Transitive: If 𝑥 ≤ 𝑦 and 𝑦 ≤ 𝑧, then 𝑥 ≤ 𝑧 ✓
+• Connected: For any 𝑥, 𝑦 ∈ ℝ, either 𝑥 ≤ 𝑦 or 𝑦 ≤ 𝑥 ✓
+This is the most familiar example of an order relation. Similarly, ℕ, ℤ, and ℚ with ≤ are all total orders.
+−1 ≤ 2
+−4 −3 −2 −1 0 1 2 3 4−∞ +∞−3 ≤ −1
+−2 ≤ 1
+0 ≤ 3
+Linear order ≤ on real numbers ℝ
+107 / 246
+Examples of Orders [2]
+Example: The subset relation ⊆ on the power set 𝒫︀(𝐴) is a partial order.
+Verification:
+• Reflexive: 𝑋 ⊆ 𝑋 for all 𝑋 ⊆ 𝐴 ✓
+‣ Every set is a subset of itself by definition
+• Antisymmetric: If 𝑋 ⊆ 𝑌 and 𝑌 ⊆ 𝑋, then 𝑋 = 𝑌 ✓
+‣ If every element of 𝑋 is in 𝑌 , and every element of 𝑌 is in 𝑋, then 𝑋 and 𝑌 have the same elements
+• Transitive: If 𝑋 ⊆ 𝑌 and 𝑌 ⊆ 𝑍, then 𝑋 ⊆ 𝑍 ✓
+‣ If every element of 𝑋 is in 𝑌 , and every element of 𝑌 is in 𝑍, then every element of 𝑋 is in 𝑍
+For 𝐴 = {1, 2}, we have 𝒫︀(𝐴) = {∅, {1}, {2}, {1, 2}} with:
+• ∅ ⊆ {1} ⊆ {1, 2} (this is a chain)
+• ∅ ⊆ {2} ⊆ {1, 2} (another chain)
+• But {1} and {2} are incomparable (neither is a subset of the other)
+This is not a total order because not all pairs are comparable.
+108 / 246
+Examples of Orders [3]
+Example: Consider the no longer than relation ≼ on binary strings 𝔹∗:
+𝑥 ≼ 𝑦 iff len(𝑥) ≤ len(𝑦)
+Verification:
+• Reflexive: 𝑥 ≼ 𝑥 for all 𝑥 ∈ 𝔹∗ ✓
+‣ len(𝑥) ≤ len(𝑥) is always true
+• Transitive: If 𝑥 ≼ 𝑦 and 𝑦 ≼ 𝑧, then 𝑥 ≼ 𝑧 ✓
+‣ If len(𝑥) ≤ len(𝑦) and len(𝑦) ≤ len(𝑧), then len(𝑥) ≤ len(𝑧) by transitivity of ≤
+• Antisymmetric: ✗
+‣ Counter-example: 01 ≼ 10 and 10 ≼ 01 (since both have length 2), but 01 ≠ 10
+• Connected: For any 𝑥, 𝑦 ∈ 𝔹∗, either 𝑥 ≼ 𝑦 or 𝑦 ≼ 𝑥 ✓
+‣ Either len(𝑥) ≤ len(𝑦) or len(𝑦) ≤ len(𝑥) (or both)
+This is a preorder (reflexive and transitive), and even connected, but not a partial order due to lack of
+antisymmetry. Different strings of the same length are all “equivalent” under this relation, but they’re not
+actually equal.
+109 / 246
+Examples of Orders [4]
+Example: Divisibility | on positive integers ℕ+ is a partial order.
+Verification:
+• Reflexive: 𝑛 | 𝑛 for all 𝑛 ∈ ℕ+ (every number divides itself) ✓
+• Antisymmetric: If 𝑎 | 𝑏 and 𝑏 | 𝑎, then 𝑎 = 𝑏 ✓
+‣ If 𝑎 divides 𝑏, then 𝑏 = 𝑎𝑘 for some positive integer 𝑘
+‣ If 𝑏 divides 𝑎, then 𝑎 = 𝑏ℓ for some positive integer ℓ
+‣ Substituting: 𝑏 = 𝑎𝑘 = (𝑏ℓ)𝑘 = 𝑏𝑘ℓ, so 𝑘ℓ = 1
+‣ Since 𝑘, ℓ ∈ ℕ+, we must have 𝑘 = ℓ = 1, hence 𝑎 = 𝑏
+• Transitive: If 𝑎 | 𝑏 and 𝑏 | 𝑐, then 𝑎 | 𝑐 ✓
+‣ If 𝑎 | 𝑏, then 𝑏 = 𝑎𝑘 for some integer 𝑘
+‣ If 𝑏 | 𝑐, then 𝑐 = 𝑏ℓ for some integer ℓ
+‣ Therefore: 𝑐 = 𝑏ℓ = (𝑎𝑘)ℓ = 𝑎(𝑘ℓ), so 𝑎 | 𝑐
+• Connected: ✗
+‣ Counter-example: 2 does not divide 3, and 3 does not divide 2
+This is a partial order but not a total order because some pairs are incomparable.
+110 / 246
+Examples of Orders [5]
+Example: Lexicographic order on strings 𝐴𝑛 (like dictionary order) is a total order.
+Verification:
+• Reflexive: 𝑠 ⪯ 𝑠 for all strings 𝑠 ✓
+‣ A string is lexicographically equal to itself
+• Antisymmetric: If 𝑠 ⪯ 𝑡 and 𝑡 ⪯ 𝑠, then 𝑠 = 𝑡 ✓
+‣ If 𝑠 comes before or equals 𝑡 AND 𝑡 comes before or equals 𝑠, then 𝑠 = 𝑡
+• Transitive: If 𝑠 ⪯ 𝑡 and 𝑡 ⪯ 𝑢, then 𝑠 ⪯ 𝑢 ✓
+‣ Lexicographic comparison preserves transitivity through character-by-character comparison
+• Connected: For any strings 𝑠, 𝑡, either 𝑠 ⪯ 𝑡 or 𝑡 ⪯ 𝑠 ✓
+‣ We can always compare strings lexicographically by comparing character by character
+For binary strings of length 2: 00 ≺ 01 ≺ 10 ≺ 11
+Key property: Every pair of strings is comparable, making this a total order.
+111 / 246
+Partially Ordered Sets
+Definition 47: A partially ordered set (or poset) ⟨𝑆, ≤⟩ is a set 𝑆 equipped with a partial order ≤.
+Example: Consider the poset ⟨𝐷, |⟩ where 𝐷 = {1, 2, 3, 4, 6, 12} and | is divisibility.
+Order relation properties:
+• Reflexive: 𝑛 | 𝑛 for all 𝑛 ∈ 𝐷
+• Antisymmetric: If 𝑎 | 𝑏 and 𝑏 | 𝑎, then 𝑎 = 𝑏
+• Transitive: If 𝑎 | 𝑏 and 𝑏 | 𝑐, then 𝑎 | 𝑐
+12
+4 6
+Special elements:
+• Least element: 1 (divides all others)
+• Greatest element: 12 (divisible by all others)
+• Minimal elements: just 1
+• Maximal elements: just 12
+2 3
+1
+Note: This poset forms a lattice since every pair has a supremum (LCM) and infimum (GCD).
+112 / 246
+Hasse Diagrams
+Definition 48: A Hasse diagram is a visual representation of a poset where:
+• Each element is represented as a vertex.
+• If 𝑥 < 𝑦 and there is no 𝑧 with 𝑥 < 𝑧 < 𝑦, draw an edge from 𝑥 to 𝑦.
+• Elements are arranged vertically by the order relation.
+• Transitive connections are omitted (implied by transitivity of the partial order).
+Example: For 𝐷 = {1, 2, 3, 4, 5, 10, 20, 35} with divisibility |.
+Reading the diagram:
+• 1 divides everything (least element at bottom)
+• Multiple maximal elements: 3, 20, 35 (no single greatest element)
+• Some chains (not necessarily maximal, can skip elements):
+‣ Chain: 1 | 2 | 4 (powers of 2)
+‣ Chain: 1 | 10 | 20 (multiples of 10)
+‣ Chain: 5 | 35 (multiples of 5)
+• Primes 2, 3, 5 are incomparable to each other
+20
+4 10 35
+2 3 5
+1
+113 / 246
+Subset Poset
+Example: For 𝒫︀({𝑎, 𝑏}) = {∅, {𝑎}, {𝑏}, {𝑎, 𝑏}} with inclusion ⊆:
+{𝑎, 𝑏}
+{𝑎} {𝑏}
+∅
+Note: This is the classic “diamond” shape characteristic of Boolean algebras.
+Note: ⟨𝒫︀(𝐴), ⊆⟩ is also called the Boolean lattice.
+114 / 246
+Covering Relation
+Definition 49: In a poset ⟨𝑆, ≤⟩, an element 𝑦 ∈ 𝑆 covers 𝑥 ∈ 𝑆, denoted 𝑥 ⋖ 𝑦, if there is no other
+element in between them:
+𝑥 ⋖ 𝑦 iff Note: “<” denotes the induced strict order:
+𝑥 < 𝑦 iff Note: Hasse diagram is just a graph of a covering relation!
+(𝑥 < 𝑦) ∧ ∄𝑧 ∈ 𝑆. (𝑥 < 𝑧 < 𝑦)
+(𝑥 ≤ 𝑦) ∧ (𝑥 ≠ 𝑦)
+115 / 246
+Maximal and Minimal Elements
+Definition 50: An element 𝑚 ∈ 𝑆 is called a maximal element of a poset ⟨𝑆, ≤⟩ if it is not less than
+any other element, i.e., there is no even greater element.
+∀𝑥 ≠ 𝑚.
+¬(𝑚 ≤ 𝑥) ⟺ ∄𝑥 ≠ 𝑚. (𝑚 ≤ 𝑥)
+Equivelently, ∀𝑥 ∈ 𝑆. (𝑚 ≤ 𝑥) → (𝑚 = 𝑥)
+Definition 51: An element 𝑚 ∈ 𝑆 is called a minimal element of a poset ⟨𝑆, ≤⟩ if it is not greater than
+any other element, i.e., there is no even smaller element.
+∀𝑥 ≠ 𝑚.
+¬(𝑥 ≤ 𝑚) ⟺ ∄𝑥 ≠ 𝑚. (𝑥 ≤ 𝑚)
+Equivelently, ∀𝑥 ∈ 𝑆. (𝑥 ≤ 𝑚) → (𝑥 = 𝑚)
+Note: There may be multiple maximal (or minimal) elements.
+116 / 246
+Example of Maximal and Minimal Elements
+Example: Consider the divisibility poset on 𝑆 = {2, 3, 4, 6, 8, 12}:
+Maximal elements: 8 and 12
+• 8 divides nothing else in 𝑆 except itself
+• 12 divides nothing else in 𝑆 except itself
+Minimal elements: 2 and 3
+• Nothing in 𝑆 properly divides 2 (since 1 ∉ 𝑆)
+• Nothing in 𝑆 properly divides 3
+Note: This poset has no greatest or least element, but multiple minimal/maximal elements.
+Hasse diagram:
+• Maximal elements (8, 12) — they divide nothing else in 𝑆
+• Minimal elements (2, 3) — nothing in 𝑆 divides them
+• Two separate chains: 2 | 4 | 8 and 3 | 6 | 12
+8 12
+4 6
+2 3
+117 / 246
+Example of Maximal and Minimal Elements [2]
+Example: Let 𝑆 = {ab, abc, abd, ac, b, bc} ordered by the prefix relation ⋖:
+𝑥 ⋖ 𝑦 iff 𝑥 is a prefix of 𝑦
+Maximal elements: abc, abd, ac, bc
+• These strings are not prefixes of any other string in 𝑆
+Minimal elements: ab, ac, b
+• These strings have no other string in 𝑆 that is a proper prefix of them
+The Hasse diagram shows three separate “trees” rooted at the minimal elements, with:
+• ab ⋖ abc and ab ⋖ abd
+• b ⋖ bc
+• ac stands alone (no other string extends it in 𝑆)
+“abc” “abd”
+“ac”
+Maximal elements
+Minimal elements
+Both minimal & maximal
+“ab”
+“bc”
+“b”
+118 / 246
+Greatest and Least Elements
+Definition 52: The greatest element of a poset ⟨𝑆, ≤⟩ is an element 𝑔 ∈ 𝑆 that is greater than or equal
+to every other element in 𝑆, i.e., for all 𝑥 ∈ 𝑆, 𝑥 ≤ 𝑔.
+Definition 53: A least element (bottom) 𝑏 satisfies 𝑏 ≤ 𝑥 for all 𝑥 ∈ 𝑆.
+Note: Greatest (top) and least (bottom) elements are unique when they exist.
+Examples:
+• ⟨𝒫︀(𝐴), ⊆⟩: least ∅ (contained in every set), greatest 𝐴 (contains every subset).
+• ⟨ℕ+
+, |⟩: least 1 (divides every positive integer), no greatest element (no integer is divisible by all others).
+• ⟨ℤ, ≤⟩: no least or greatest element (integers extend infinitely in both directions).
+• ⟨{1, 2, 3, 4, 5, 6}, |⟩: least 1, no greatest element, maximal elements are 4, 5, 6 (prime powers and primes
+that don’t divide anything else in the given set).
+119 / 246
+Converse Orders
+Definition 54: The dual (or converse) of a poset ⟨𝑆, ≤⟩ is the poset ⟨𝑆, ≥⟩ where 𝑥 ≥ 𝑦 iff 𝑦 ≤ 𝑥.
+Example: Consider the ℕ+ ordered naturally.
+• For ≤ order:
+‣ The ≤-least element is 1, since it is ≤-smaller than all others.
+‣ 1 is also ≤-minimal, since there are no other element which is ≤-smaller than 1.
+‣ There are no ≤-maximal elements, since the set is unbounded above.
+‣ On the Hasse diagram, 1 is at the bottom, and the diagram extends infinitely upwards.
+• For ≥ order, minimal and maximal elements “flip”:
+‣ There are no ≥-minimal elements. A ≥-minimal element would be an element 𝑚 such that there is no
+other (≥-smaller) element 𝑛 ≠ 𝑚 with 𝑛 ≥ 𝑚. However, for any 𝑚 ∈ ℕ+, there exists 𝑛 = 𝑚 + 1
+which is 𝑛 ≥ 𝑚, so no such ≥-minimal element exists.
+‣ The ≥-greatest element is 1, since all elements are ≥-smaller than it.
+‣ On the Hasse diagram, 1 is at the top, and the diagram extends infinitely downwards.
+120 / 246
+Notes on Converse Orders
+Note:
+• Maximal elements in ⟨𝑆, ≤⟩ become minimal in ⟨𝑆, ≥⟩ and vice versa.
+• Greatest element in ⟨𝑆, ≤⟩ becomes least in ⟨𝑆, ≥⟩ and vice versa.
+• Chains and antichains remain the same in both orders.
+• The Hasse diagram is flipped vertically when taking the dual order.
+‣ For ⟨ℕ+
+, ≤⟩:
+- The least element 1 is at the bottom.
+- The diagram of ⟨ℕ+
+, ≤⟩ extends infinitely upwards.
+‣ In the dual ⟨ℕ+
+, ≥⟩:
+- 1 becomes the greatest element at the top.
+- The diagram of ⟨ℕ+
+, ≥⟩ extends infinitely downwards.
+121 / 246
+Chains and Antichains
+Definition 55: In a partially ordered set ⟨𝑀, ≤⟩:
+• A chain is a subset 𝐶 ⊆ 𝑀 where every two elements are comparable. Formally:
+∀𝑥, 𝑦 ∈ 𝐶. (𝑥 ≤ 𝑦 or 𝑦 ≤ 𝑥)
+• An antichain is a subset 𝐴 ⊆ 𝑀 where no two distinct elements are comparable. Formally:
+∀𝑥, 𝑦 ∈ 𝐴. (𝑥 ≠ 𝑦) → (𝑥 ≰ 𝑦 and 𝑦 ≰ 𝑥)
+Note:
+• Chains correspond to arbitrary paths or sub-sequences in the Hasse diagram.
+• A maximal chain is a chain that cannot be extended by including any other elements from 𝑀.
+• A maximum chain is a chain of the largest possible size in 𝑀.
+• A chain is a totally ordered subset of the poset.
+• An antichain consists of pairwise incomparable elements.
+• Any singleton set is both a chain and an antichain.
+122 / 246
+Examples of Chains and Antichains
+Example: Consider the divisibility poset ⟨𝐷, |⟩ where 𝐷 = {1, 2, 3, 4, 5, 6, 10, 20, 35}.
+Chains: (totally ordered subsets)
+• Maximal chain: {1, 2, 4, 20} — longest path
+• Not maximal: {5, 10}
+• Can skip elements: {1, 5, 20}
+Maximal elements: 3, 20, 35
+Antichains: (pairwise incomparable elements)
+• Maximal antichain: {3, 4, 10, 35}
+• Incomparable on the same level: {2, 5}
+• Incomparable from different levels: {3, 2, 35}
+3
+4
+2
+20
+1
+10
+5
+Dilworth’s theorem: Maximum antichain size (4) = minimum chains needed to cover (4).
+35
+123 / 246
+Examples of Chains and Antichains [2]
+Example: In a Git repository, commits form a poset under the “ancestor” relation:
+• Chain: A sequence of commits on a single branch (linear history).
+• Antichain: Commits on different branches that have diverged (no ancestry relation).
+Practical insight: Merge commits combine multiple antichains back into a single chain.
+124 / 246
+Chains and Antichains in Scheduling
+Example: In project management, tasks form a scheduling poset under the “prerequisite” relation.
+Consider web development tasks: Design, Backend, Frontend, Testing, Deploy, Documentation.
+Dependencies:
+• Design ≺ Back, Front
+• Back, Front ≺ Test
+• Test ≺ Deploy ≺ Doc
+Documentation
+Backend
+Design
+Testing Deploy
+Antichain analysis:
+• {Back, Front} can run in parallel after Design
+• {Deploy, Doc} can run in parallel (final tasks)
+Frontend
+Critical path: Design → Back → Test → Deploy (length 3 max chain)
+Practical insights:
+• Chains = sequential dependencies (critical path)
+• Antichains = tasks for parallel execution (resource allocation)
+• Project duration = length of longest chain
+125 / 246
+Dilworth’s Theorem
+Theorem 10 (Dilworth): In any finite partially ordered set, the maximum size of an antichain equals
+the minimum number of chains needed to cover the entire set.
+Example: Consider the divisibility poset on 𝑃 = {2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60}.
+60
+Maximum antichain: {4, 6, 10, 15} (size 4)
+• These elements are pairwise incomparable (none divides another).
+12 20 30
+Minimum chain decomposition: We need exactly 4 chains that cover 𝑃:
+• Chain 1: 2 | 4 | 12 | 60
+• Chain 2: 3 | 6 | 30
+• Chain 3: 5 | 10 | 20
+• Chain 4: 15 (singleton chain)
+4 6 10 15
+2 3 5
+Each element appears in exactly one chain, forming a partition of 𝑃.
+Dilworth’s theorem: Maximum antichain size (4) = Minimum number of disjoint chains (4). ✓
+126 / 246
+Proof of Dilworth’s Theorem
+Proof: Let ⟨𝑃, ≤⟩ be a finite poset. Let 𝛼 denote the maximum size of an antichain in 𝑃, and let 𝛽 denote
+the minimum number of chains needed to cover 𝑃. We prove 𝛼 = 𝛽 by showing 𝛼 ≤ 𝛽 and 𝛼 ≥ 𝛽.
+Easy part (𝛼 ≤ 𝛽): Suppose 𝑃 can be partitioned into 𝑘 chains 𝐶1, …, 𝐶𝑘. Let 𝐴 be any antichain in 𝑃.
+Since elements in an antichain are pairwise incomparable, each chain contains at most one element of 𝐴.
+Therefore |𝐴| ≤ 𝑘. Taking the maximum over all antichains gives 𝛼 ≤ 𝑘. Since this holds for any chain
+partition, we have 𝛼 ≤ 𝛽. ∎
+127 / 246
+Proof of Dilworth’s Theorem [2]
+Hard part (𝛼 ≥ 𝛽): Let 𝐴 ⊆ 𝑃 be a maximal antichain of size 𝛼.
+We construct a chain partition of 𝑃 of size 𝛼 as follows:
+• Initialize 𝒞︀ ≔ ∅.
+• While 𝑃 ≠ ∅:
+1. Choose a maximal element 𝑥 ∈ 𝑃 (no element above 𝑥 in the remaining poset).
+2. Build a chain 𝐶 ending at 𝑥:
+‣ Start with 𝐶 ≔ {𝑥}.
+‣ Repeatedly add a maximal predecessor element 𝑦 ∈ 𝑃 ∖ 𝐶 such that 𝑦 < current bottom of 𝐶.
+3. Add 𝐶 to 𝒞︀ and remove all elements of 𝐶 from 𝑃.
+By construction:
+• Each 𝐶 ∈ 𝒞︀ is a chain (elements are added only below the current bottom).
+• Chains in 𝒞︀ cover all elements of 𝑃.
+• Each chain contains exactly one element of the maximal antichain 𝐴, so |𝒞︀| = 𝛼.
+Therefore 𝑃 can be covered by 𝛼 chains, giving 𝛽 ≤ 𝛼. □
+128 / 246
+Summary: Orders
+Orders provide structured ways to compare and rank elements:
+• Preorders: Basic comparison (reflexive, transitive)
+• Partial orders: Add antisymmetry for unique comparisons
+• Total orders: Every pair of elements is comparable
+Visualization: Hasse diagrams clearly show structure and hierarchy by omitting redundant transitive
+edges, revealing chains (ordered sequences) and antichains (incomparable elements).
+Applications: Task scheduling • Git version control • Database indexing • Type hierarchies • Boolean
+algebra • Concurrent systems • Build systems (dependency resolution) • Social networks • File system
+permissions • Web page ranking • Package managers • Distributed systems
+129 / 246
+Lattices
+“Order is the shape upon which beauty depends.”
+— Pearl S. Buck
+Alfred Tarski Garrett
+Birkhoff
+Dana Scott Emmy Noether Marshall Stone
+Upper and Lower Bounds
+Definition 56: In a poset ⟨𝑆, ≤⟩, an element 𝑢 ∈ 𝑆 is called an upper bound of a subset 𝐶 ⊆ 𝑆 if it is
+greater than or equal to every element in 𝐶, i.e., for all 𝑥 ∈ 𝐶, 𝑥 ≤ 𝑢.
+Definition 57: In a poset ⟨𝑆, ≤⟩, an element 𝑙 ∈ 𝑆 is called a lower bound of a subset 𝐶 ⊆ 𝑆 if it is
+less than or equal to every element in 𝐶, i.e., for all 𝑥 ∈ 𝐶, 𝑙 ≤ 𝑥.
+Note: In the simplest case, we consider a single-element subset: the upper/lower bounds of 𝐶 = {𝑐} are
+just all elements greater/less than 𝑐 (including 𝑐 itself, since 𝑐 ≤ 𝑐). In a more general case, upper/lower
+bounds must be comparable to all elements in 𝐶.
+131 / 246
+Examples of Bounds
+Example: In ⟨ℤ, ≤⟩ for 𝐶 = {−2, 3, 7}:
+• Lower bounds: all integers ≤ −2, i.e., {…,
+−4,
+−3,
+−2}
+• Upper bounds: all integers ≥ 7, i.e., {7, 8, 9, …}
+Example: In ⟨ℝ, ≤⟩ for interval 𝐶 = (0; 1):
+• Lower bounds: every 𝑥 ≤ 0 (including −∞,
+−1, 0)
+• Upper bounds: every 𝑥 ≥ 1 (including 1, 2, +∞)
+Example: In ⟨𝒫︀({1, 2, 3}), ⊆⟩ for 𝐶 = {{1, 2}, {1, 3}}:
+• Lower bounds: ∅, {1} (subsets of both sets in 𝐶)
+• Upper bounds: {1, 2, 3} (supersets of both sets in 𝐶)
+Example: In divisibility poset for 𝐶 = {4, 6}:
+• Upper bounds: multiples of lcm(4, 6) = 12, i.e., {12, 24, 36, …}
+• Lower bounds: common divisors, i.e., {1, 2}
+132 / 246
+Suprema and Infima
+Definition 58: In a poset ⟨𝑆, ≤⟩, the supremum (or join) of a subset 𝐶 ⊆ 𝑆, denoted sup(𝐶) or ⋁ 𝐶, is
+the least upper bound of 𝐶, i.e., an upper bound 𝑢 ∈ 𝑆 s.t. for any other upper bound 𝑣 ∈ 𝑆, 𝑢 ≤ 𝑣.
+Note: If it exists, the least upper bound is unique.
+Definition 59: In a poset ⟨𝑆, ≤⟩, the infimum (or meet) of a subset 𝐶 ⊆ 𝑆, denoted inf(𝐶) or ⋀ 𝐶, is
+the greatest lower bound of 𝐶, i.e., a lower bound 𝑙 ∈ 𝑆 s.t. for any other lower bound 𝑚 ∈ 𝑆, 𝑚 ≤ 𝑙.
+Note: If it exists, the greatest lower bound is unique.
+Example: ⟨ℝ, ≤⟩:
+• For finite subsets, sup(𝐶) = max(𝐶) and inf(𝐶) = min(𝐶).
+• For infinite subsets: sup((0; 1)) = 1 and inf((0; 1)) = 0 (even though 0, 1 ∉ (0; 1))
+133 / 246
+Examples of Suprema and Infima
+Example: ⟨𝒫︀(𝐴), ⊆⟩:
+• Join: sup(𝒞︀) = ⋃𝑋∈𝒞︀ 𝑋 (union of all sets)
+• Meet: inf(𝒞︀) = ⋂𝑋∈𝒞︀ 𝑋 (intersection of all sets)
+• sup{{1, 2}, {2, 3}, {3, 4}} = {1, 2, 3, 4}
+• inf{{1, 2, 3}, {2, 3, 4}, {3, 4, 5}} = {3}
+Example: Divisibility on ℕ+:
+• Join: sup{𝑎, 𝑏} = lcm(𝑎, 𝑏) (least common multiple)
+• Meet: inf{𝑎, 𝑏} = gcd(𝑎, 𝑏) (greatest common divisor)
+• sup{6, 10} = 30
+• inf{6, 10} = 2
+134 / 246
+Lattices
+Definition 60: A poset ⟨𝑆, ≤⟩ where every non-empty finite subset 𝐶 ⊆ 𝑆 has a join (supremum) is
+called an upper semilattice (or join-semilattice) and denoted ⟨𝑆, ∨⟩.
+Definition 61: A poset ⟨𝑆, ≤⟩ where every non-empty finite subset 𝐶 ⊆ 𝑆 has a meet (infimum) is
+called a lower semilattice (or meet-semilattice) and denoted ⟨𝑆, ∧⟩.
+Definition 62: A poset ⟨𝑆, ≤⟩ that is both an upper semilattice and a lower semilattice, i.e., every non-
+empty finite subset has both a join and a meet, is called a lattice, denoted (𝑆, ∨, ∧).
+Example (Boolean Lattice): ⟨𝒫︀(𝑋), ⊆⟩ is a bounded distributive lattice (𝒫︀(𝑋), ∪, ∩):
+• Elements are subsets of 𝑋, ordered by inclusion (⊆)
+• Join is union (∨ = ∪), meet is intersection (∧ = ∩)
+• Top element is 𝑋 (greatest element), bottom is ∅ (least element)
+135 / 246
+Examples: Small Lattices
+Boolean Lattice 𝐵1
+⊤
+Diamond Lattice 𝑀3
+⊤
+Pentagon Lattice 𝑁5
+⊤
+𝑎 𝑏 𝑐
+𝑎
+⊥
+𝑐
+𝑏
+⊥
+⊥
+Operations:
+• ⊤ ∨ ⊤ = ⊤
+• ⊥ ∨ ⊥ = ⊥
+• ⊥ ∨ ⊤ = ⊤
+• ⊥ ∧ ⊤ = ⊥
+• Smallest non-distributive
+• But modular!
+Smallest non-modular: for 𝑏 ≤ 𝑐:
+𝑏 ∨ (𝑎 ∧ 𝑐) = 𝑏
+(𝑏 ∨ 𝑎) ∧ 𝑐 = 𝑐} 𝑏 ≠ 𝑐 ✗
+Key insight: These small lattices are fundamental building blocks. Many properties (distributivity,
+modularity) can be characterized by whether these appear as sublattices.
+136 / 246
+Counterexamples: Not All Posets Are Lattices!
+No Supremum
+⊤
+𝑡1 𝑡2
+No Infimum
+𝑥 𝑦
+No Bounds
+𝑥 𝑦
+{𝑥, 𝑦} does not have any
+upper/lower bounds
+Not a lattice ✗
+𝑥 𝑦
+{𝑥, 𝑦} has two minimal
+upper bounds: 𝑡1 and 𝑡2
+Not a lattice ✗
+𝑏1 𝑏2
+⊥
+{𝑥, 𝑦} has two maximal
+lower bounds: 𝑏1 and 𝑏2
+Not a lattice ✗
+Warning: A poset must have unique least upper bounds and greatest lower bounds for every pair of
+elements to be a lattice. Even one missing join or meet makes it not a lattice!
+137 / 246
+Why Lattices?
+Why study lattices? Whenever you have:
+• Elements that can be compared (ordered)
+• Ways to combine elements (join, meet)
+• Consistent behavior under combination
+…you likely have a lattice!
+This structure appears in programming languages, databases, security systems, logic circuits, and
+many other areas of computer science and mathematics.
+138 / 246
+Properties of Lattices
+Definition 63: A lattice is bounded if it has a greatest element ⊤ and a least element ⊥.
+Example:
+• ⟨𝒫︀(𝐴), ⊆⟩: bounded with ⊤ = 𝐴, ⊥ = ∅
+• ⟨ℕ+
+, ∣⟩: bounded below (⊥ = 1) but not above (no element divisible by all)
+• ⟨ℤ, ≤⟩: not bounded (no maximum or minimum)
+139 / 246
+Distributive Lattices
+Definition 64: A lattice is distributive if it satisfies the distributive laws:
+𝑥 ∧ (𝑦 ∨ 𝑧) = (𝑥 ∧ 𝑦) ∨ (𝑥 ∧ 𝑧)
+𝑥 ∨ (𝑦 ∧ 𝑧) = (𝑥 ∨ 𝑦) ∧ (𝑥 ∨ 𝑧)
+Note: In a lattice, one law implies the other.
+Example: 𝐵1 is distributive
+Check:
+• 0 ∧ (0 ∨ 1) = 0 ∧ 1 = 0
+• (0 ∧ 0) ∨ (0 ∧ 1) = 0 ∨ 0 = 0
+• 0 = 0 ✓
+• Similarly for dual law
+All Boolean algebras are distributive.
+1
+0
+140 / 246
+1
+Non-Distributive Lattices
+Example: 𝑀3 is not distributive
+Check:
+• 𝑎 ∧ (𝑏 ∨ 𝑐) = 𝑎 ∧ 1 = 𝑎
+• (𝑎 ∧ 𝑏) ∨ (𝑎 ∧ 𝑐) = 0 ∨ 0 = 0
+• 𝑎 ≠ 0 ✗
+𝑎 𝑏 𝑐
+The diamond 𝑀3 is the forbidden sublattice for distributivity.
+A lattice is distributive if and only if it does not have a sublattice isomorphic to 𝑀3 or 𝑁5.
+0
+141 / 246
+Distributive Lattices: Applications
+Example: In compiler optimization, interprocedural dataflow analysis uses distributive lattices:
+• Elements: Sets of dataflow facts (e.g., “variable 𝑥 is constant”, “pointer 𝑝 may be null”)
+• Order: 𝑆1 ≤ 𝑆2 if 𝑆1 ⊆ 𝑆2 (subset of facts)
+• Join: 𝑆1 ∨ 𝑆2 = 𝑆1 ∪ 𝑆2 (merge facts from different paths)
+• Meet: 𝑆1 ∧ 𝑆2 = 𝑆1 ∩ 𝑆2 (common facts)
+Why distributivity matters?
+• Distributivity ensures that 𝑓(𝑥 ∨ 𝑦) = 𝑓(𝑥) ∨ 𝑓(𝑦) for flow functions 𝑓.
+• This allows separate analysis of different execution paths with guaranteed precision when merged.
+• IFDS (Interprocedural, Finite, Distributive, Subset) problems (e.g., reachability, taint analysis) are
+solvable in polynomial time precisely because the lattice is distributive!
+142 / 246
+Modular Lattices
+Definition 65: A lattice is modular if for all 𝑥, 𝑦, 𝑧 with 𝑥 ≤ 𝑧:
+𝑥 ∨ (𝑦 ∧ 𝑧) = (𝑥 ∨ 𝑦) ∧ 𝑧
+Note: Every distributive lattice is modular, but not vice versa.
+Example: Diamond lattice 𝑀3 is modular.
+For 𝑎 ≤ 1:
+• 𝑎 ∨ (𝑏 ∧ 1) = 𝑎 ∨ 𝑏 = 1
+• (𝑎 ∨ 𝑏) ∧ 1 = 1 ∧ 1 = 1
+• 1 = 1 ✓
+Note: 𝑀3 is modular but NOT distributive!
+1
+𝑎 𝑏 𝑐
+0
+143 / 246
+Non-Modular Lattices
+Example: Pentagon lattice 𝑁5 is not modular.
+For 𝑏 ≤ 𝑐:
+• 𝑏 ∨ (𝑎 ∧ 𝑐) = 𝑏 ∨ 0 = 𝑏
+• (𝑏 ∨ 𝑎) ∧ 𝑐 = 1 ∧ 𝑐 = 𝑐
+• 𝑏 ≠ 𝑐 ✗
+𝑎
+The pentagon 𝑁5 is the forbidden sublattice for modularity.
+1
+0
+A lattice is modular if and only if it does not have a sublattice isomorphic to 𝑁5.
+𝑐
+𝑏
+144 / 246
+Modular Lattices: Applications
+Hierarchy: Lattice ⇒ Modular ⇒ Distributive
+Each level adds structure and enables different applications.
+Example: The subspaces of a vector space 𝑉 , ordered by inclusion, form a modular lattice.
+• Elements: subspaces 𝑈, 𝑊, 𝑍 ⊆ 𝑉
+• Join: 𝑈 ∨ 𝑊 = 𝑈 + 𝑊 (sum / span of 𝑈 ∪ 𝑊)
+• Meet: 𝑈 ∧ 𝑊 = 𝑈 ∩ 𝑊
+For any two subspaces 𝑈, 𝑊 of 𝑉 , we have the dimension formula:
+dim(𝑈 + 𝑊) = dim(𝑈) + dim(𝑊) − dim(𝑈 ∩ 𝑊)
+This expresses how dimensions “add up” when combining subspaces.
+This is exactly the modular law in disguise!
+The modular law governs how join (+) and meet (∩) interact when one subspace is contained in another.
+145 / 246
+Modular Lattices: Applications [2]
+Modular law: Whenever 𝑈 ⊆ 𝑍, we have: 𝑈 ∨ (𝑊 ∧ 𝑍) = (𝑈 ∨ 𝑊) ∧ 𝑍
+Proof: We show both inclusions of the equality: 𝑈 + (𝑊 ∩ 𝑍) = (𝑈 + 𝑊) ∩ 𝑍
+Step 1 (⊆):
+• Suppose 𝑥 ∈ 𝑈 + (𝑊 ∩ 𝑍).
+• Then 𝑥 = 𝑢 + 𝑤′ for some 𝑢 ∈ 𝑈, 𝑤′ ∈ 𝑊 ∩ 𝑍.
+• Since 𝑢 ∈ 𝑈 ⊆ 𝑍 and 𝑤′ ∈ 𝑍, we have 𝑥 ∈ 𝑍.
+• Also 𝑥 ∈ 𝑈 + 𝑊, hence 𝑥 ∈ (𝑈 + 𝑊) ∩ 𝑍.
+Step 2 (⊇):
+• Suppose 𝑥 ∈ (𝑈 + 𝑊) ∩ 𝑍.
+• Then 𝑥 = 𝑢 + 𝑤 for some 𝑢 ∈ 𝑈, 𝑤 ∈ 𝑊, and 𝑥 ∈ 𝑍.
+• Because 𝑈 ⊆ 𝑍, we have 𝑢 ∈ 𝑍, so 𝑤 = 𝑥 − 𝑢 ∈ 𝑍.
+• Thus 𝑤 ∈ 𝑊 ∩ 𝑍, and therefore 𝑥 = 𝑢 + 𝑤 ∈ 𝑈 + (𝑊 ∩ 𝑍).
+Combining both directions, we conclude: 𝑈 + (𝑊 ∩ 𝑍) = (𝑈 + 𝑊) ∩ 𝑍. □
+Interpretation: “Joining 𝑈 and 𝑊, then cutting by 𝑍” equals “cutting 𝑊 by 𝑍, then joining with 𝑈”.
+146 / 246
+Example: Divisibility Lattice
+Positive integers form a lattice under divisibility relation: 𝑎 ≤ 𝑏 iff 𝑎 divides 𝑏.
+• Join (LCM): 6 ∨ 10 = lcm(6, 10) = 30
+• Meet (GCD): 6 ∧ 10 = gcd(6, 10) = 2
+• Bottom element: 1 (divides everything)
+• No top element: No positive integer is divisible by all others
+‣ If we include 0: then 0 is the top (divisible by all!)
+Applications:
+• Number theory and cryptography (RSA key generation)
+• Computer algebra systems (polynomial GCD algorithms)
+• Scheduling problems (finding common time periods)
+0
+8 12 20⋯
+4 6 10⋯
+2 3 5⋯
+1
+Lattices aren’t just abstract algebra — they appear everywhere in computer science and mathematics.
+The join and meet operations capture fundamental patterns of combination and interaction.
+147 / 246
+Example: File System Permissions
+Unix file permissions form a lattice under inclusion.
+• Elements: Sets of permissions like {𝑟, 𝑤, 𝑥}, {𝑟, 𝑥}, {𝑤}, etc.
+• Order: 𝑃1 ≤ 𝑃2 if 𝑃1 ⊆ 𝑃2 (fewer permissions ⇒ more restrictive)
+• Join: Union of permissions (less restrictive)
+‣ For example: {read} ∨ {execute} = {read, execute}
+• Meet: Intersection of permissions (more restrictive)
+‣ For example: {read, write} ∧ {write, execute} = {write}
+7: rwx
+6: rw- 5: r-x 3: -wx
+4: r-- 2: -w- 1: --x
+0: ---
+148 / 246
+Example: Partition Lattice
+All partitions of a set 𝑆, ordered by refinement, form a lattice.
+{1, 2, 3}• Elements: Partitions like (12 | 3), (1 | 23), (1 | 2 | 3), etc.
+• Order: 𝜋1 ≤ 𝜋2 if 𝜋1 is a refinement of 𝜋2 (smaller blocks)
+• Join: Finest common coarsening
+‣ For example: (12 | 3) ∨ (1 | 23) = (123)
+• Meet: Coarsest common refinement
+‣ For example: (12 | 3) ∧ (1 | 23) = (1 | 2 | 3)
+{1, 2}, {3} {1, 3}, {2} {1}, {2, 3}
+{1}, {2}, {3}
+149 / 246
+Example: Type Systems as Lattices
+In programming language theory, types form a lattice under the subtyping relation ⊑.
+The subtyping relation 𝜏1 ⊑ 𝜏2 means “𝜏1 is more specific than 𝜏2” (values of type 𝜏1 can be safely
+used where type 𝜏2 is expected).
+Join and meet operations solve type inference problems of finding common supertypes and subtypes.
+Consider a type system with numeric, boolean, and
+collection types:
+any
+number bool collection
+int float array map
+Lattice operations:
+Join (∨): most specific common supertype
+• int∨ float= number
+• int∨ bool= any
+• array∨ map= collection
+Meet (∧): most general common subtype
+• number∧ collection= ⊥ (bottom type)
+• int∧ number= int
+150 / 246
+Example: Type Systems as Lattices [2]
+Example (Type inference in conditionals): The code snippet below shows how join operations automatically
+compute types in conditional expressions:
+let x = cond ? 42 : 3.14 let y = cond ? x : true // type: int ∨ float = number`
+// type: number ∨ bool = any`
+The join operation gives the least upper bound type.
+Example (Generic function bounds): Bounds in generic functions constrain what types can be passed:
+<T extends Number> void process(T x) // Java
+def f[T <: Number](x: T) // Scala
+The type checker verifies that 𝑇 ⊑ Number by checking lattice relationships.
+Note: Lattice-based type systems enable gradual typing (mixing typed and untyped code) and
+sophisticated type inference. Examples: TypeScript, Flow, Dart, Cython, mypy.
+151 / 246
+Complemented Lattices
+Definition 66: A lattice is complemented if for every element 𝑥 there exists an element 𝑦 (called the
+complement of 𝑥) such that:
+𝑥 ∨ 𝑦 = ⊤
+𝑥 ∧ 𝑦 = ⊥
+Note: Complements may not be unique in general!
+152 / 246
+Boolean Algebras
+Definition 67: A Boolean algebra is a complemented distributive lattice (𝐵, ∨, ∧,
+• a set 𝐵
+• with two binary operations ∨ (join) and ∧ (meet),
+• a unary operation ¬ (complement),
+• and two distinguished elements ⊤ (top) and ⊥ (bottom).
+¬
+, ⊤, ⊥):
+Note: The complement ¬𝑥 is unique for each 𝑥 in a Boolean algebras!
+Example: 𝐵1 = 𝟐 = ({0, 1}, ∨, ∧,
+¬
+, 1, 0) is the two-element Boolean algebra (0 = false, 1 = true).
+Isomorphic to (same structure up to renaming):
+𝑥 𝑦 𝑥 ∨ 𝑦 𝑥 ∧ 𝑦 ¬𝑥
+• Classical semantics: ({0, 1}, max, min, 1 − 𝑥)
+• Algebra on sets: (𝒫︀({⋆}), ∪, ∩, ∁)
+• GF(2) algebra: ({0, 1}, ⊕, ∧, 1 ⊕ 𝑥)
+0 0 0 1 1 0 1 1 0 0 1
+1 0 1
+1 0 0
+1 1 0
+153 / 246
+Boolean Lattices as Boolean Algebras
+Example: Boolean lattice 𝐵3 = (𝒫︀({𝑎, 𝑏, 𝑐}), ∪, ∩, 𝑋) is a Boolean algebra.
+Elements: Subsets of {𝑎, 𝑏, 𝑐} ordered by inclusion (⊆)
+Operations:
+• Join: 𝐴 ∨ 𝐵 = 𝐴 ∪ 𝐵
+• Meet: 𝐴 ∧ 𝐵 = 𝐴 ∩ 𝐵
+• Complement: ¬𝐴 = 𝐴 = {𝑎, 𝑏, 𝑐} ∖ 𝐴
+• Top: {𝑎, 𝑏, 𝑐}
+• Bottom: ∅
+Check: {𝑎} ∨ ¬{𝑎} = {𝑎} ∪ {𝑏, 𝑐} = {𝑎, 𝑏, 𝑐} = ⊤ ✓
+{𝑎, 𝑏, 𝑐}
+{𝑎, 𝑏} {𝑎, 𝑐} {𝑏, 𝑐}
+{𝑎} {𝑏} {𝑐}
+∅
+Stone’s Representation Theorem: Every Boolean algebra is isomorphic to a Boolean algebra of sets.
+154 / 246
+Boolean Algebras: Applications
+Digital Circuit Design
+Boolean algebras model logic gates:
+• Variables: Input signals (0/1, false/true)
+• Join: OR gate (∨)
+• Meet: AND gate (∧)
+• Complement: NOT gate (¬)
+Applications: CPU design, memory circuits,
+FPGA programming
+Key insight: Boolean algebras unify:
+• Set theory (powerset operations)
+• Logic (propositional calculus)
+• Circuits (digital hardware)
+Propositional Logic
+Boolean algebras formalize logical reasoning:
+• Elements: Truth values or propositions
+• Join: Logical OR (𝑝 ∨ 𝑞)
+• Meet: Logical AND (𝑝 ∧ 𝑞)
+• Complement: Negation (¬𝑝)
+Connection to lattices:
+• 𝜑 ≤ 𝜓 means “𝜑 implies 𝜓”
+• Disjunction is join (weaker formula)
+• Conjunction is meet (stronger formula)
+Applications: SAT solvers, theorem provers,
+formal verification
+155 / 246
+Summary: Lattice Theory
+Core definitions:
+• Lattice: Poset where every pair has a unique join (sup) and meet (inf)
+• Bounded lattice: Has top (⊤) and bottom (⊥) elements
+• Distributive lattice: Satisfies 𝑥 ∧ (𝑦 ∨ 𝑧) = (𝑥 ∧ 𝑦) ∨ (𝑥 ∧ 𝑧)
+• Modular lattice: Each 𝑥 ≤ 𝑧 satisfies 𝑥 ∨ (𝑦 ∧ 𝑧) = (𝑥 ∨ 𝑦) ∧ 𝑧
+• Boolean algebra: Complemented distributive lattice with 𝑥 ∨ ¬𝑥 = ⊤, 𝑥 ∧ ¬𝑥 = ⊥
+Key properties:
+• Distributive lattice ⟺ no 𝑀3 or 𝑁5 sublattice
+• Modular lattice ⟺ no 𝑁5 sublattice
+• Stone’s theorem: Every Boolean algebra is isomorphic to some powerset 𝒫︀(𝑆)
+156 / 246
+Hierarchy of Lattice Structures
+Key Examples of Lattices:
+• 𝐵𝑛
+= 𝒫︀({𝑥1, …, 𝑥𝑛}): Boolean lattice
+‣ Boolean algebra of sets
+‣ Universal model (by Stone’s theorem)
+• 𝟐 = 𝐵1: Two-element Boolean algebra
+‣ Distributive ✓
+‣ Models: logic, circuits, sets
+• 𝑴𝟑: Diamond lattice
+‣ Modular ✓, but NOT distributive ✗
+‣ Forbidden for distributivity
+• 𝑵𝟓: Pentagon lattice
+‣ Lattice ✓, but NOT modular ✗
+‣ Forbidden for modularity
+Boolean Algebra
+Distributive
+Modular
+Bounded
+Lattice
+Semilattice
+Poset
+157 / 246
+Summary: Applications of Lattices
+Main applications:
+• Program analysis: Dataflow analysis (IFDS framework), abstract interpretation
+• Type systems: Subtyping, type inference, generic programming
+• Digital circuits: Logic gate design, circuit optimization, BDDs
+• Abstract algebra: Subspace lattices in linear algebra
+• Logic: Propositional calculus, SAT solvers, theorem proving
+Connection to next topics:
+• Well Orders: Special total orders where every subset has a minimum
+• Cardinality: Comparing sizes of infinite sets using bijections
+• Boolean Algebra: Deep dive into axioms, laws, circuits, and applications
+• Formal Logic: Lattices provide algebraic semantics for logical systems
+158 / 246
+Well Orders
+“Every set can be well-ordered.”
+— Ernst Zermelo (Axiom of Choice)
+Well-Ordered Sets
+Definition 68: A poset ⟨𝑀, ≤⟩ is well-ordered if every non-empty subset 𝑆 ⊆ 𝑀 has a least element.
+Formally: ∀𝑆 ⊆ 𝑀. (𝑆 ≠ ∅) → (∃𝑚 ∈ 𝑆. ∀𝑥 ∈ 𝑆. 𝑚 ≤ 𝑥)
+The key property: No matter how you pick elements from a well-ordered set, there’s always a “first”
+one in any selected subset.
+This is stronger than just having a minimum — well-ordering means you can’t descend infinitely!
+Note: A well-ordered set is automatically a total order (any two elements are comparable).
+160 / 246
+Examples: Well-Ordered vs Not
+Example (The natural numbers): ℕ = {0, 1, 2, 3, …} with ≤ is well-ordered:
+• {5, 17, 23, 100} has least element 5
+• {2, 4, 6, 8, …} has least element 2
+• Even {𝑛 ∈ ℕ | 𝑛 ≥ 1000} has least element 1000
+Why this matters: You can always find a “starting point” in any subset!
+Example (The integers): ℤ with ≤ is NOT well-ordered:
+• {−1,
+−2,
+−3, …} has no minimum
+• ℤ itself has no least element
+• Can descend forever: 0 > −1 > −2 > −3 > …
+The problem: Negative numbers allow infinite descent.
+Intuition: Well-ordering prevents “falling forever.” Every subset has a floor you can’t go below.
+161 / 246
+Example: Ordinals
+Example (Ordinal numbers): Ordinals extend natural numbers into the transfinite:
+• 𝜔 = all natural numbers: 0, 1, 2, 3, …
+• 𝜔 + 1 = natural numbers plus one more element “at the end”
+• 𝜔 + 2 = 𝜔 + 1 plus another element
+• 𝜔 ⋅ 2 = two copies of 𝜔 in sequence
+• 𝜔2
+, 𝜔3
+, …, 𝜔𝜔
+, …
+Each ordinal is well-ordered, and ordinals themselves are well-ordered!
+Key insight: Ordinals provide a canonical way to label positions in well-ordered sets.
+162 / 246
+Example: String Orderings
+Two common ways to order finite strings over an alphabet:
+Definition 69 (Shortlex order): Compare by length first, then alphabetically:
+𝜀 ≺ a ≺ b ≺ … ≺ aa ≺ ab ≺ …
+Well-ordered: Every set has a shortest string, ties broken alphabetically.
+Example: {cat, dog, ox, zebra} has minimum “ox” (shortest).
+Definition 70 (Dictionary order): Compare alphabetically only, ignoring length:
+a ≺ aa ≺ aaa ≺ … ≺ b ≺ ba ≺ …
+NOT well-ordered: {b, ab, aab, aaab, …} has no minimum!
+Infinite descent: b ≻ ab ≻ aab ≻ … (because a < b alphabetically).
+163 / 246
+Well-Ordering Enables Induction
+Theorem 11: Let ⟨𝑆, ≤⟩ be a well-ordered set. For any property 𝑃, if
+∀𝑥 ∈ 𝑆. (∀𝑦 < 𝑥. 𝑃(𝑦)) → 𝑃(𝑥)
+then 𝑃(𝑥) holds for all 𝑥 ∈ 𝑆.
+Proof: Assume the hypothesis holds but 𝑃 fails for some elements.
+Let 𝑇 = {𝑥 ∈ 𝑆 | ¬𝑃(𝑥)} be the set of counterexamples.
+Since 𝑆 is well-ordered, 𝑇 has a least element 𝑚. This element 𝑚 is the smallest counterexample to 𝑃.
+Then 𝑃(𝑘) holds for all 𝑘 < 𝑚 (otherwise 𝑚 wouldn’t be least).
+By hypothesis, this implies 𝑃(𝑚) holds — contradicting 𝑚 ∈ 𝑇!
+Therefore 𝑇 = ∅. □
+164 / 246
+Two Forms of Induction on ℕ
+Definition 71 (Weak Induction): To prove ∀𝑛 ∈ ℕ. 𝑃(𝑛):
+• Base: Prove 𝑃(0)
+• Step: For any 𝑛, prove 𝑃(𝑛) → 𝑃(𝑛 + 1)
+Definition 72 (Strong Induction): To prove ∀𝑛 ∈ ℕ. 𝑃(𝑛):
+• For any 𝑛, assume 𝑃(𝑘) for all 𝑘 < 𝑛, then prove 𝑃(𝑛)
+Note: These are equivalent for ℕ. The difference is convenience:
+• Weak: uses only 𝑃(𝑛 − 1) to prove 𝑃(𝑛)
+• Strong: can use any 𝑃(𝑘) with 𝑘 < 𝑛 to prove 𝑃(𝑛)
+Example:
+• Weak: Proving ∑𝑛
+𝑛(𝑛+1)
+𝑖=0 𝑖 =
+2 (only need 𝑃(𝑛) for 𝑃(𝑛 + 1))
+• Strong: Proving Fibonacci formula (need 𝑃(𝑛 − 1) and 𝑃(𝑛 − 2) for 𝑃(𝑛))
+165 / 246
+Well-Ordering Principle
+Definition 73 (Well-Ordering Principle (WOP)): Every non-empty subset of ℕ has a least element.
+Example:
+• {5, 10, 15, 20, …} has least element 5
+• {𝑛 ∈ ℕ | 𝑛2 > 100} has least element 11
+• {𝑛 ∈ ℕ | 𝑛 is prime} has least element 2
+Note: WOP is an axiom in Peano arithmetic, not provable from simpler principles.
+Key: If a property fails, there’s a smallest counterexample — this makes proof by contradiction work.
+166 / 246
+WOP = Induction
+Theorem 12: Well-Ordering Principle ⟺ Mathematical Induction
+Proof (WOP ⟹ Induction): Suppose WOP holds. To prove ∀𝑛 ∈ ℕ. 𝑃(𝑛), assume 𝑃 fails.
+Let 𝑆 = {𝑛 ∈ ℕ | ¬𝑃(𝑛)}. By WOP, 𝑆 has a least element 𝑚.
+Then 𝑃(𝑘) holds for all 𝑘 < 𝑚 (since 𝑚 is least in 𝑆).
+By the induction hypothesis, 𝑃(𝑚) holds — contradicting 𝑚 ∈ 𝑆! □
+Note: The reverse (Induction ⟹ WOP) can be proven similarly.
+167 / 246
+Well-Founded Relations
+Well-ordering requires total comparability. Can we relax this?
+Definition 74: A relation 𝑅 ⊆ 𝑀2 is well-founded if every non-empty subset has a minimal element.
+Formally: ∀𝑆 ⊆ 𝑀. (𝑆 ≠ ∅) → (∃𝑚 ∈ 𝑆. ∀𝑥 ∈ 𝑆. 𝑥 𝑅 𝑚)
+Note: Well-ordered ≠ Well-founded
+• Well-ordered: unique least element (total order)
+• Well-founded: one or more minimal elements (may be incomparable)
+• Every well-ordered set is well-founded, but not vice versa.
+Key insight: Both prevent infinite descent, but well-founded allows incomparable elements.
+168 / 246
+Example: Well-Founded but Not Well-Ordered
+Example: Proper subset (⊂) relation on 𝑀 = {∅, {𝑎}, {𝑏}, {𝑎, 𝑏}}
+Is it well-founded? ✓
+• Consider 𝑆 = {{𝑎}, {𝑏}, {𝑎, 𝑏}}
+• Minimal elements: {𝑎} and {𝑏} (nothing in 𝑆 is a proper subset of both)
+• Note: {𝑎, 𝑏} is not minimal
+Is it well-ordered? ✗
+• {𝑎} and {𝑏} are incomparable
+• No unique least element in 𝑆
+{𝑎, 𝑏}
+{𝑎} {𝑏}
+∅
+Difference: Well-founded allows multiple incomparable minimals; well-ordered requires unique least.
+169 / 246
+Example: Divisibility Poset
+Example: Consider ⟨ℕ+
+, |⟩ with the divisibility relation.
+Take the subset {4, 6, 8, 12, 18}:
+Minimal elements: 4 and 6
+• No divisors of 4 or 6 in this set
+• They’re incomparable: 4 ∤ 6 and 6 ∤ 4
+Conclusion:
+• Well-founded: every subset has minimals ✓
+• Well-ordered: no unique least ✗
+8 12 18
+4 6
+170 / 246
+Example: Set Membership ∈
+Definition 75: In ZFC set theory, the Axiom of Regularity (also called Foundation) states:
+∀𝑆 ≠ ∅. ∃𝑥 ∈ 𝑆. (𝑥 ∩ 𝑆 = ∅)
+Every non-empty set contains an element disjoint from itself.
+Equivalently, every non-empty set has an ∈-minimal element.
+Examples:
+• {∅} has minimal ∅
+• {{∅}, {{∅}}} has minimal {∅}
+• {{1}, {2}} has two minimals: {1} and {2}
+• {1, 2, 3} has minimal 1 (since 1 ∈ 2 and 1 ∈ 3)
+Key properties of ∈:
+• Well-founded? ✓ (by Regularity)
+• Well-ordered? ✗ (e.g. {1} ∉ {2} and {2} ∉ {1})
+• No infinite descent (… ∈ 𝑥2 ∈ 𝑥1 ∈ 𝑥0)
+• No self-membership (𝑥 ∈ 𝑥)
+• No cycles (𝑥 ∈ 𝑦 ∈ 𝑥)
+• ∈-induction!
+171 / 246
+Example: Program Termination
+def factorial(n):
+if n == 0: return 1
+return n * factorial(n-1)
+Claim: factorial terminates for all 𝑛 ∈ ℕ.
+Proof:
+• Recursive calls form a chain: 𝑛 → (𝑛 − 1) → (𝑛 − 2) → … → 1 → 0
+• This is a descending chain in ⟨ℕ, <⟩
+• Since ⟨ℕ, <⟩ is well-founded, no infinite descent
+• Therefore, recursion terminates! □
+Application: Verification tools (Dafny, Coq, Agda, Lean) use well-founded relations to prove
+termination of recursive functions.
+172 / 246
+Well-Founded Induction
+Definition 76: Let ⟨𝑆, ≺⟩ be well-founded. To prove ∀𝑥 ∈ 𝑆. 𝑃(𝑥), show:
+∀𝑥 ∈ 𝑆. (∀𝑦 ≺ 𝑥. 𝑃(𝑦)) → 𝑃(𝑥)
+Key insight: Assume 𝑃(𝑦) for all 𝑦 “smaller” than 𝑥, then prove 𝑃(𝑥).
+This generalizes strong induction — “smaller” is defined by ≺ instead of <.
+Note: Also called: Noetherian induction, transfinite induction (on ordinals).
+173 / 246
+Proof of Well-Founded Induction
+Proof: Assume the hypothesis but suppose 𝑃 fails.
+Let 𝑆′
+= {𝑥 ∈ 𝑆 | ¬𝑃(𝑥)}. Since ⟨𝑆, ≺⟩ is well-founded, 𝑆′ has a minimal element 𝑥0.
+For any 𝑦 ≺ 𝑥0: since 𝑥0 is minimal, 𝑦 ∉ 𝑆′, so 𝑃(𝑦) holds.
+By hypothesis: (∀𝑦 ≺ 𝑥0. 𝑃(𝑦)) → 𝑃(𝑥0).
+So 𝑃(𝑥0) holds — contradicting 𝑥0 ∈ 𝑆′! □
+Pattern:
+• Well-foundedness gives minimal counterexample
+• ⇒ minimality makes hypothesis applicable
+• ⇒ contradiction
+174 / 246
+Example: Termination via Well-Founded Induction
+def process(S):
+if S == ∅: return "done"
+x = S.pop()
+return process(S)
+Claim: process(S) terminates for all finite 𝑆.
+Proof: Use well-founded induction on ⟨𝒫︀ fin, ⊂⟩ (finite sets ordered by proper inclusion).
+Assume process(T) terminates for all 𝑇 ⊂ 𝑆 (strictly smaller sets).
+• If 𝑆 = ∅: returns immediately ✓
+• If 𝑆 ≠ ∅: recursive call uses 𝑆 ∖ {𝑥} ⊂ 𝑆, which terminates by hypothesis ✓
+Therefore process(S) terminates for all finite 𝑆. □
+Note: The relation ⊂ on finite sets is well-founded but not well-ordered (sets {1} and {2} are
+incomparable).
+175 / 246
+Special Cases of Well-Founded Induction
+Name Structure “Smaller” means
+Strong induction ⟨ℕ, >⟩ Numerically less
+Transfinite induction Ordinals Earlier in order
+Structural induction Trees, lists Proper substructure
+Example (Structural induction on trees):
+data Tree a = Empty | Node (Tree a) a (Tree a)
+To prove 𝑃(tree) for all trees:
+• Base: Prove 𝑃(Empty) (empty tree)
+• Step: Assume 𝑃(𝐿) and 𝑃(𝑅), prove 𝑃(Node(𝐿, 𝑣, 𝑅))
+The “subtree” relation is well-founded.
+176 / 246
+Induced Strict Orders
+To discuss chain conditions, we need strict orders derived from partial orders.
+Definition 77 (Induced Strict Order): From any partial order ≤, we induce a strict order:
+𝑥 < 𝑦 iff 𝑥 ≤ 𝑦 and 𝑥 ≠ 𝑦
+Similarly, 𝑥 > 𝑦 means 𝑦 < 𝑥 (the converse).
+Convetion: For any poset ⟨𝑆, ≤⟩, we freely use < and > for induced strict orders.
+This lets us express strictly ascending/descending sequences: 𝑥1 < 𝑥2 < 𝑥3 < …
+Example:
+• In ⟨ℕ, ≤⟩: 3 < 5 means 3 ≤ 5 and 3 ≠ 5
+• In ⟨𝒫︀(𝑀), ⊆⟩: {𝑎} < {𝑎, 𝑏} means {𝑎} ⊆ {𝑎, 𝑏} and {𝑎} ≠ {𝑎, 𝑏}
+177 / 246
+Descending Chain Condition (DCC)
+Definition 78: A poset ⟨𝑆, ≤⟩ satisfies DCC if there are no infinite strictly descending chains:
+𝑥1 > 𝑥2 > 𝑥3 > 𝑥4 > …
+Example: ⟨ℕ, ≤⟩ satisfies DCC:
+Any descending sequence eventually stabilizes at 0.
+Intuition: “Can’t fall forever” — every descent hits bottom or stabilizes.
+178 / 246
+Well-Founded ⟺ DCC
+Theorem 13: 𝑅 is well-founded ⟺ 𝑅 satisfies DCC
+Proof (Well-founded ⟹ DCC): Suppose infinite descending chain 𝑥0 > 𝑥1 > 𝑥2 > … exists.
+Let 𝑇 = {𝑥0, 𝑥1, 𝑥2, …}. By well-foundedness, 𝑇 has minimal 𝑥𝑘.
+But 𝑥𝑘 > 𝑥𝑘+1 contradicts minimality! □
+Proof (DCC ⟹ Well-founded): Let 𝑇 ⊆ 𝑆 be non-empty. Pick 𝑥0 ∈ 𝑇.
+If 𝑥0 is not minimal, pick 𝑥1 ∈ 𝑇 with 𝑥1 < 𝑥0. Repeat.
+If this continues forever, we get infinite descent 𝑥0 > 𝑥1 > 𝑥2 > …, contradicting DCC. □
+179 / 246
+Ascending Chain Condition (ACC)
+Definition 79: A poset satisfies ACC if no infinite strictly ascending chains exist:
+𝑥1 < 𝑥2 < 𝑥3 < 𝑥4 < …
+Example:
+• ⟨ℕ, ≤⟩ does NOT satisfy ACC: 0 < 1 < 2 < 3 < …
+• ⟨𝒫︀(ℕ), ⊆⟩ satisfies neither ACC nor DCC:
+‣ ACC fails: ∅ ⊂ {1} ⊂ {1, 2} ⊂ …
+‣ DCC fails: ℕ ⊃ ℕ ∖ {1} ⊃ ℕ ∖ {1, 2} ⊃ …
+Intuition: “Can’t climb forever” — every ascent hits ceiling or stabilizes.
+180 / 246
+Noetherian Relations
+Definition 80: 𝑅 is Noetherian if 𝑅−1 is well-founded.
+Equivalently: every non-empty subset has a maximal element.
+Theorem 14: Noetherian ⟺ ACC
+Proof: Chain of equivalences:
+𝑅 is Noetherian ⟺ 𝑅−1 is well-founded
+⟺ 𝑅−1 satisfies DCC
+⟺ 𝑅 satisfies ACC
+□
+Duality: Well-founded has minimals + DCC; Noetherian has maximals + ACC.
+181 / 246
+Summary: Equivalences
+Concept Definition Equivalent
+Well-ordered Unique least in every subset Total + Well-founded
+Well-founded Minimal(s) in every subset DCC
+Noetherian Maximal(s) in every subset ACC
+Key:
+• Well-ordered → well-founded
+• Well-founded ⟺ DCC
+• Noetherian ⟺ ACC
+• Well-founded and Noetherian are duals
+182 / 246
+Application: Noetherian Rings
+Definition 81: A ring is Noetherian if every ascending chain of ideals stabilizes:
+𝐼1 ⊆ 𝐼2 ⊆ 𝐼3 ⊆ …
+Example (ℤ is Noetherian): Ideals in ℤ have form 𝑛ℤ = {𝑛𝑘 | 𝑘 ∈ ℤ} for 𝑛 ∈ ℕ.
+For chain 𝑛1ℤ ⊆ 𝑛2ℤ ⊆ …:
+• Inclusion means 𝑛2 | 𝑛1, so 𝑛1 ≥ 𝑛2 ≥ … in ℕ
+• By DCC, this sequence stabilizes
+• Therefore the ideal chain stabilizes
+183 / 246
+Chain Conditions: Key Examples
+Poset DCC? ACC?
+⟨ℕ, ≤⟩ ✓ ✗
+⟨ℤ−
+, ≤⟩ (negative integers) ✗ ✓
+⟨𝒫︀({1, 2, 3}), ⊆⟩ (finite) ✓ ✓
+⟨𝒫︀(ℕ), ⊆⟩ (infinite) ✗ ✗
+Key observation: DCC and ACC are independent — a structure can satisfy one, both, or neither!
+184 / 246
+Applications: From Theory to Practice
+These abstract concepts — well-orders, well-founded relations, and chain conditions — are powerful tools
+for proving termination, reasoning about infinity, and establishing finiteness properties.
+The unifying principle: All capture variants of “no infinite regress” — essential for proving processes
+terminate and structures are well-behaved.
+Examples (Computer science):
+• Model checking: Well-founded relations guarantee finite state-space exploration
+• Database systems: Datalog uses well-founded semantics for recursive queries
+• Compiler optimization: Prove termination of optimization passes via well-founded metrics
+• Graph algorithms: DFS/BFS termination follows from well-founded visit ordering
+185 / 246
+Applications: From Theory to Practice [2]
+Examples (Mathematics & logic):
+• Transfinite induction: Well-ordering enables proofs about infinite ordinals
+• Set theory: Von Neumann ordinals constructed as well-ordered sets
+• Rewriting systems: Confluence and termination via Noetherian orderings (Knuth-Bendix)
+• Combinatorics: Dickson’s lemma uses well-quasi-orders for finiteness results
+Examples (Software engineering):
+• Scheduling algorithms: Priority queues maintain well-founded task ordering
+• Garbage collection: Reachability analysis uses well-founded heap traversal
+• Distributed systems: Lamport clocks establish well-founded event causality
+• Version control: Commit DAGs form well-founded partial orders
+186 / 246
+Summary: Well-Founded Relations and Chain Conditions
+Concept Definition Equivalent to
+Well-ordered Every subset has unique least element Total + well-founded
+Well-founded Every subset has minimal elements DCC
+Noetherian Every subset has maximal elements ACC
+DCC (Artinian) No infinite descending chains Well-founded
+ACC (Noetherian) No infinite ascending chains Noetherian
+Key relationships:
+• Well-ordered → well-founded (least → minimal)
+• Well-ordered → total order (least elements force comparability)
+• Well-founded ⟺ DCC (equivalent characterizations)
+• Noetherian ⟺ ACC (equivalent characterizations)
+187 / 246
+Cardinality & Infinity
+“God made the integers, all else is the work of man.”
+— Leopold Kronecker
+Giuseppe
+Peano
+Leopold
+Kronecker
+David Hilbert Kurt Gödel John von
+Neumann
+Paul Cohen
+Cardinality of Sets
+Definition 82: The cardinality of a set 𝑋, denoted |𝑋|, is a measure of its “size”.
+• For finite sets, cardinality equals the number of elements: |{𝑎, 𝑏, 𝑐}| = 3.
+• For infinite sets, cardinality describes the “type” of infinity, distinguishing between countable (like ℕ)
+and uncountable (like ℝ) infinities.
+Key insight: Not all infinities are equal!
+Some infinite sets are “larger” than others in a precise mathematical sense.
+Example:
+• |ℕ| = ℵ0 (“aleph-null” — the smallest infinite cardinal, denoting countable infinity)
+• |ℤ| = ℵ0 (surprisingly, same size as ℕ!)
+• |ℚ| = ℵ0 (rationals are also countably infinite)
+• |ℝ| = 2ℵ0 = 𝔠 (“continuum” — uncountably infinite)
+• |𝒫︀(ℕ)| = 2ℵ0 > ℵ0 (power set is always larger than the original set)
+189 / 246
+Cardinal Numbers
+Note: |𝑋| is not just a number, but a cardinal number.
+• Cardinal numbers extend natural numbers to describe sizes of infinite sets
+• The finite cardinals are: 0, 1, 2, 3, …
+• The first infinite cardinal is ℵ0 = |ℕ|
+• Arithmetic on infinite cardinals behaves differently: ℵ0 + 1 = ℵ0 and ℵ0⋅ 2 = ℵ0
+Cantor’s revolutionary insight (1874): We can compare sizes of infinite sets using bijections, just as
+we compare finite sets by counting!
+190 / 246
+Equinumerosity
+Definition 83: Two sets 𝐴 and 𝐵 have the same cardinality and are called equinumerous, denoted
+|𝐴| = |𝐵| or 𝐴 ≈ 𝐵, iff there exists a bijection (one-to-one correspondence) between 𝐴 and 𝐵.
+Intuition: If you can pair up every element of 𝐴 with exactly one element of 𝐵, with nothing left over on
+either side, then 𝐴 and 𝐵 have the same cardinality.
+Theorem 15: Equinumerosity is an equivalence relation.
+Proof: Let 𝐴, 𝐵, 𝐶 be sets.
+• Reflexivity: The identity map id𝐴 : 𝐴 → 𝐴, where id𝐴(𝑥) = 𝑥, is a bijection, so 𝐴 ≈ 𝐴.
+• Symmetry: Suppose 𝐴 ≈ 𝐵, then there is a bijection 𝑓 : 𝐴 → 𝐵. Since it is a bijection, its inverse 𝑓−1
+exists and is also a bijection. Hence, 𝑓−1 : 𝐵 → 𝐴 is a bijection, so 𝐵 ≈ 𝐴.
+• Transitivity: Suppose that 𝐴 ≈ 𝐵 and 𝐵 ≈ 𝐶, i.e., there are bijections 𝑓 : 𝐴 → 𝐵 and 𝑔 : 𝐵 → 𝐶.
+Then the composition 𝑔 ∘ 𝑓 : 𝐴 → 𝐶 is also a bijection. So 𝐴 ≈ 𝐶.
+Therefore, equinumerosity is an equivalence relation. □
+191 / 246
+Hilbert’s Grand Hotel
+Imagine a hotel with infinitely many rooms, numbered 1, 2, 3, …, and all rooms are occupied.
+A new guest arrives. Can we accommodate them? YES!
+The solution: Move each guest in room 𝑛 to room 𝑛 + 1.
+• Guest in room 1 moves to room 2
+• Guest in room 2 moves to room 3
+• And so on…
+Now room 1 is vacant for the new guest!
+Formally: Define the shift map 𝑓 : ℕ → ℕ by 𝑓(𝑛) = 𝑛 + 1
+• Injective: Different rooms map (shift) to different rooms
+• Not surjective: Room 1 has no pre-image
+The hotel can accommodate one more guest even though it is “full”!
+192 / 246
+Dedekind-Infinite Sets
+Definition 84: A set 𝑋 is Dedekind-infinite if some proper subset 𝑌 ⊂ 𝑋 is equinumerous to it, i.e.,
+there is a bijection between 𝑋 and one of its proper subsets.
+Equivalently, 𝑋 is Dedekind-infinite if there exists an injective but not surjective function 𝑓 : 𝑋 → 𝑋.
+A set that is not Dedekind-infinite is called Dedekind-finite.
+Note: Intuitively, an “infinite” set can be put in one-to-one correspondence with a part of itself, which is
+impossible for finite sets.
+Example: The set of natural numbers ℕ is Dedekind-infinite:
+• Let 𝑌 = {2, 4, 6, 8, …} = ℕeven ⊂ ℕ (proper subset)
+• Define 𝑓 : ℕ → 𝑌 by 𝑓(𝑛) = 2𝑛 (bijection)
+• Since ℕ ≈ ℕeven (equinumerous, bijection exists), the set ℕ is Dedekind-infinite
+193 / 246
+Examples of Dedekind-Infinite Sets
+Example: Integers ℤ are Dedekind-infinite:
+• Define 𝑓 : ℤ → ℤeven by 𝑓(𝑛) = 2𝑛
+• This is a bijection: ℤ ≈ ℤeven ⊂ ℤ
+Example: Rationals ℚ are Dedekind-infinite:
+• Define 𝑓 : ℚ → ℚ ∖ [0; 1) by 𝑓(𝑥) = {𝑥 𝑥+1 if 𝑥≥0
+if 𝑥<0
+• This “skips” the interval [0; 1), giving a bijection onto ℚ ∖ [0, 1) ⊂ ℚ
+Example: Real numbers (0; 1) are Dedekind-infinite:
+• Define 𝑓 : (0; 1) → (0; 1
+2) by 𝑓(𝑥) =
+𝑥
+2
+• This is a bijection: (0; 1) ≈ (0; 1
+2) ⊂ (0; 1)
+Key insight: Being Dedekind-infinite is equivalent to being infinite (assuming the Axiom of Choice).
+This gives us a purely set-theoretic definition of infinity without counting!
+194 / 246
+Hilbert’s Hotel: Infinitely Many New Guests
+The Greater Challenge: Now a bus with infinitely many passengers arrives (numbered 1, 2, 3, …).
+The hotel is still completely full. Can we accommodate all of them? The solution:
+Ask each current guest in room 𝑛 to move to room 2𝑛:
+𝑓current : ℕ → ℕeven, 𝑓current(𝑛) = 2𝑛
+This creates infinitely many vacant odd-numbered rooms: {1, 3, 5, 7, 9, …}
+Then, assign bus passenger 𝑘 to room 2𝑘 − 1:
+𝑓new : ℕ → ℕodd, 𝑓new(𝑘) = 2𝑘 − 1
+YES!
+195 / 246
+Hilbert’s Hotel: Infinitely Many New Guests [2]
+Original Current Guest ⟶ New Room New Guest
+Room 1 Guest #1 Room 2
+Room 2 Guest #2 Room 4
+Room 3 Guest #3 Room 6
+⋮ ⋮ ⋮
+Room 1 Bus passenger #1
+Room 3 Bus passenger #2
+Room 5 Bus passenger #3
+⋮ ⋮
+This demonstrates that ℕ (all guests) is equinumerous to ℕeven (current guests) and ℕodd (new guests):
+|ℕ| = |ℕeven| = |ℕodd| = ℵ0
+Moreover, we showed that ℕ ≈ ℕeven ⊔ ℕodd, illustrating that ℵ0 + ℵ0 = ℵ0.
+196 / 246
+Countable Sets
+Definition 85: A set is countable if it is either finite, or has the same cardinality as ℕ (i.e., there exists
+a bijection with ℕ).
+An infinite countable set has cardinality ℵ0.
+Key insight: A countable set is one whose elements can be “listed” in a sequence 𝑎0, 𝑎1, 𝑎2, …,
+pairing each with a natural number.
+Example: Integers ℤ = {…,
+−2,
+−1, 0, 1, 2, …} are countable: |ℤ| = ℵ0
+Bijection 𝑓 : ℕ → ℤ:
+𝑓(𝑛) = {𝑛
+2 if 𝑛 is even
+𝑛+1
+−
+2 if 𝑛 is odd [ℕ:
+ℤ:
+0
+1
+2
+3
+0
+−1
+1
+−2
+This systematically pairs each natural number with exactly one integer.
+4
+2
+5
+−3
+6
+3
+7
+−4
+…
+…]
+197 / 246
+Properties of Countable Sets
+Theorem 16:
+1. 2. 3. 4. Any subset of a countable set is countable
+The union of countably many countable sets is countable
+The Cartesian product of two countable sets is countable
+The set of finite sequences over a countable alphabet is countable
+198 / 246
+Examples of Countable Sets
+Example: Finite binary strings Σ∗
+= {𝜀, 0, 1, 00, 01, 10, 11, 000, …} over Σ = {0, 1}:
+• List by length, then lexicographically: 𝜀 (length 0), then 0, 1 (length 1), then 00, 01, 10, 11 (length 2), etc.
+• Since each length class is finite and there are countably many lengths, Σ∗ is countable
+Example: Polynomials with integer coefficients ℤ[𝑥]:
+• Group by degree and coefficient sum, enumerate systematically
+• Countable because expressible as finite sequences over ℤ
+Example: Algebraic numbers (roots of polynomials with integer coefficients):
+• Each polynomial has finitely many roots
+• “Countably many polynomials” × “finitely many roots each” = countable
+199 / 246
+Zig-Zag Enumeration: ℕ2 is Countable
+Theorem 17: ℕ × ℕ is countable.
+Proof: We enumerate pairs by diagonals of constant sum 𝑠 = 𝑛 + 𝑘 for 𝑠 = 0, 1, 2, …
+𝑛 ↓ 𝑘 → 0 1 2 3 …
+0 ⟨0, 0⟩
+0
+1 ⟨1, 0⟩
+1
+2 ⟨2, 0⟩
+3
+3 ⟨3, 0⟩
+6
+⟨0, 1⟩
+2
+⟨1, 1⟩
+4
+⟨2, 1⟩
+7
+⟨3, 1⟩
+11
+⟨0, 2⟩
+5
+⟨1, 2⟩
+8
+⟨2, 2⟩
+12
+⟨3, 2⟩
+17
+⟨0, 3⟩
+9…
+⟨1, 3⟩
+13…
+⟨2, 3⟩
+18…
+⟨3, 3⟩
+24…
+⋮ ⋮ ⋮ ⋮ ⋮ ⋱
+200 / 246
+Zig-Zag Enumeration: ℕ2 is Countable [2]
+The Cantor pairing function gives an explicit bijection 𝑓 : ℕ2 → ℕ:
+(𝑛 + 𝑘)(𝑛 + 𝑘 + 1)
+𝑓(𝑛, 𝑘) =
++ 𝑘
+2
+⏟
+pairs before diagonal 𝑛+𝑘
+⏟
+position within diagonal
+Therefore ℕ2 ≈ ℕ, so |ℕ2| = ℵ0. □
+Why this matters: “2-dimensional infinity” is the same size as “1-dimensional infinity”!
+More generally, ℕ𝑛 is countable for any finite 𝑛.
+201 / 246
+Rationals are Countable
+Theorem 18: ℚ is countable.
+Proof: We construct an injection from ℚ into ℕ × ℕ, which is countable.
+Step 1: Map each positive rational 𝑝
+𝑞 (as a reduced fraction) to (𝑝, 𝑞) ∈ ℕ × ℕ.
+• This is injective: different reduced fractions have different (𝑝, 𝑞) pairs
+• Since ℕ × ℕ is countable, ℚ+ ⪯ ℕ × ℕ (injection) implies ℚ+ is countable
+Step 2: Decompose ℚ = ℚ+ ∪ {0} ∪ ℚ− (union of three disjoint sets).
+• ℚ+ is countable (Step 1), {0} is finite, ℚ−
+≈ ℚ+ via 𝑓(𝑥) = −𝑥
+Step 3: Union of three countable sets is countable, so ℚ is countable. □
+Surprising fact: There are “as many” rationals as integers, even though rationals are dense (between
+any two, there’s another) while integers are discrete!
+202 / 246
+Uncountable Sets: Cantor’s Diagonal Argument
+Definition 86: A set is uncountable if it is infinite but not countable (no bijection with ℕ exists).
+Cantor’s strategy: Given any proposed “list” of all elements, construct a new element that differs
+from each item in the list, proving the list is incomplete.
+Theorem 19: The set 𝔹𝜔 of all infinite binary sequences is uncountable.
+Why 𝔹𝜔? It’s simpler than ℝ but has the same cardinality: |𝔹𝜔| = |ℝ| = 2ℵ0 = 𝔠.
+Binary sequences can represent real numbers via binary expansions!
+Proof: Suppose for contradiction that 𝔹𝜔 is countable. Then we can enumerate its elements as
+𝑥1, 𝑥2, 𝑥3, …, where 𝑥𝑖 = (𝑏𝑖1, 𝑏𝑖2, 𝑏𝑖3, …) is an infinite bit sequence.
+203 / 246
+Uncountable Sets: Cantor’s Diagonal Argument [2]
+We can represent this enumeration as an infinite table, where each row corresponds to a (supposedly
+countable) sequence 𝑥𝑖 and each column corresponds to a bit position (natural numbers):
+Seq Bit 1 Bit 2 Bit 3 Bit 4 …
+𝑏11 𝑏12 𝑏13 𝑏14…
+𝑏21 𝑏22 𝑏23 𝑏24…
+𝑏31 𝑏32 𝑏33 𝑏34…
+𝑏41 𝑏42 𝑏43 𝑏44…
+⋮ ⋮ ⋮ ⋮ ⋮ ⋱
+𝑥1 𝑥2 𝑥3 𝑥4 Δ 𝑏11 𝑏22 𝑏33 𝑏44…
+Construct Δ = (𝑏11, 𝑏22, 𝑏33, …) by flipping each diagonal bit:
+𝑏𝑖𝑖 = {1 if 𝑏𝑖𝑖 = 0
+0 if 𝑏𝑖𝑖 = 1
+204 / 246
+Uncountable Sets: Cantor’s Diagonal Argument [3]
+Key observation: Δ ≠ 𝑥𝑖 for any 𝑖, because they differ at position 𝑖: 𝑏𝑖𝑖 ≠ 𝑏𝑖𝑖.
+But Δ ∈ 𝔹𝜔, since it is an infinite binary sequence, so it should appear in our enumeration. Contradiction!
+Therefore, 𝔹𝜔 is uncountable. □
+Connection to zig-zag:
+• Zig-zag (for ℕ2): Each diagonal is finite, we can list all pairs
+• Diagonal argument (for 𝔹𝜔): Sequences are infinite, impossible to list completely!
+205 / 246
+More Uncountable Sets
+Example: Real numbers ℝ are uncountable:
+• Map each 𝑥 ∈ (0; 1) to its binary expansion sequence in 𝔹𝜔
+• Since 𝔹𝜔 is uncountable and (0, 1) ≈ ℝ, we have |ℝ| = 2ℵ0 = 𝔠
+Example: Power set 𝒫︀(ℕ) is uncountable:
+• Map each 𝑆 ⊆ ℕ to its characteristic sequence (𝜒𝑆(0), 𝜒𝑆(1), 𝜒𝑆(2), …) ∈ 𝔹𝜔
+• This is a bijection: 𝒫︀(ℕ) ≈ 𝔹𝜔
+• Therefore |𝒫︀(ℕ)| = 2ℵ0 (matches Cantor’s theorem!)
+206 / 246
+More Uncountable Sets [2]
+Example: Irrational numbers 𝕀 = ℝ ∖ ℚ are uncountable:
+• If 𝕀 were countable, then ℝ = ℚ ∪ 𝕀 would be a union of two countable sets, hence countable
+• But ℝ is uncountable, contradiction!
+• Most real numbers are irrational (in a measure-theoretic sense)
+Example (Computer science connections):
+• Undecidable problems: There are uncountably many languages over any alphabet, but only countably
+many algorithms (finite strings). Most languages have no decision algorithm!
+• Real computation: Real numbers are uncountable, but computable reals are countable
+• Cryptography: Security often relies on the vastness of uncountable key spaces
+207 / 246
+Comparing Cardinalities
+Definition 87: The cardinality of 𝐴 is less than or equal to that of 𝐵, denoted |𝐴| ≤ |𝐵| or 𝐴 ⪯ 𝐵,
+if there exists an injection 𝑓 : 𝐴 → 𝐵.
+Definition 88: The cardinality of 𝐴 is strictly less than that of 𝐵, denoted |𝐴| < |𝐵| or 𝐴 ≺ 𝐵,
+if 𝐴 ⪯ 𝐵 and 𝐴 ≉ 𝐵 (injection exists, but no bijection).
+Key insight: Injections let us compare sizes without needing full bijections!
+Example:
+• |{1, 2}| < |{𝑎, 𝑏, 𝑐}| because 𝑓(1) = 𝑎, 𝑓(2) = 𝑏 is injective, but no bijection exists
+• |ℕ| ≤ |ℤ| and |ℤ| ≤ |ℕ| (both have bijections, so |ℕ| = |ℤ|)
+• |ℕ| < |𝒫︀(ℕ)| because 𝑓(𝑛) = {𝑛} is injective, but Cantor’s theorem says no bijection exists
+• |ℕ| < |ℝ| because 𝑓 : ℕ → ℝ via 𝑓(𝑛) = 𝑛 is injective, but diagonal argument shows no bijection
+208 / 246
+Cantor’s Theorem
+Theorem 20 (Cantor): 𝐴 ≺ 𝒫︀(𝐴) for any set 𝐴.
+Proof: The map 𝑓(𝑥) = {𝑥} is an injection from 𝐴 to 𝒫︀(𝐴), since if 𝑥 ≠ 𝑦, then {𝑥} ≠ {𝑦}, and so
+𝑓(𝑥) ≠ 𝑓(𝑦). So we have shown that 𝐴 ⪯ 𝒫︀(𝐴).
+To show that 𝐴 ≉ 𝒫︀(𝐴), suppose for reductio that there is a bijection 𝑔 : 𝐴 → 𝒫︀(𝐴).
+• Consider 𝐷 = {𝑥 ∈ 𝐴 | 𝑥 ∉ 𝑔(𝑥)}. Note that 𝐷 ⊆ 𝐴, so 𝐷 ∈ 𝒫︀(𝐴).
+• Since 𝑔 is surjective, there exists 𝑦 ∈ 𝐴 such that 𝑔(𝑦) = 𝐷.
+‣ If 𝑦 ∈ 𝐷, then by definition of 𝐷, we have 𝑦 ∉ 𝑔(𝑦), i.e., 𝑦 ∉ 𝐷. Contradiction!
+‣ If 𝑦 ∉ 𝐷, then 𝑦 ∉ 𝑔(𝑦), so by definition of 𝐷, we have 𝑦 ∈ 𝐷. Contradiction!
+• Therefore, no bijection 𝐴 → 𝒫︀(𝐴) can exist, so 𝐴 ≉ 𝒫︀(𝐴). □
+Profound implication: There is no “largest” infinity! We can always construct a bigger one using the
+power set operation: ℵ0 < 2ℵ0 < 22ℵ0 < …
+209 / 246
+Schröder–Bernstein Theorem
+Theorem 21 (Schröder–Bernstein): If 𝐴 ⪯ 𝐵 and 𝐵 ⪯ 𝐴, then 𝐴 ≈ 𝐵.
+Equivalently: if injections 𝑓 : 𝐴 → 𝐵 and 𝑔 : 𝐵 → 𝐴 both exist, then a bijection ℎ : 𝐴 → 𝐵 exists.
+What this means: If each set “fits inside” the other, they have the same size!
+This powerful result lets us prove equality of cardinalities without constructing explicit bijections.
+Example: (0; 1) ≈ [0; 1] (open interval equals closed interval):
+• Injection 𝑓 : (0; 1) → [0; 1] by 𝑓(𝑥) = 𝑥 (identity)
+• Injection 𝑔 : [0; 1] → (0; 1) by 𝑔(𝑥) =
+𝑥
+2 + 1
+4 (shrink and shift to (1
+4; 3
+4))
+• By Schröder–Bernstein, there exists a bijection between them!
+Note: The proof is non-trivial and constructive. We’ll see it in a dedicated section later.
+210 / 246
+Unit Line vs. Unit Square
+Theorem 22: The unit line 𝐿 = [0; 1] and unit square 𝑆 = [0; 1]2 are equinumerous.
+𝐿 ≈ 𝑆 Surprise! A 1D object has the same cardinality as a 2D object!
+Proof4: Step 1: Injection 𝑓 : 𝐿 → 𝑆 by 𝑓(𝑥) = ⟨𝑥, 𝑥⟩ gives 𝐿 ⪯ 𝑆.
+• If 𝑓(𝑎) = 𝑓(𝑏), then ⟨𝑎, 𝑎⟩ = ⟨𝑏, 𝑏⟩, so 𝑎 = 𝑏
+Step 2: Injection 𝑔 : 𝑆 → 𝐿 by interleaving decimal digits gives 𝑆 ⪯ 𝐿:
+𝑥 = 0.𝑥1𝑥2𝑥3…
+𝑦 = 0.𝑦1𝑦2𝑦3… } 𝑔(𝑥, 𝑦) = 0.𝑥1𝑦1𝑥2𝑦2𝑥3𝑦3…
+• If 𝑔(𝑎, 𝑏) = 𝑔(𝑐, 𝑑), then all digits match, so ⟨𝑎, 𝑏⟩ = ⟨𝑐, 𝑑⟩
+Step 3: By Schröder–Bernstein (Theorem 21), we conclude 𝐿 ≈ 𝑆. □
+4See https://math.stackexchange.com/a/183383 for more detailed analysis.
+211 / 246
+Summary: Cardinality & Infinity
+Cardinality measures set “size,” with surprising distinctions among infinities:
+• Finite sets: Cardinality = element count
+• Countable infinity (ℵ0): Sets like ℕ, ℤ, ℚ that can be listed (bijection with ℕ)
+• Uncountable infinity: Sets like ℝ and 𝒫︀(ℕ) too large to enumerate (e.g., |ℝ| = 2ℵ0 = 𝔠)
+Key techniques:
+• Equinumerosity: Sets have equal cardinality iff a bijection exists between them
+• Injections: Prove |𝐴| ≤ |𝐵| by constructing a one-to-one map
+• Diagonal argument: Prove uncountability by showing no enumeration can be complete
+• Schröder–Bernstein: Two injections (both ways) yield a bijection
+212 / 246
+Summary: Cardinality & Infinity [2]
+Mind-bending facts:
+• |ℕ| = |ℤ| = |ℚ| = ℵ0 (integers and rationals are “same size” as naturals!)
+• |ℕ × ℕ| = |ℕ| (2D grid has same size as 1D line)
+• [0; 1] ≈ [0; 1]2 (unit line equals unit square!)
+• |ℕ| < |𝒫︀(ℕ)| < |𝒫︀(𝒫︀(ℕ))| < … (infinitely many infinities!)
+• Most real numbers are not algebraic (computable reals are countable, but all reals are uncountable)
+213 / 246
+Enumerations and Countability
+Enumerable Sets
+Definition 89: A set 𝑋 is enumerable if there exists a surjection 𝑒 : ℕ → 𝑋.
+The function 𝑒 is called an enumeration of 𝑋.
+Intuition: An enumerable set can be “listed” as 𝑒(0), 𝑒(1), 𝑒(2), … (possibly with repetitions).
+Note: Elements may appear multiple times since we only require a surjection, not a bijection.
+Example: Even numbers: 𝑒(𝑛) = 2𝑛 gives 0, 2, 4, 6, 8, …
+Example: Perfect squares: 𝑒(𝑛) = 𝑛2 gives 0, 1, 4, 9, 16, 25, …
+Example: Prime numbers: 𝑒(0) = 2, 𝑒(1) = 3, 𝑒(2) = 5, 𝑒(3) = 7, … (via Sieve of Eratosthenes)
+215 / 246
+Three Equivalent Characterizations
+Theorem 23: For any set 𝑋, the following are equivalent:
+1. 𝑋 is countable: 𝑋 is finite or has a bijection with ℕ
+2. 𝑋 is enumerable: there exists a surjection 𝑒 : ℕ → 𝑋
+3. 𝑋 is embeddable in ℕ: 𝑋 = ∅ or there exists an injection 𝑓 : 𝑋 → ℕ
+Practical guide:
+• Use bijection when you can construct an explicit 1-1 correspondence
+• Use surjection (enumeration) when you can algorithmically list elements
+• Use injection when 𝑋 embeds naturally into ℕ (often easiest!)
+216 / 246
+Proof of Equivalence
+Proof: We prove (1) ⇒ (2) ⇒ (3) ⇒ (1).
+(1) ⇒ (2): Suppose 𝑋 is countable.
+• If 𝑋 is finite: 𝑋 = {𝑥0, …, 𝑥𝑛−1}, define 𝑒(𝑘) = {𝑥𝑘 if 𝑘<𝑛
+𝑥0 if 𝑘≥𝑛 (surjection)
+• If 𝑋 ≈ ℕ: any bijection 𝑔 : ℕ → 𝑋 is also a surjection
+(2) ⇒ (3): Suppose 𝑒 : ℕ → 𝑋 is a surjection.
+• If 𝑋 = ∅, done
+• Otherwise, for each 𝑥 ∈ 𝑋, define 𝑓(𝑥) = min{𝑛 ∈ ℕ | 𝑒(𝑛) = 𝑥} (first occurrence)
+• This is injective: if 𝑓(𝑥) = 𝑓(𝑦) = 𝑛, then 𝑒(𝑛) = 𝑥 and 𝑒(𝑛) = 𝑦, so 𝑥 = 𝑦
+(3) ⇒ (1): Suppose 𝑋 = ∅ or 𝑓 : 𝑋 → ℕ is injective.
+• If 𝑋 = ∅, then 𝑋 is finite (countable)
+• Otherwise, 𝑋 ≈ 𝑓(𝑋) ⊆ ℕ
+• Since any subset of ℕ is countable, 𝑋 is countable
+□
+217 / 246
+Infinite Subsets of ℕ
+Theorem 24: Any infinite subset 𝐴 ⊆ ℕ is equinumerous to ℕ.
+Proof: Construct a bijection 𝑓 : ℕ → 𝐴 recursively:
+• 𝑓(0) = min 𝐴 (ℕ is well-ordered ⇒ any 𝐴 ⊆ ℕ has a least element)
+• 𝑓(𝑛 + 1) = min(𝐴 ∖ {𝑓(0), 𝑓(1), …, 𝑓(𝑛)})
+Since 𝐴 is infinite, 𝐴 ∖ {𝑓(0), …, 𝑓(𝑛)} is always non-empty and has a minimum.
+Injective: By construction, all 𝑓(𝑖) are distinct.
+Surjective: Every 𝑎 ∈ 𝐴 eventually becomes the minimum of a remaining set.
+Therefore 𝑓 is a bijection, so |𝐴| = ℵ0. □
+Key insight: There’s only “one size” of countably infinite set: ℵ0.
+218 / 246
+Enumeration Examples
+Example (Finite strings over Σ = {𝑎, 𝑏}): Enumerate Σ∗ by length, then lexicographically:
+𝜀, 𝑎, 𝑏, 𝑎𝑎, 𝑎𝑏, 𝑏𝑎, 𝑏𝑏, 𝑎𝑎𝑎, 𝑎𝑎𝑏, …
+• Length 0: 𝜀 (1 string)
+• Length 1: 𝑎, 𝑏 (2 strings)
+• Length 2: 𝑎𝑎, 𝑎𝑏, 𝑏𝑎, 𝑏𝑏 (4 strings)
+• Length 𝑛: 2𝑛 strings
+Since ⋃∞
+𝑛=0 2𝑛 is a countable union of finite sets, Σ∗ is countable.
+Example (Rational numbers): List positive fractions 𝑝
+𝑞 by increasing 𝑝 + 𝑞, skip non-reduced:
+1
+1
+2
+1
+1
+2
+3
+4
+3
+1,
+2,
+1,
+3,
+1,
+4,
+3,
+2,
+1, …
+Include 0 and negatives by interleaving:
+1
+1
+1
+1
+2
+2
+0,
+−
+−
+−
+1,
+1,
+2,
+2,
+1,
+1, …
+219 / 246
+Schröder–Bernstein
+Proof of Schröder–Bernstein Theorem
+Theorem 25: If injections 𝑓 : 𝐴 → 𝐵 and 𝑔 : 𝐵 → 𝐴 exist, then a bijection ℎ : 𝐴 → 𝐵 exists.
+Proof: Let 𝑓 : 𝐴 → 𝐵 and 𝑔 : 𝐵 → 𝐴 be injections.
+We use 𝑔−1 to denote the inverse of 𝑔 restricted to its image: for any 𝑎 ∈ 𝑔(𝐵), we write 𝑔−1(𝑎) for the
+unique 𝑏 ∈ 𝐵 satisfying 𝑔(𝑏) = 𝑎.
+Step 1: Construct auxiliary sets
+Define inductively the sets 𝐴𝑛 ⊆ 𝐴 and 𝐵𝑛 ⊆ 𝐵 for 𝑛 ≥ 0 by:
+𝐴0 ≔ 𝐴 ∖ 𝑔(𝐵)
+𝐵𝑛
+≔ 𝑓(𝐴𝑛) 𝐴𝑛+1 ≔ 𝑔(𝐵𝑛) for 𝑛 ≥ 0
+for 𝑛 ≥ 0
+Define 𝐴∞ ⊆ 𝐴 as the union of all 𝐴𝑛: 𝐴∞
+≔ ⋃
+𝑛≥0
+𝐴𝑛.
+221 / 246
+Proof of Schröder–Bernstein Theorem [2]
+Step 2: Define the candidate bijection
+Define ℎ : 𝐴 → 𝐵 by:
+ℎ(𝑎) = {𝑓(𝑎) 𝑔−1(𝑎) if 𝑎 ∉ 𝐴∞
+if 𝑎 ∈ 𝐴∞
+Step 3: Verify ℎ is well-defined
+For all 𝑎 ∈ 𝐴, we need ℎ(𝑎) to be defined:
+• 𝑎 ∈ 𝐴∞: Then ℎ(𝑎) = 𝑓(𝑎) is well-defined (since 𝑓 : 𝐴 → 𝐵).
+• 𝑎 ∉ 𝐴∞: Then 𝑎 ∉ 𝐴0 (as 𝐴0 ⊆ 𝐴∞), so 𝑎 ∈ 𝑔(𝐵). Thus 𝑔−1(𝑎) exists and is unique.
+222 / 246
+Proof of Schröder–Bernstein Theorem [3]
+Step 4: Prove the ranges are disjoint
+We show that 𝑓(𝐴∞) and 𝑔−1(𝐴 ∖ 𝐴∞) are disjoint.
+First, observe that:
+𝑓(𝐴∞) = 𝑓(⋃
+𝑛≥0
+𝐴𝑛) = ⋃
+𝑛≥0
+Now take 𝑎 ∉ 𝐴∞ and let 𝑏 = 𝑔−1(𝑎). We claim 𝑏 ∉ ⋃𝑛≥0 𝐵𝑛:
+• Suppose for contradiction that 𝑏 ∈ 𝐵𝑛 for some 𝑛
+• Then 𝑎 = 𝑔(𝑏) ∈ 𝑔(𝐵𝑛) = 𝐴𝑛+1 ⊆ 𝐴∞
+• This contradicts 𝑎 ∉ 𝐴∞
+Hence 𝑔−1(𝐴 ∖ 𝐴∞) ⊆ 𝐵 ∖ ⋃𝑛≥0 𝐵𝑛
+= 𝐵 ∖ 𝑓(𝐴∞).
+Therefore, the ranges 𝑓(𝐴∞) and 𝑔−1(𝐴 ∖ 𝐴∞) are disjoint.
+𝑓(𝐴𝑛) = ⋃
+𝑛≥0
+𝐵𝑛
+223 / 246
+Proof of Schröder–Bernstein Theorem [4]
+Step 5: Prove ℎ is injective
+Take 𝑎, 𝑎′ ∈ 𝐴 with ℎ(𝑎) = ℎ(𝑎′). Consider the cases:
+• Both in 𝐴∞: Then 𝑓(𝑎) = 𝑓(𝑎′), so 𝑎 = 𝑎′ (since 𝑓 is injective).
+• Both outside 𝐴∞: Then 𝑔−1(𝑎) = 𝑔−1(𝑎′), so 𝑎 = 𝑎′ (since 𝑔 is injective).
+• Mixed case (say 𝑎 ∈ 𝐴∞, 𝑎′ ∉ 𝐴∞): Then ℎ(𝑎) = 𝑓(𝑎) ∈ 𝑓(𝐴∞) but ℎ(𝑎′) = 𝑔−1(𝑎′) ∈ 𝐵 ∖ 𝑓(𝐴∞).
+By Step 4, these sets are disjoint, contradicting ℎ(𝑎) = ℎ(𝑎′).
+Therefore ℎ is injective.
+224 / 246
+Proof of Schröder–Bernstein Theorem [5]
+Step 6: Prove ℎ is surjective
+Let 𝑏 ∈ 𝐵. Consider the cases:
+• 𝑏 ∈ 𝑓(𝐴∞): Then 𝑏 = 𝑓(𝑎) for some 𝑎 ∈ 𝐴∞, so ℎ(𝑎) = 𝑓(𝑎) = 𝑏.
+• 𝑏 ∉ 𝑓(𝐴∞): Let 𝑎 = 𝑔(𝑏) ∈ 𝐴. We claim 𝑎 ∉ 𝐴∞:
+‣ Suppose for contradiction that 𝑎 ∈ 𝐴∞
+‣ Then 𝑎 ∈ 𝐴𝑛 for some 𝑛 ≥ 1 (as 𝑎 = 𝑔(𝑏) ∈ 𝑔(𝐵), but 𝐴0 = 𝐴 ∖ 𝑔(𝐵))
+‣ So 𝑎 ∈ 𝐴𝑛
+= 𝑔(𝐵𝑛−1), meaning 𝑎 = 𝑔(𝑏′) for some 𝑏′ ∈ 𝐵𝑛−1
+‣ Since 𝑔 is injective and 𝑎 = 𝑔(𝑏) = 𝑔(𝑏′), we have 𝑏 = 𝑏′ ∈ 𝐵𝑛−1 ⊆ 𝑓(𝐴∞)
+‣ This contradicts 𝑏 ∉ 𝑓(𝐴∞)
+Therefore 𝑎 ∉ 𝐴∞, and ℎ(𝑎) = 𝑔−1(𝑎) = 𝑔−1(𝑔(𝑏)) = 𝑏.
+Therefore ℎ is surjective.
+Conclusion: Since ℎ is both injective and surjective, ℎ is a bijection, so 𝐴 ≈ 𝐵. □
+225 / 246
+Large Cardinal Numbers
+“The essence of mathematics is its freedom.”
+— Georg Cantor
+Beyond ℵ0: Hierarchies of Infinity
+We’ve seen that ℵ0 = |ℕ| is the smallest infinite cardinality. But are there larger infinities beyond ℵ0?
+Cantor showed that there are infinitely many distinct sizes of infinity, forming an endless hierarchy of
+ever-growing infinities.
+|ℕ| < |ℝ| < |𝒫︀(ℝ)| < |𝒫︀(𝒫︀(ℝ))| < …
+This discovery fundamentally changed our understanding of the infinite.
+Two key hierarchies help us organize these infinities:
+• The ℶ (beth) numbers ℶ0, ℶ1, ℶ2, … — constructive hierarchy built by repeatedly taking powersets
+• The ℵ (aleph) numbers ℵ0, ℵ1, ℵ2, … — ordinal hierarchy indexing all infinite cardinals by their order
+227 / 246
+Beth Numbers: The Powerset Hierarchy
+Definition 90: The beth numbers (from Hebrew letter ב) form a constructive hierarchy defined
+recursively using the powerset operation:
+• ℶ0 = ℵ0 = |ℕ| (countable infinity — the starting point)
+• ℶ𝑛+1 = 2ℶ𝑛 = |𝒫︀(set of size ℶ𝑛)| (apply powerset operation)
+• ℶ𝜆 = sup
+ℶ𝛼 (for limit ordinal 𝜆)
+𝛼<𝜆
+Key insight: Each beth number is the cardinality of the powerset of the previous one.
+This gives us a concrete, algorithmic hierarchy: we know exactly how to construct each level!
+Note: The beth hierarchy is a natural generalization of Cantor’s diagonal argument: each step ℶ𝑛 → ℶ𝑛+1
+applies the result that 𝑆 ≺ 𝒫︀(𝑆) for any set 𝑆.
+246 / 228
+Examples of Beth Numbers
+Example: The first few beth numbers:
+Beth Value Interpretation
+ℶ0 ℵ0 = |ℕ| Countable infinity
+ℶ1 ℶ2 2ℵ0 = |𝒫︀(ℕ)| = |ℝ| = 𝔠 The continuum (real numbers)
+2𝔠 = |𝒫︀(ℝ)| All functions ℝ → ℝ, all subsets of ℝ
+ℶ3 2ℶ2 = |𝒫︀(𝒫︀(ℝ))| All relations on ℝ
+By Cantor’s theorem, we know ℶ0 < ℶ1 < ℶ2 < ℶ3 < … is a strictly increasing sequence.
+Each powerset operation produces a provably larger infinity!
+229 / 246
+Aleph Numbers: Indexing All Infinite Cardinals
+Definition 91: The aleph numbers (from Hebrew letter א) enumerate all infinite cardinal numbers in
+their natural order:
+• ℵ0 = |ℕ| — the smallest infinite cardinal (countable infinity)
+• ℵ1 — the next infinite cardinal after ℵ0 (the smallest uncountable cardinal)
+• ℵ2 — the next infinite cardinal after ℵ1
+• In general: ℵ𝛼+1 is the smallest cardinal strictly larger than ℵ𝛼
+Unlike beth numbers (defined by powerset), aleph numbers are defined abstractly by their order.
+We don’t know how to “construct” ℵ1 from ℵ0 — we only know it is the “next” cardinal!
+246 / 230
+Notes on Aleph Hierarchy
+Note: Each aleph is actually an initial ordinal: the smallest ordinal of that cardinality.
+• For example, ℵ0 = 𝜔, the first infinite ordinal.
+• ℵ1 = 𝜔1, the first uncountable ordinal.
+• “Intermediate” ordinals like 𝜔 + 1, 𝜔 × 2, 𝜔2
+, 𝜔𝜔
+, … all have cardinality ℵ0.
+This connects cardinality to ordinal number theory.
+Note: The alephs are “ordinal-indexed”: ℵ0, ℵ1, …, ℵ𝜔, ℵ𝜔+1, … It extends through all ordinal numbers!
+For a limit ordinal 𝜆:
+ℵ𝜆 = ⋃
+𝛼<𝜆
+ℵ𝛼
+= sup
+𝛼<𝜆
+ℵ𝛼
+231 / 246
+Aleph vs Beth: Two Fundamentally Different Hierarchies
+Beth hierarchy (constructive):
+Aleph hierarchy (ordinal):
+• Start: ℶ0 = ℵ0 = |ℕ|
+• Start: ℵ0 = ℶ0 = |ℕ|
+• Rule: ℶ𝑛+1 = 2ℶ𝑛 (powerset)
+• Rule: ℵ𝑛+1 = “next cardinal”
+• Algorithmic: built by iteration
+• Axiomatic: built by well-ordering
+• We know exactly what each is
+• We know the order, not values
+powerset
+powerset powerset
+ℶ1 = 2ℵ0 ℶ2 = 2ℶ1 ℶ3 = 2ℶ2
+…
+ℵ0 = ℶ0
+?
+successor
+ℵ1 ℵ2 ℵ3…
+successor successor
+How these two diverging hierarchies relate is one of deepest “unsolved” questions in mathematics.
+Central question: Is ℵ1 = ℶ1 = 𝔠? This is the Continuum Hypothesis.
+232 / 246
+The Continuum Hypothesis (CH): Cantor’s Great Question
+Definition 92: The Continuum Hypothesis (CH) states that there is no infinite cardinal strictly
+between ℵ0 and the cardinality of the continuum:
+ℵ1 = ℶ1 = 2ℵ0 = |ℝ| = 𝔠
+In other words: every infinite subset of ℝ is either countable (ℵ0) or has the same size as ℝ (𝔠).
+Georg Cantor formulated CH in 1878 and believed it to be true. He spent decades trying to prove it.
+“The question whether there exists a transfinite number between ℵ0 and 2ℵ0 has tormented me.” 5
+Despite geniously discovering the transfinite numbers, Cantor could neither prove nor disprove CH.
+This struggle contributed to his mental health difficulties in later life.
+5Not a real quote, but captures his sentiment!
+233 / 246
+What CH Implies?
+Examples (if CH is true):
+• The real numbers ℝ have cardinality ℵ1 (first uncountable cardinal)
+• Every uncountable subset of ℝ is equinumerous to ℝ
+• There are “no infinities between” countable and continuum
+• The hierarchies align at the first step: ℵ1 = ℶ1
+• All “naturally occurring” uncountable sets in analysis have the same size
+Examples (if CH is false):
+• The real numbers ℝ have cardinality strictly larger than ℵ1 (e.g., 𝔠 = ℵ2 or higher)
+• There exist uncountable subsets of ℝ with cardinalities between ℵ0 and |ℝ|
+• The hierarchies diverge: ℵ1 < ℶ1
+• A richer structure of infinite cardinalities exists
+• Some “naturally occurring” sets in analysis may have different sizes
+Are there hidden infinities between countable and continuum, or just these two?
+234 / 246
+The Generalized Continuum Hypothesis (GCH)
+Definition 93: The Generalized Continuum Hypothesis (GCH) extends CH to all infinite cardinals:
+For every infinite cardinal 𝜅:
+2𝜅 = 𝜅+
+where 𝜅+ denotes the immediate successor cardinal after 𝜅.
+This means: ℵ𝑛
+= ℶ𝑛 for all ordinals 𝑛 (finite and transfinite).
+What GCH claims: The two hierarchies completely coincide at every level!
+There is only one natural hierarchy of infinite cardinals, and the powerset operation always produces
+the very next cardinal in the sequence.
+235 / 246
+What GCH Implies?
+Examples (if GCH is true):
+• Every aleph is a beth: ℵ𝑛
+= ℶ𝑛 for all ordinals 𝑛
+• Powerset always gives the next cardinal: 2ℵ𝛼 = ℵ𝛼+1
+• No “gaps” in the cardinal hierarchy — maximally simple structure
+• All questions about cardinal arithmetic have definite answers
+• The universe of sets is “neat” and predictable
+Examples (if GCH is false):
+• The hierarchies diverge at some level: ℵ𝛼 < ℶ𝛼 for some 𝛼
+• Powerset can “jump” multiple levels: 2ℵ𝛼 > ℵ𝛼+1
+• Cardinal arithmetic has complex, unpredictable behavior
+• The universe of sets is “wild” with hidden structure
+• Different models can have vastly different cardinal behaviors
+Is the cardinal hierarchy maximally simple or is reality more complex?..
+236 / 246
+Hilbert’s First Problem
+In 1900, David Hilbert presented 23 problems that shaped 20th-century mathematics.
+Problem 1 was to resolve the Continuum Hypothesis — showing its fundamental importance.
+Early attempts to settle CH:
+• Cantor (1878–1918): Believed CH was true, could not prove it
+• Hilbert (1900): Made it the first of his famous problems
+• Zermelo (1908): Developed axiomatic set theory (ZF), but CH remained open
+• Fraenkel (1922): Extended to ZFC (with Axiom of Choice), CH still unresolved
+• Gödel (1940): Proved CH is consistent with ZFC (cannot be disproved)
+• Cohen (1963): Proved ¬CH is also consistent — breakthrough!
+237 / 246
+Cohen’s Independence Result (1963)
+Theorem 26 (Cohen, 1963): The Continuum Hypothesis is independent of ZFC (Zermelo–Fraenkel set
+theory with the Axiom of Choice):
+• ZFC cannot prove CH
+• ZFC cannot disprove CH
+• Both “ZFC + CH” and “ZFC + ¬CH” are consistent (assuming ZFC is consistent)
+What Cohen proved using forcing: The value of 2ℵ0 is not determined by the axioms of ZFC!
+We can construct models where:
+• ℵ1 = ℶ1 = 2ℵ0 (CH holds)
+• ℵ2 = ℶ1 = 2ℵ0 (one intermediate cardinal)
+• ℵ𝜔
+= ℶ1 = 2ℵ0 (countably many intermediate cardinals)
+• ℵ𝜔1
+= ℶ1 = 2ℵ0 (uncountably many intermediate cardinals)
+• Even: ℵ𝛼
+= ℶ1 = 2ℵ0 for arbitrarily large 𝛼!
+238 / 246
+The Freedom of Infinity
+Different models of ZFC can have wildly different cardinal structures!
+Universe where CH holds:
+• ℵ1 = ℶ1 = 2ℵ0 = |ℝ| — hierarchies align
+• Every subset of ℝ is either countable (ℵ0) or has
+the same cardinality 𝔠
+• No “intermediate” infinities
+Universe where CH fails:
+• ℵ1 < 2ℵ0 = |ℝ| — hierarchies diverge
+• “Intermediate” infinities exist (between ℕ and ℝ)
+• ℝ can be arbitrarily large
+• Much richer structure
+Before 1963: We thought CH must be either true or false.
+After Cohen: CH is independent — both answers are mathematically valid!
+Key insight: There is no single fixed mathematical reality.
+Different axiom systems can give different but equally consistent answers.
+239 / 246
+What Is Mathematical Truth?
+If CH can be neither proved nor disproved, what does it even mean to ask “Is CH true?”
+Two philosophical perspectives:
+Platonist view:
+• Mathematical objects exist independently
+• CH is either true or false in reality
+• We just haven’t found the “right” axioms yet
+• Approach: Search for natural axioms beyond ZFC
+(like large cardinal axioms)
+Formalist view:
+• Mathematics is just symbol manipulation
+• “Truth” depends on which axioms you choose
+• CH is true in some models, false in others
+• Approach: Study all possible models
+(“multiverse”) and their properties
+240 / 246
+Modern Perspectives on CH
+Most mathematicians today take a pragmatic approach:
+Instead of asking “Is CH absolutely true?”, modern set theory asks more productive questions:
+• In which models of ZFC does CH hold?
+• What interesting mathematics follows from CH? From ¬CH?
+• Do certain “natural” axioms beyond ZFC settle CH?
+• Which axiom systems are most useful for specific areas of mathematics?
+Note: This shift mirrors similar debates in physics: rather than asking if string theory is “The True Theory,”
+physicists ask what predictions it makes and whether it’s useful for understanding nature.
+241 / 246
+Summary: Large Cardinal Numbers
+Two infinite hierarchies with different constructions:
+• Beth numbers: ℶ0 = ℵ0, ℶ𝑛+1 = 2ℶ𝑛 — built step-by-step using powersets
+• Aleph numbers: ℵ0, ℵ1, ℵ2, … — enumerate all infinite cardinals in order
+Both start at ℵ0 = ℶ0, but their relationship afterward is not fixed by ZFC axioms.
+The Continuum Hypothesis: Does ℵ1 = 2ℵ0 ?
+• Gödel (1940): Showed ZFC + CH is consistent
+• Cohen (1963): Showed ZFC + ¬CH is also consistent
+Conclusion: CH is independent of ZFC. The “size” of ℝ depends on which axioms you choose.
+What we learned: Mathematics does not have a unique “reality” — different axiom systems can give
+different answers to the same question, yet remain equally consistent.
+242 / 246
+Outline
+§1 §2 §3 §4 §5 §6 §7 §8 §9 §10 §11 §12 §13 Relations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+Properties of Relations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+Equivalence Relations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+Composition of Relations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+Closures of Relations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+Functions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 69
+Order Theory . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 104
+Lattices . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 129
+Well Orders . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 158
+Cardinality & Infinity . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 187
+Enumerations and Countability . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 213
+Schröder–Bernstein . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 219
+Large Cardinal Numbers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 225
+243 / 246
+TODO
+• Applications of lattices in:
+‣ Formal concept analysis
+‣ Domain theory in computer science
+‣ Algebraic topology
+‣ Cryptography (lattice-based cryptography)
+• Advanced topics in set theory:
+‣ Cardinal arithmetic
+‣ Ordinal numbers
+‣ Forcing and independence results
+‣ Large cardinals
+• Connections to Boolean algebra (next lecture)
+• Applications in formal logic and proof theory
+244 / 246
+Looking Ahead: Boolean Algebra
+The next lecture will explore Boolean algebra, which provides the mathematical foundation for:
+• Digital circuit design and computer hardware
+• Propositional logic and automated reasoning
+• Database query optimization
+• Formal verification of software and hardware systems
+Key topics will include:
+• Boolean functions and their representations
+• Normal forms (CNF, DNF)
+• Minimization techniques (Karnaugh maps, Quine-McCluskey)
+• Functional completeness and Post’s theorem
+• The satisfiability problem (SAT) and its computational complexity
+245 / 246
+Preview: Formal Logic
+Following Boolean algebra, we will study formal logic, covering:
+• Propositional and predicate logic
+• Natural deduction and proof systems
+• Completeness and soundness theorems
+• Applications to program verification and AI reasoning
+This progression from sets → relations → functions → Boolean algebra → logic provides a solid
+foundation for advanced topics in discrete mathematics and computer science.
+Binary relations are the bridge between sets and functions — they model how objects connect,
+organize, and interact in mathematical structures and real-world systems.
+246 / 246
+```
+
+Пример конспекта:
+
+```
+## Определение
+Ординалы ([лат.](https://ru.wikipedia.org/wiki/%D0%9B%D0%B0%D1%82%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9_%D1%8F%D0%B7%D1%8B%D0%BA "Латинский язык") ordinalis - порядковый) - это представление чисел в виде [множеств](Множество.md).
+
+---
+## Определение чисел через множества
+- $0 = \emptyset$
+- $1 = \{0\} = \{\emptyset\}$
+- $2 = \{0, 1\} = \{\emptyset, \{\emptyset\}\}$
+  $...$
+- $\omega = \{0, 1, 2, ...\} = \mathbb{N}$
+- $\omega + 1 = \{0, 1, 2, ...\, \omega\} = \mathbb{N} + 1$
+- $\alpha = \omega^\alpha$
+- $\omega_0, ..., \omega^{\omega^{\omega^{...}}}, ..., \varepsilon_0, ..., \Gamma_0, ..., \omega_1$
+
+$\omega$ как раз и является первым бесконечным ординалом
+
+---
+## Кардинальности бесконечных множеств
+Есть 2 кардинальности $\beth$ и $\aleph$. Они образуют 2 серии кардинальностей $\beth_n$ и $\aleph_n$.
+--- start-multi-column: ExampleRegion1  
+```column-settings  
+number of columns: 2
+Border: false
+Shadow: false
+```
+
+- $\aleph_0 = |\mathbb{N}|$
+- $\aleph_1 = the\; next\; smallest\; infinite\; cardinal\; after\; \aleph_0$
+- $\aleph_2 = the\; next\; smallest\; infinite\; cardinal\; after\; \aleph_1$
+- $...$
+- $\aleph_{n + 1} = the\; next\; smallest\; infinite\; cardinal\; after\; \aleph_n$
+
+--- end-column ---
+
+- $\beth_0 = |\mathbb{N}|$
+- $\beth_1 = |\cal{P}(\mathbb{N})|$
+- $\beth_2 = |\cal{P}(\cal{P}(\mathbb{N}))|$
+- $...$
+- $\beth_{n + 1} = |\cal{P}(set\; size\; of\; \beth_n)|$
+
+--- end-multi-column
+
+---
+## [Wiki](https://ru.wikipedia.org/wiki/Порядковое_число)
+```
+
+Напиши конспект по теме решетка на русском

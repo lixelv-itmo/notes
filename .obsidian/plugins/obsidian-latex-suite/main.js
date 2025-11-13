@@ -10039,7 +10039,7 @@ var TreeCursor = class {
     }
   }
   /**
-  Test whether the current node matches a given context—a sequence
+  Test whether the current node matches a given context-a sequence
   of direct parent node names. Empty strings in the context array
   are treated as wildcards.
   */
@@ -10886,7 +10886,7 @@ var InputStream = class {
   ///
   /// Note that looking around during tokenizing creates dependencies
   /// on potentially far-away content, which may reduce the
-  /// effectiveness incremental parsing—when looking forward—or even
+  /// effectiveness incremental parsing-when looking forward-or even
   /// cause invalid reparses when looking backward more than 25 code
   /// units, since the library does not track lookbehind.
   peek(offset2) {
