@@ -1,17 +1,27 @@
 ## Определение
---- start-multi-column: ExampleRegion1
-```column-settings
-number of columns: 2
+AVL бинарное дерево поиска ([англ.](https://ru.wikipedia.org/wiki/%D0%90%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8%D0%B9_%D1%8F%D0%B7%D1%8B%D0%BA "Английский язык") AVL BST) - это сбалансированное [[бинарное дерево поиска]], где все операции вставки и удаления гарантированно работают за $O(\log n)$. Основная идея в хранении высоты каждого поддерева и если высота правого ребенка - высота левого (баланс) больше 1 или меньше -1, то происходит ребалансировка с помощью правых и левых поворотов.
+
+---
+## Сложность и визуализация
+--- start-multi-column: ExampleRegion1  
+```column-settings  
+number of columns: 2  
 Border: false
 Shadow: false
 ```
 
-AVL бинарное дерево поиска ([англ.](https://ru.wikipedia.org/wiki/%D0%90%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8%D0%B9_%D1%8F%D0%B7%D1%8B%D0%BA "Английский язык") AVL BST) - это сбалансированное [[бинарное дерево поиска]], где все операции вставки и удаления гарантированно работают за $O(\log n)$. Основная идея в хранении высоты каждого поддерева и если высота правого ребенка - высота левого (баланс) больше 1 или меньше -1, то происходит ребалансировка с помощью правых и левых поворотов.
+- **Вставка:** $O(\log n)$
+- **Чтение:**   $O(\log n)$
+- **Удаление:**  $O(\log n)$
+- **Затраты памяти:** $O(n)$
 
 --- end-column ---
 
 ![](avl_tree.png)
+
 --- end-multi-column
+
+---
 ## Реализация на C++
 ```cpp
 #include <iostream>
@@ -201,16 +211,16 @@ private:
     }
 
     print(node->right, depth + 1);
-
+	
     for (int i = 0; i < depth; i++) {
       std::cout << "   ";
     }
     std::cout << node->val << std::endl;
-
+	
     print(node->left, depth + 1);
   };
 
-  void clear(Node<T> *node) {
+	void clear(Node<T> *node) {
     if (!node)
       return;
     clear(node->left);
@@ -219,6 +229,10 @@ private:
   }
 };
 
-template <typename T> bool lessCompare(const T &a, const T &b) { return a < b; }
+template <typename T> bool lessCompare(const T &a, const T &b) {return a < b;}
 template <typename T> using AVLTree = AVLAbstract<T, lessCompare<T>>;
 ```
+
+
+---
+## [Wiki](https://ru.wikipedia.org/wiki/АВЛ-дерево) [DSA](https://www.w3schools.com/dsa/dsa_data_avltrees.php)
