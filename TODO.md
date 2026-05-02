@@ -1,3 +1,0 @@
-- Дженерики
-- Функция
-- Линковка, storage duration и linkage duration
